@@ -1,9 +1,9 @@
 @echo off
 chcp 65001 >nul
-title Instalador Automatico - GeekFlashCore
+title Instalador Automatico - TensaZangetsu
 
 echo ===================================================
-echo      Instalador Automatico - GeekFlashCore
+echo      Instalador Automatico - TensaZangetsu
 echo ===================================================
 
 REM Verificar si dotnet existe en el sistema ocultando los errores
@@ -39,7 +39,7 @@ if %errorlevel% neq 0 (
 REM Compilar el proyecto
 echo.
 echo [*] Compilando la solucion...
-dotnet build GeekFlashCore.slnx
+dotnet build TensaZangetsu.slnx
 if %errorlevel% neq 0 (
     echo [X] Error durante la compilacion. Revisa el registro arriba.
     pause
@@ -54,8 +54,8 @@ echo.
 
 set /p abrir="Deseas iniciar la aplicacion ahora? (S/N): "
 if /i "%abrir%"=="S" (
-    echo [*] Abriendo GeekFlashCore...
-    dotnet run --project src/GeekFlashCore.App/GeekFlashCore.App.csproj
+    echo [*] Abriendo TensaZangetsu...
+    dotnet run --project src/TensaZangetsu.App/TensaZangetsu.App.csproj
 ) else (
     echo [*] Instalacion finalizada. Puedes cerrar esta ventana.
     pause

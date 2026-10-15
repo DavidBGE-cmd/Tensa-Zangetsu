@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "name": "TensaZangetsu.App (Desktop GUI)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/TensaZangetsu.App/bin/Debug/net10.0/TensaZangetsu.App.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/TensaZangetsu.App",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "TensaZangetsu.CLI",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/TensaZangetsu.CLI/bin/Debug/net10.0/tensazangetsu.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/TensaZangetsu.CLI",
+            "stopAtEntry": false,
+            "console": "integratedTerminal"
+        }
+    ]
+}
