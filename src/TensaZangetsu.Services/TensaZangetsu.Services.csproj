@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.Ports" Version="10.0.11" />
+    <PackageReference Include="System.Management" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TensaZangetsu.Abstractions\TensaZangetsu.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Android.Lp\TensaZangetsu.Android.Lp.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Android.Lp.Abstractions\TensaZangetsu.Android.Lp.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Android.Sparse\TensaZangetsu.Android.Sparse.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.BlockDevice\TensaZangetsu.BlockDevice.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.BlockDevice.Abstractions\TensaZangetsu.BlockDevice.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.FileSystem.Abstractions\TensaZangetsu.FileSystem.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.FileSystem.Erofs\TensaZangetsu.FileSystem.Erofs.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.FileSystem.Ext\TensaZangetsu.FileSystem.Ext.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Firmware\TensaZangetsu.Firmware.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Gpt\TensaZangetsu.Gpt.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Gpt.Abstractions\TensaZangetsu.Gpt.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.ImageFormats.Abstractions\TensaZangetsu.ImageFormats.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Abstractions\TensaZangetsu.Protocol.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Mtk\TensaZangetsu.Protocol.Mtk.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Mtk.Abstractions\TensaZangetsu.Protocol.Mtk.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Mtk.Extensions\TensaZangetsu.Protocol.Mtk.Extensions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Qcom\TensaZangetsu.Protocol.Qcom.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Qcom.Abstractions\TensaZangetsu.Protocol.Qcom.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Qcom.MessagePipe\TensaZangetsu.Protocol.Qcom.MessagePipe.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Sprd\TensaZangetsu.Protocol.Sprd.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Sprd.Abstractions\TensaZangetsu.Protocol.Sprd.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Shared\TensaZangetsu.Shared.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Transport.Abstractions\TensaZangetsu.Transport.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Transport.LibUsb\TensaZangetsu.Transport.LibUsb.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Transport.SerialPort\TensaZangetsu.Transport.SerialPort.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.UsbWatcher\TensaZangetsu.UsbWatcher.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.UsbWatcher.Abstractions\TensaZangetsu.UsbWatcher.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

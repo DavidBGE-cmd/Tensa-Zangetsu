@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TensaZangetsu.BlockDevice\TensaZangetsu.BlockDevice.csproj" />
+      <ProjectReference Include="..\TensaZangetsu.Gpt.Abstractions\TensaZangetsu.Gpt.Abstractions.csproj" />
+      <ProjectReference Include="..\TensaZangetsu.Shared\TensaZangetsu.Shared.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="NativeUsbAssets.props" />
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <AssemblyName>tensazangetsu</AssemblyName>
+    <RootNamespace>TensaZangetsu.CLI</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TensaZangetsu.Firmware\TensaZangetsu.Firmware.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Android.Lp\TensaZangetsu.Android.Lp.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.FileSystem.Erofs\TensaZangetsu.FileSystem.Erofs.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.FileSystem.Ext\TensaZangetsu.FileSystem.Ext.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Abstractions\TensaZangetsu.Protocol.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Qcom\TensaZangetsu.Protocol.Qcom.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Mtk\TensaZangetsu.Protocol.Mtk.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Sprd\TensaZangetsu.Protocol.Sprd.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Mtk.Extensions\TensaZangetsu.Protocol.Mtk.Extensions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Protocol.Qcom.Abstractions\TensaZangetsu.Protocol.Qcom.Abstractions.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Transport.SerialPort\TensaZangetsu.Transport.SerialPort.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.Transport.LibUsb\TensaZangetsu.Transport.LibUsb.csproj" />
+    <ProjectReference Include="..\TensaZangetsu.UsbWatcher\TensaZangetsu.UsbWatcher.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="4.4.0" />
+  </ItemGroup>
+</Project>

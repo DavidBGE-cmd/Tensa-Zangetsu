@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../TensaZangetsu.Protocol.Sprd.Abstractions/TensaZangetsu.Protocol.Sprd.Abstractions.csproj" />
+    <ProjectReference Include="../TensaZangetsu.Android.Sparse/TensaZangetsu.Android.Sparse.csproj" />
+    <ProjectReference Include="../TensaZangetsu.BlockDevice/TensaZangetsu.BlockDevice.csproj" />
+    <ProjectReference Include="../TensaZangetsu.Gpt/TensaZangetsu.Gpt.csproj" />
+    <PackageReference Include="Serilog" Version="4.4.0" />
+  </ItemGroup>
+</Project>

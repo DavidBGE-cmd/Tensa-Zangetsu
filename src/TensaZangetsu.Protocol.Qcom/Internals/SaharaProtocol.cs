@@ -1,0 +1,740 @@
+﻿using System.Buffers;
+using System.Buffers.Binary;
+using System.Diagnostics;
+using System.Globalization;
+using System.Text;
+using TensaZangetsu.Protocol.Abstractions;
+using TensaZangetsu.Protocol.Qcom.Abstractions;
+using TensaZangetsu.Protocol.Qcom.Models;
+using TensaZangetsu.Transport.Abstractions;
+using Serilog;
+
+namespace TensaZangetsu.Protocol.Qcom.Internals;
+
+internal class SaharaProtocol : IDisposable
+{
+    private const int MaxRamDumpRead = 0x100000;
+    private const int MaxCommandDataLength = 0x100000;
+    private const int UploadBufferSize = 64 * 1024;
+    private const int MaximumPblLoaderChunkLength = 4 * 1024 * 1024;
+    private const long ProgressReportInterval = 0x100000;
+    private const int MemoryTableEntrySize32Bit = 52;
+    private const int MemoryTableEntrySize64Bit = 64;
+    private const int MemoryRegionStringLength = 20;
+
+    private bool _disposed;
+    private readonly ITransport _transport;
+    private readonly ILogger _logger = Log.ForContext<SaharaProtocol>();
+    private readonly SaharaPacketReceiver _receiver;
+    private readonly SaharaPacketSender _sender;
+    private SaharaTargetInfo _targetInfo;
+
+    public SaharaTargetInfo TargetInfo => _targetInfo;
+
+    public bool IsConnected { get; private set; }
+    internal bool IsPblImageTransfer { get; private set; }
+
+    internal void ResetStateMachine()
+    {
+        if (_disposed) return;
+        _sender.SendResetStateMachineRequest();
+        IsConnected = false;
+    }
+
+    public SaharaProtocol(ITransport transport)
+    {
+        ArgumentNullException.ThrowIfNull(transport);
+        _transport = transport;
+        if (!transport.IsOpen)
+            throw new InvalidOperationException(Strings.Common_TransportIsClosed);
+        _sender = new SaharaPacketSender(Log.ForContext<SaharaPacketSender>(), _transport);
+        _receiver = new SaharaPacketReceiver(Log.ForContext<SaharaPacketReceiver>(), _transport);
+        _targetInfo = new SaharaTargetInfo();
+    }
+
+    public void Connect(IProgress<ProgressRecord>? progress = null)
+    {
+        ThrowIfDisposed();
+        _logger.Information(Strings.FormatCommon_ConnectingToMode(nameof(SaharaProtocol)));
+        progress?.Report(new ProgressRecord(3, 0, Strings.Progress_Connecting));
+        ReceiveHello(out var helloRequest);
+        SetTargetInfoFromHelloRequest(in helloRequest);
+        SendHelloResponse(SaharaMode.Command);
+        progress?.Report(new ProgressRecord(3, 1, Strings.Progress_HelloReceived));
+        _logger.Information(Strings.Common_ReadingTargetInfo);
+        progress?.Report(new ProgressRecord(3, 2, Strings.Progress_ReadingTargetInfo));
+        ReadTargetInfo();
+        IsConnected = true;
+        progress?.Report(new ProgressRecord(3, 3, Strings.Progress_SaharaReady));
+        _logger.Debug(Strings.Qcom_LogTargetInfo, FormatTargetInfo(TargetInfo));
+    }
+
+    public void UploadImage(
+        IReadOnlyList<SaharaImageEntry> saharaImages,
+        Action<SaharaMemoryRegion, ReadOnlyMemory<byte>>? onMemoryData = null,
+        IProgress<ProgressRecord>? progress = null)
+        => UploadImageCancelable(saharaImages, onMemoryData, progress, CancellationToken.None);
+
+    public void UploadImageCancelable(
+        IReadOnlyList<SaharaImageEntry> saharaImages,
+        Action<SaharaMemoryRegion, ReadOnlyMemory<byte>>? onMemoryData,
+        IProgress<ProgressRecord>? progress,
+        CancellationToken cancellationToken)
+    {
+        ThrowIfDisposed();
+        cancellationToken.ThrowIfCancellationRequested();
+        ArgumentNullException.ThrowIfNull(saharaImages);
+        if (saharaImages.Count == 0)
+            throw new ArgumentException(Strings.Sahara_EmptyImageList, nameof(saharaImages));
+
+        var imageDict = new Dictionary<int, SaharaImageEntry>(saharaImages.Count);
+        long totalImageBytes = 0;
+        foreach (SaharaImageEntry image in saharaImages)
+        {
+            ArgumentNullException.ThrowIfNull(image);
+            if (image.Id < 0)
+                throw new ArgumentOutOfRangeException(nameof(saharaImages), image.Id, null);
+            if (image.Length < 0 || image.Length != image.DataSource.Length)
+                throw new ArgumentException(Strings.Sahara_InvalidImageLength, nameof(saharaImages));
+            if (!imageDict.TryAdd(image.Id, image))
+                throw new ArgumentException(Strings.Sahara_DuplicateImageId, nameof(saharaImages));
+            totalImageBytes = checked(totalImageBytes + image.Length);
+        }
+
+        if (_targetInfo.Mode != SaharaMode.ImageTxPending)
+            SwitchModeTo(SaharaMode.ImageTxPending);
+
+        long lastReportedBytes = 0;
+        int currentImageId = -1;
+        Stream? stream = null;
+        long totalBytes = 0;
+        var stopwatch = Stopwatch.StartNew();
+        progress?.Report(new ProgressRecord(totalImageBytes, 0, Strings.Progress_Uploading)
+            { Unit = ProgressUnit.Bytes, Phase = ProgressPhase.Started });
+        try
+        {
+            while (true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var bodyLength = _receiver.ReceivePacketHeader(out var cmd);
+
+                switch (cmd)
+                {
+                    case SaharaCommand.ReadData32Bit:
+                    case SaharaCommand.ReadData64Bit:
+                    {
+                        long dataOffset;
+                        int dataLength;
+                        int imageId;
+
+                        if (cmd == SaharaCommand.ReadData32Bit)
+                        {
+                            _receiver.ReadReadData32BitRequest(out var rd, bodyLength);
+                            dataOffset = rd.DataOffset;
+                            dataLength = CheckedRequestValue(rd.DataLength, nameof(rd.DataLength));
+                            imageId = CheckedRequestValue(rd.ImageId, nameof(rd.ImageId));
+                        }
+                        else
+                        {
+                            _receiver.ReadReadData64BitRequest(out var rd, bodyLength);
+                            dataOffset = CheckedRequestOffset(rd.DataOffset);
+                            dataLength = CheckedRequestValue(rd.DataLength, nameof(rd.DataLength));
+                            imageId = CheckedRequestValue(rd.ImageId, nameof(rd.ImageId));
+                        }
+
+                        if (dataLength == 0)
+                            throw new SaharaProtocolException(Strings.FormatSahara_InvalidPacketLength(dataLength));
+                        if (!imageDict.TryGetValue(imageId, out var image))
+                            throw new FileNotFoundException(Strings.FormatSahara_ImageNotFound(imageId));
+                        if (IsPblImageTransfer && (dataLength > MaximumPblLoaderChunkLength ||
+                            dataOffset > image.Length || dataLength > image.Length - dataOffset))
+                            throw new SaharaProtocolException(Strings.Qcom_PblLoaderRangeInvalid);
+                        if (currentImageId != imageId)
+                        {
+                            stream?.Dispose();
+                            stream = image.DataSource.OpenStream() ??
+                                     throw new InvalidDataException(Strings.Sahara_ImageStreamMustBeReadableAndSeekable);
+                            if (!stream.CanRead || !stream.CanSeek)
+                            {
+                                stream.Dispose();
+                                stream = null;
+                                throw new InvalidDataException(Strings.Sahara_ImageStreamMustBeReadableAndSeekable);
+                            }
+
+                            currentImageId = imageId;
+                        }
+
+                        Stream activeStream = stream ?? throw new InvalidOperationException(
+                            Strings.Sahara_ImageStreamMustBeReadableAndSeekable);
+                        _logger.Debug(Strings.Qcom_LogTransferImage,
+                            imageId, dataOffset, dataLength);
+                        byte[] rented = ArrayPool<byte>.Shared.Rent(Math.Min(dataLength, UploadBufferSize));
+                        try
+                        {
+                            if (dataOffset < image.Length)
+                                activeStream.Seek(dataOffset, SeekOrigin.Begin);
+                            int remaining = dataLength;
+                            long available = Math.Max(0, image.Length - dataOffset);
+                            while (remaining > 0)
+                            {
+                                cancellationToken.ThrowIfCancellationRequested();
+                                int count = Math.Min(remaining, UploadBufferSize);
+                                int sourceCount = (int)Math.Min(count, available);
+                                activeStream.ReadExactly(rented.AsSpan(0, sourceCount));
+                                rented.AsSpan(sourceCount, count - sourceCount).Fill(0xFF);
+                                _transport.Write(rented, 0, count);
+                                available -= sourceCount;
+                                remaining -= count;
+                            }
+                            totalBytes = checked(totalBytes + dataLength);
+                            if (progress != null && totalBytes - lastReportedBytes >= ProgressReportInterval)
+                            {
+                                lastReportedBytes = totalBytes;
+                                progress.Report(new ProgressRecord(totalImageBytes, totalBytes,
+                                    Strings.FormatProgress_UploadingImage(currentImageId)) { Unit = ProgressUnit.Bytes });
+                            }
+                        }
+                        finally
+                        {
+                            ArrayPool<byte>.Shared.Return(rented);
+                        }
+
+                        break;
+                    }
+                    case SaharaCommand.MemoryDebug32Bit:
+                    case SaharaCommand.MemoryDebug64Bit:
+                    {
+                        _logger.Warning(Strings.Qcom_LogMemoryDebugWarning);
+                        progress?.Report(new ProgressRecord(totalImageBytes, totalBytes, Strings.Progress_MemoryDump));
+                        bool is64Bit = cmd == SaharaCommand.MemoryDebug64Bit;
+                        if (is64Bit)
+                        {
+                            _receiver.ReadMemoryDebug64BitRequest(out var memoryDebug, bodyLength);
+                            DumpMemoryCore(memoryDebug.MemoryTableAddress, memoryDebug.MemoryTableLength,
+                                true, onMemoryData);
+                        }
+                        else
+                        {
+                            _receiver.ReadMemoryDebug32BitRequest(out var memoryDebug, bodyLength);
+                            DumpMemoryCore(memoryDebug.MemoryTableAddress, memoryDebug.MemoryTableLength,
+                                false, onMemoryData);
+                        }
+
+                        stream?.Dispose();
+                        stream = null;
+                        currentImageId = -1;
+                        break;
+                    }
+                    case SaharaCommand.EndImageTransmit:
+                    {
+                        ThrowIfGetEndImageTxError(cmd, bodyLength);
+                        _sender.SendDoneRequest();
+                        var doneResponseLength = _receiver.ReceivePacketHeader(out var doneCmd);
+                        ThrowIfGetInvalidResponse(doneCmd, SaharaCommand.DoneResponse, doneResponseLength);
+                        _receiver.ReadDoneResponse(out var done, doneResponseLength);
+                        if (done.ImageTxStatus == SaharaMode.ImageTxComplete)
+                        {
+                            _targetInfo.Mode = SaharaMode.ImageTxComplete;
+                            LogThroughput("UploadImage", totalBytes, stopwatch.Elapsed);
+                            progress?.Report(new ProgressRecord(totalImageBytes, totalBytes,
+                                Strings.Progress_UploadComplete) { Unit = ProgressUnit.Bytes, Phase = ProgressPhase.Completed });
+                            return;
+                        }
+
+                        if (done.ImageTxStatus != SaharaMode.ImageTxPending)
+                        {
+                            throw new SaharaProtocolException(
+                                Strings.FormatSahara_UnexpectedStatus(done.ImageTxStatus.ToName()));
+                        }
+
+                        stream?.Dispose();
+                        stream = null;
+                        if (progress != null && totalBytes != lastReportedBytes)
+                        {
+                            lastReportedBytes = totalBytes;
+                            progress.Report(new ProgressRecord(totalImageBytes, totalBytes,
+                                Strings.FormatProgress_UploadingImage(currentImageId)) { Unit = ProgressUnit.Bytes });
+                        }
+
+                        currentImageId = -1;
+
+                        ReceiveHello(out var hello, false);
+                        SetTargetInfoFromHelloRequest(in hello);
+                        SendHelloResponse(SaharaMode.ImageTxPending);
+                        break;
+                    }
+
+                    default:
+                        throw new SaharaProtocolException(Strings.FormatSahara_UnexpectedCommand(cmd));
+                }
+            }
+        }
+        finally
+        {
+            stream?.Dispose();
+        }
+    }
+
+    private static int CheckedRequestValue(ulong value, string name)
+    {
+        if (value > int.MaxValue)
+            throw new SaharaProtocolException(Strings.FormatSahara_InvalidPacketLength($"{name}={value}"));
+        return (int)value;
+    }
+
+    private static long CheckedRequestOffset(ulong value)
+    {
+        if (value > long.MaxValue)
+            throw new SaharaProtocolException(Strings.FormatSahara_InvalidPacketLength($"offset={value}"));
+        return (long)value;
+    }
+
+    public ReadOnlyMemory<byte> ExecuteCommand(SaharaExecuteCommand command)
+    {
+        ThrowIfDisposed();
+        ThrowIfNotConnected();
+        _logger.Information(Strings.Qcom_LogExecuteCommand, command.ToName());
+        return ExecuteData(command, static data => data.ToArray());
+    }
+
+    public void SwitchMode(SaharaMode mode)
+    {
+        ThrowIfDisposed();
+        ThrowIfNotConnected();
+        SwitchModeTo(mode);
+    }
+
+    internal void BeginPblImageTransfer()
+    {
+        ThrowIfDisposed();
+        ThrowIfNotConnected();
+        // Patch owns the new Hello and its chip-specific HelloResponse.
+        _sender.SendSwitchModeRequest(SaharaMode.ImageTxPending);
+        IsConnected = false;
+    }
+
+    internal void ResumePblImageTransfer(SaharaTargetInfo target)
+    {
+        ThrowIfDisposed();
+        ArgumentNullException.ThrowIfNull(target);
+        _targetInfo = target with { Mode = SaharaMode.ImageTxPending };
+        IsPblImageTransfer = true;
+        IsConnected = true;
+    }
+
+    public void Reset()
+    {
+        ThrowIfDisposed();
+        _logger.Information(Strings.Qcom_LogSendingReset);
+        _sender.SendResetRequest();
+        var bodyLength = _receiver.ReceivePacketHeader(out var command);
+        ThrowIfGetInvalidResponse(command, SaharaCommand.ResetResponse, bodyLength);
+        _receiver.ReadResetResponse(out _, bodyLength);
+        IsConnected = false;
+        _logger.Information(Strings.Qcom_LogResetAcknowledged);
+    }
+
+    public IReadOnlyList<SaharaMemoryRegion> DumpMemory(
+        Action<SaharaMemoryRegion, ReadOnlyMemory<byte>>? onData = null,
+        bool resetAfterDump = false)
+    {
+        ThrowIfDisposed();
+        _logger.Information(Strings.Qcom_LogEnteringMemoryDebug);
+        ReceiveHello(out var hello);
+        SetTargetInfoFromHelloRequest(in hello);
+        _sender.SendHelloResponse(hello.Version, hello.Version, SaharaStatus.StatusSuccess,
+            _targetInfo.Mode, 1, 2, 3, 4, 5, 6);
+        IsConnected = true;
+
+        var bodyLength = _receiver.ReceivePacketHeader(out var command);
+        IReadOnlyList<SaharaMemoryRegion> regions;
+        switch (command)
+        {
+            case SaharaCommand.MemoryDebug32Bit:
+            {
+                _receiver.ReadMemoryDebug32BitRequest(out var memoryDebug, bodyLength);
+                regions = DumpMemoryCore(memoryDebug.MemoryTableAddress, memoryDebug.MemoryTableLength,
+                    false, onData);
+                break;
+            }
+            case SaharaCommand.MemoryDebug64Bit:
+            {
+                _receiver.ReadMemoryDebug64BitRequest(out var memoryDebug, bodyLength);
+                regions = DumpMemoryCore(memoryDebug.MemoryTableAddress, memoryDebug.MemoryTableLength,
+                    true, onData);
+                break;
+            }
+            default:
+                ThrowIfGetInvalidResponse(command, SaharaCommand.MemoryDebug32Bit, bodyLength);
+                throw new SaharaProtocolException(Strings.FormatSahara_UnexpectedCommand(command));
+        }
+
+        if (resetAfterDump)
+            Reset();
+        else
+            SwitchModeTo(SaharaMode.ImageTxPending);
+        return regions;
+    }
+
+    private IReadOnlyList<SaharaMemoryRegion> DumpMemoryCore(
+        ulong tableAddress, ulong tableLength, bool is64Bit,
+        Action<SaharaMemoryRegion, ReadOnlyMemory<byte>>? onData)
+    {
+        int entrySize = is64Bit ? MemoryTableEntrySize64Bit : MemoryTableEntrySize32Bit;
+        _logger.Information(Strings.Qcom_LogMemoryDebugInfo,
+            is64Bit ? 64 : 32, tableAddress, tableLength);
+
+        if (tableLength % (ulong)entrySize != 0 || tableLength > MaxRamDumpRead)
+        {
+            _logger.Error(Strings.Qcom_LogMemoryTableInvalid,
+                tableLength, entrySize);
+            Reset();
+            throw new SaharaProtocolException(Strings.FormatSahara_InvalidMemoryTable(tableLength));
+        }
+
+        var regions = new List<SaharaMemoryRegion>(
+            tableLength == 0 ? 0 : (int)(tableLength / (ulong)entrySize));
+        if (tableLength > 0)
+        {
+            SendMemoryReadRequest(tableAddress, tableLength, is64Bit);
+            byte[] table = ArrayPool<byte>.Shared.Rent((int)tableLength);
+            try
+            {
+                _transport.ReadExact(table.AsSpan(0, (int)tableLength));
+                ParseMemoryTable(table.AsSpan(0, (int)tableLength), is64Bit, regions);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(table);
+            }
+        }
+
+        foreach (var region in regions)
+        {
+            _logger.Information(Strings.Qcom_LogMemoryRegion,
+                region.BaseAddress, region.Length, region.FileName, region.Description);
+        }
+
+        long totalBytes = 0;
+        var stopwatch = Stopwatch.StartNew();
+        for (int i = regions.Count - 1; i >= 0; i--)
+        {
+            var region = regions[i];
+            ulong address = region.BaseAddress;
+            ulong remaining = region.Length;
+            while (remaining > 0)
+            {
+                uint chunkLength = (uint)Math.Min(remaining, MaxRamDumpRead);
+                SendMemoryReadRequest(address, chunkLength, is64Bit);
+                byte[] rented = ArrayPool<byte>.Shared.Rent((int)chunkLength);
+                try
+                {
+                    _transport.ReadExact(rented.AsSpan(0, (int)chunkLength));
+                    onData?.Invoke(region, new ReadOnlyMemory<byte>(rented, 0, (int)chunkLength));
+                }
+                finally
+                {
+                    ArrayPool<byte>.Shared.Return(rented);
+                }
+
+                address += chunkLength;
+                remaining -= chunkLength;
+                totalBytes += chunkLength;
+            }
+
+            _logger.Information(Strings.Qcom_LogDumpedRegion, region.FileName, region.Length);
+        }
+
+        LogThroughput("MemoryDump", totalBytes, stopwatch.Elapsed);
+        return regions;
+    }
+
+    private static void ParseMemoryTable(ReadOnlySpan<byte> table, bool is64Bit, List<SaharaMemoryRegion> regions)
+    {
+        int entrySize = is64Bit ? MemoryTableEntrySize64Bit : MemoryTableEntrySize32Bit;
+        for (int offset = 0; offset + entrySize <= table.Length; offset += entrySize)
+        {
+            ReadOnlySpan<byte> entry = table.Slice(offset, entrySize);
+            ulong baseAddress;
+            ulong length;
+            ReadOnlySpan<byte> description;
+            ReadOnlySpan<byte> fileName;
+            if (is64Bit)
+            {
+                baseAddress = BinaryPrimitives.ReadUInt64LittleEndian(entry.Slice(8));
+                length = BinaryPrimitives.ReadUInt64LittleEndian(entry.Slice(16));
+                description = entry.Slice(24, MemoryRegionStringLength);
+                fileName = entry.Slice(44, MemoryRegionStringLength);
+            }
+            else
+            {
+                baseAddress = BinaryPrimitives.ReadUInt32LittleEndian(entry.Slice(4));
+                length = BinaryPrimitives.ReadUInt32LittleEndian(entry.Slice(8));
+                description = entry.Slice(12, MemoryRegionStringLength);
+                fileName = entry.Slice(32, MemoryRegionStringLength);
+            }
+
+            regions.Add(new SaharaMemoryRegion(baseAddress, length,
+                DecodeMemoryTableString(fileName), DecodeMemoryTableString(description)));
+        }
+    }
+
+    private static string DecodeMemoryTableString(ReadOnlySpan<byte> bytes)
+    {
+        int length = bytes.IndexOf((byte)0);
+        if (length < 0)
+            length = bytes.Length;
+        return Encoding.ASCII.GetString(bytes[..length]);
+    }
+
+    private void SendMemoryReadRequest(ulong address, ulong length, bool is64Bit)
+    {
+        if (is64Bit)
+            _sender.SendMemoryRead64BitRequest(address, length);
+        else
+            _sender.SendMemoryRead32BitRequest((uint)address, (uint)length);
+    }
+
+    private T ExecuteData<T>(SaharaExecuteCommand executeCommand, Func<ReadOnlyMemory<byte>, T> processData)
+    {
+        _sender.SendExecuteRequest(executeCommand);
+        var bodyLength = _receiver.ReceivePacketHeader(out var command);
+        ThrowIfGetInvalidResponse(command, SaharaCommand.ExecuteResponse, bodyLength);
+        _receiver.ReadExecuteResponse(out var executeResponse, bodyLength);
+        if (executeResponse.ClientCommand != executeCommand)
+            throw new SaharaProtocolException(Strings.FormatSahara_UnexpectedCommand(executeResponse.ClientCommand));
+        if (executeResponse.DataLength is 0 or > MaxCommandDataLength)
+            throw new SaharaProtocolException(Strings.FormatSahara_InvalidPacketLength(executeResponse.DataLength));
+        int dataLength = checked((int)executeResponse.DataLength);
+        _sender.SendExecuteDataResponse(executeCommand);
+        byte[] rented = ArrayPool<byte>.Shared.Rent(dataLength);
+        try
+        {
+            if (_transport.ReadExact(rented.AsSpan(0, dataLength)) != dataLength)
+                throw new EndOfStreamException(Strings.SaharaNak_TimeoutRx);
+            return processData(new ReadOnlyMemory<byte>(rented, 0, dataLength));
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(rented, clearArray: true);
+        }
+    }
+
+    private ReadOnlyMemory<byte> ExecuteReadCaHash()
+    {
+        return ExecuteData(SaharaExecuteCommand.ReadOemPkHash,
+            static data => data[..48].ToArray());
+    }
+
+    private ulong ExecuteReadSblVersion()
+    {
+        return ExecuteData(SaharaExecuteCommand.ReadSblVersion,
+            static data => data.Length == 4
+                ? BinaryPrimitives.ReadUInt32LittleEndian(data.Span)
+                : BinaryPrimitives.ReadUInt64LittleEndian(data.Span));
+    }
+
+    private ulong ExecuteReadSerial()
+    {
+        return ExecuteData(SaharaExecuteCommand.ReadSerialNum,
+            static data => data.Length == 4
+                ? BinaryPrimitives.ReadUInt32LittleEndian(data.Span)
+                : BinaryPrimitives.ReadUInt64LittleEndian(data.Span));
+    }
+
+    private SaharaMsmHwInfo ExecuteReadMsmHwIdV2()
+    {
+        return ExecuteData(SaharaExecuteCommand.ReadMsmHwId,
+            static data =>
+            {
+                var span = data.Span;
+                var hwId = data.Length == 4
+                    ? BinaryPrimitives.ReadUInt32LittleEndian(span)
+                    : BinaryPrimitives.ReadUInt64LittleEndian(span);
+                return new SaharaMsmHwInfo()
+                {
+                    AntiRollbackVersion = null,
+                    SocHwVersion = null,
+                    ModelId = (uint?)(hwId & 0xFFFF),
+                    OemId = (uint?)(hwId >> 2 * 8 & 0xFFFF),
+                    MsmId = (uint?)(hwId >> 4 * 8 & 0xFFFFFFFF),
+                };
+            });
+    }
+
+    private SaharaMsmHwInfo ExecuteReadMsmHwIdV3()
+    {
+        return ExecuteData(SaharaExecuteCommand.ReadMsmHwIdV3,
+            static data =>
+            {
+                var span = data.Span;
+                var info = new SaharaMsmHwInfo();
+                if (data.Length >= 4)
+                    info.AntiRollbackVersion = BinaryPrimitives.ReadUInt16LittleEndian(span.Slice(2, 2));
+                if (data.Length >= 0x2C)
+                {
+                    info.SocHwVersion = BinaryPrimitives.ReadUInt32LittleEndian(span.Slice(0x20, 4));
+                    info.MsmId = BinaryPrimitives.ReadUInt32LittleEndian(span.Slice(0x24, 4));
+                    info.OemId = BinaryPrimitives.ReadUInt32LittleEndian(span.Slice(0x28, 4));
+                    info.ModelId = null;
+                }
+
+                return info;
+            });
+    }
+
+    private void ReadTargetInfo()
+    {
+        if (_targetInfo.Mode == SaharaMode.Command)
+        {
+            _targetInfo.Serial = ExecuteReadSerial();
+            _targetInfo.CaHash = ExecuteReadCaHash();
+            if (_targetInfo.Version > 3)
+            {
+                _targetInfo.MsmHwInfo = ExecuteReadMsmHwIdV3();
+            }
+            else
+            {
+                _targetInfo.SblVersion = ExecuteReadSblVersion();
+                _targetInfo.MsmHwInfo = ExecuteReadMsmHwIdV2();
+            }
+        }
+        else
+            throw new SaharaProtocolException(Strings.FormatSahara_InvalidMode(_targetInfo.Mode, SaharaMode.Command));
+    }
+
+    private void SwitchModeTo(SaharaMode mode)
+    {
+        _logger.Information(Strings.Qcom_LogSwitchingMode, mode.ToName());
+        _sender.SendSwitchModeRequest(mode);
+        ReceiveHello(out _, false);
+        _sender.SendHelloResponse(_targetInfo.Version, _targetInfo.Version,
+            SaharaStatus.StatusSuccess, mode, 1, 2, 3, 4, 5, 6);
+        _targetInfo.Mode = mode;
+    }
+
+    private void SendHelloResponse(SaharaMode mode)
+    {
+        _sender.SendHelloResponse(_targetInfo.Version, _targetInfo.Version,
+            SaharaStatus.StatusSuccess, mode, 1, 2, 3, 4, 5, 6);
+        var bodyLength = _receiver.ReceivePacketHeader(out var command);
+        ThrowIfGetInvalidResponse(command, SaharaCommand.ReadyResponse, bodyLength);
+        _targetInfo.Mode = mode;
+    }
+
+    private void ThrowIfGetEndImageTxError(SaharaCommand cmd, int length)
+    {
+        if (cmd == SaharaCommand.EndImageTransmit)
+        {
+            _receiver.ReadEndImageTxResponse(out var imageTxResponse, length);
+            if (imageTxResponse.Status != SaharaStatus.StatusSuccess)
+            {
+                var errorMessage = SaharaStatusMapping.MessageMapping.TryGetValue(imageTxResponse.Status, out var msg)
+                    ? msg
+                    : imageTxResponse.Status.ToName();
+                throw new SaharaProtocolException(errorMessage);
+            }
+        }
+    }
+
+    private void ThrowIfGetInvalidResponse(SaharaCommand cmd, SaharaCommand correctCmd, int bodyLength)
+    {
+        if (cmd != correctCmd)
+        {
+            ThrowIfGetEndImageTxError(cmd, bodyLength);
+            throw new SaharaProtocolException(Strings.FormatSahara_CantReceivePacket(correctCmd.ToName()));
+        }
+    }
+
+    private void ReceiveHello(out SaharaHelloRequest request, bool isReset = true)
+    {
+        int retryCount = 1;
+        request = new SaharaHelloRequest();
+        do
+        {
+            _logger.Debug(Strings.Qcom_LogHelloRetry, retryCount);
+            try
+            {
+                var bodyLength = _receiver.ReceivePacketHeader(out var command);
+                if (command == SaharaCommand.Hello)
+                {
+                    _receiver.ReadHelloRequest(out request, bodyLength);
+                    return;
+                }
+
+                retryCount--;
+            }
+            catch (Exception e) when (e is TimeoutException or InvalidDataException or ArgumentException)
+            {
+                _logger.Debug(e, Strings.Qcom_LogHelloReceiveFailed);
+                _transport.Flush();
+                if (isReset)
+                    _sender.SendResetStateMachineRequest();
+                retryCount--;
+            }
+        } while (retryCount >= 0);
+
+        throw new TimeoutException(Strings.SaharaNak_TimeoutRx);
+    }
+
+    private void SetTargetInfoFromHelloRequest(in SaharaHelloRequest hello)
+    {
+        _targetInfo.Version = hello.Version;
+        _targetInfo.MinimumVersionSupported = hello.VersionSupported;
+        _targetInfo.MaximumPacketSizeSupported = hello.CommandPacketLength;
+        _targetInfo.Mode = hello.Mode;
+
+        _logger.Debug(Strings.Qcom_LogTargetInfoFromHello, FormatTargetInfo(_targetInfo));
+    }
+
+    private static string FormatTargetInfo(SaharaTargetInfo info)
+    {
+        SaharaMsmHwInfo? hardware = info.MsmHwInfo;
+        static string FormatUInt(uint? value) => value is { } number ? "0x" + number.ToString("X8", CultureInfo.InvariantCulture) : "unknown";
+        static string FormatULong(ulong? value) => value is { } number ? "0x" + number.ToString("X8", CultureInfo.InvariantCulture) : "unknown";
+        return string.Join(", ",
+            $"Version={info.Version.ToString(CultureInfo.InvariantCulture)}",
+            $"MinVersion={info.MinimumVersionSupported.ToString(CultureInfo.InvariantCulture)}",
+            $"MaxPacket={info.MaximumPacketSizeSupported.ToString(CultureInfo.InvariantCulture)}",
+            $"Mode={info.Mode.ToName()}",
+            $"Serial={FormatULong(info.Serial)}",
+            $"SblVersion={FormatULong(info.SblVersion)}",
+            $"CaHashLength={info.CaHash?.Length ?? 0}",
+            $"AntiRollback={FormatUInt(hardware?.AntiRollbackVersion)}",
+            $"SocHwVersion={FormatUInt(hardware?.SocHwVersion)}",
+            $"MsmId={FormatUInt(hardware?.MsmId)}",
+            $"OemId={FormatUInt(hardware?.OemId)}",
+            $"ModelId={FormatUInt(hardware?.ModelId)}");
+    }
+
+    private void LogThroughput(string operation, long bytes, TimeSpan elapsed)
+    {
+        double mbps = elapsed.TotalSeconds > 0
+            ? bytes / elapsed.TotalSeconds / (1024.0 * 1024.0)
+            : 0;
+        _logger.Information(Strings.Qcom_LogOperationComplete,
+            operation, bytes, elapsed, mbps);
+    }
+
+    private void ThrowIfNotConnected()
+    {
+        if (!IsConnected)
+            throw new InvalidOperationException(Strings.Sahara_NotConnected);
+    }
+
+    private void ThrowIfDisposed()
+    {
+        if (_disposed)
+            throw new ObjectDisposedException(nameof(SaharaProtocol));
+    }
+
+    public void Dispose()
+    {
+        if (_disposed) return;
+        _disposed = true;
+        IsConnected = false;
+        _logger.Verbose(Strings.Qcom_LogDisposeSahara);
+        _targetInfo = new SaharaTargetInfo();
+        GC.SuppressFinalize(this);
+    }
+}

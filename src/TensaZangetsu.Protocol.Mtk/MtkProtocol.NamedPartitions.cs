@@ -1,0 +1,92 @@
+﻿using System.Text;
+using TensaZangetsu.Android.Sparse;
+using TensaZangetsu.Android.Sparse.Types;
+using TensaZangetsu.BlockDevice;
+using TensaZangetsu.BlockDevice.Abstractions;
+using TensaZangetsu.Protocol.Abstractions;
+using TensaZangetsu.Protocol.Mtk.Da;
+using TensaZangetsu.Protocol.Mtk.Internals;
+
+namespace TensaZangetsu.Protocol.Mtk;
+
+public sealed partial class MtkProtocol : IMtkNamedPartitionAccess
+{
+    private static string PartitionName(string name)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+        name = MtkPartitionNames.Wire(name);
+        if(string.IsNullOrWhiteSpace(name) || name.Length>64 || name.Any(c=>!char.IsAsciiLetterOrDigit(c) && c is not ('_' or '-' or '.')))throw new ArgumentException(nameof(name));
+        return name;
+    }
+    private void NamedWritePolicy(bool erase=false)
+    {
+        if(_storage!.Regions.Any(r=>!r.CanWrite))throw new MtkCapabilityException("named partition write policy");
+        if(erase && _storage.Kind==MtkStorageKind.Nor && _storage.Regions.Any(r=>r.EraseBlockSize==0))throw new MtkCapabilityException("NOR erase geometry");
+    }
+    /// <inheritdoc />
+    public long ReadNamedPartition(string name,Stream destination,long maximumLength,CancellationToken cancellationToken=default)
+    {
+        name=PartitionName(name);ArgumentNullException.ThrowIfNull(destination);if(!destination.CanWrite || maximumLength<=0)throw new ArgumentException(nameof(destination));
+        return Execute(()=>
+        {
+            Ready();
+            var boot=PreloaderRegion(new PartitionTarget { Name=name });
+            if(boot is not null)maximumLength=Math.Min(maximumLength,boot.Length);
+            var trace = StartTransfer(MtkTransferKind.NamedRead, null, 0, maximumLength, name);
+            long length = _da switch
+            {
+                XFlashSession x=>x.ReadNamed(name,destination,maximumLength),XmlSession xml=>xml.ReadNamed(name,destination,maximumLength),
+                _=>ReadLegacyNamed(name,destination,maximumLength)
+            };
+            CompleteTransfer(trace, length);
+            return length;
+        },cancellationToken);
+    }
+    private long ReadLegacyNamed(string name,Stream destination,long maximum)
+    {
+        if(MtkPartitionNames.IsPreloader(name))throw new MtkCapabilityException("native Preloader upload/dialect");
+        var part=LoadPartitionsCore().SingleOrDefault(p=>MtkPartitionNames.Matches(p.Name,name));
+        if(part.Name is null || part.Range.Length>maximum)throw new MtkResourceException("partition name/limit");var region=Range(part.Range);_da!.Read(region,part.Range.Offset,part.Range.Length,destination);return part.Range.Length;
+    }
+    /// <inheritdoc />
+    public void WriteNamedPartition(string name,IDataSource source,long maximumExpandedLength,CancellationToken cancellationToken=default)
+    {
+        name=PartitionName(name);ArgumentNullException.ThrowIfNull(source);if(maximumExpandedLength<=0)throw new ArgumentOutOfRangeException(nameof(maximumExpandedLength));
+        Execute(()=>
+        {
+            Ready();NamedWritePolicy();if(_da is not (XFlashSession or XmlSession))throw new MtkCapabilityException("native named download/dialect");
+            var boot=PreloaderRegion(new PartitionTarget { Name=name });
+            if(boot is not null)maximumExpandedLength=Math.Min(maximumExpandedLength,boot.Length);
+            if(source.Length<=0)throw new MtkResourceException("partition source length");
+            using Stream input=source.OpenStream();if(!input.CanRead || !input.CanSeek || input.Position!=0 || input.Length!=source.Length)throw new MtkResourceException("partition source");
+            if(SparseImageParser.IsSparse(input))
+            {
+                if(boot is not null)throw new MtkResourceException("Preloader image source");
+                using var block=new StreamBlockDevice(input,source.Length,DeviceOwnership.Borrow);using var sparse=SparseImageParser.Open(block,DeviceOwnership.Borrow);
+                if(sparse.ExpandedLength<=0 || sparse.ExpandedLength>maximumExpandedLength)throw new MtkResourceException("partition sparse capacity");
+                if(sparse.ChecksumStatus==SparseChecksumStatus.NotVerified)sparse.VerifyChecksum(cancellationToken:cancellationToken);
+                input.Position=0;
+            }
+            else if(source.Length>maximumExpandedLength)throw new MtkResourceException("partition source capacity");
+            var trace = StartTransfer(MtkTransferKind.NamedWrite, null, 0, source.Length, name);
+            if(_da is XFlashSession x)x.WriteNamed(name,input,source.Length);else ((XmlSession)_da).WriteNamed(name,input,source.Length);
+            _partitions=null;CompleteTransfer(trace);return 0;
+        },cancellationToken);
+    }
+    /// <inheritdoc />
+    public void EraseNamedPartition(string name,CancellationToken cancellationToken=default)
+    {
+        name=PartitionName(name);Execute(()=>
+        {
+            Ready();NamedWritePolicy(erase:true);
+            var trace = StartTransfer(MtkTransferKind.NamedErase, null, 0, 0, name);
+            if(_da is XFlashSession x)x.EraseNamed(name);else if(_da is XmlSession xml)xml.EraseNamed(name);
+            else
+            {
+                var part=LoadPartitionsCore().SingleOrDefault(p=>MtkPartitionNames.Matches(p.Name,name));if(part.Name is null)throw new MtkResourceException("partition name");
+                var region=Range(part.Range);_da!.Erase(region,part.Range.Offset,part.Range.Length);
+            }
+            _partitions=null;CompleteTransfer(trace);return 0;
+        },cancellationToken);
+    }
+}

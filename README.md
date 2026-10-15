@@ -1,4 +1,4 @@
-# ⚡ GeekFlashPro • Universal Android Servicing Suite
+# ⚡ Tensa-Zangetsu • Universal Android Servicing Suite
 
 <p align="center">
   <b>Suite profesional de flasheo, servicio técnico a bajo nivel y administración de particiones para Android.</b><br/>
@@ -94,24 +94,24 @@ Descarga e instala controladores firmados WHQL desde servidores oficiales y CDNs
 ## 🏗️ Estructura del Proyecto
 
 ```
-GeekFlashPro/
+Tensa-Zangetsu/
 ├── src/
-│   ├── GeekFlashCore.App/                 # Aplicación de escritorio Avalonia UI (Estilo DOTS)
-│   ├── GeekFlashCore.Services/            # Motor de servicios (AdbFastboot, DriverToolkit, FlashEngine)
-│   ├── GeekFlashCore.Protocol.Mtk/        # Protocolo BROM, DA, Scatter y extensiones MTK
-│   ├── GeekFlashCore.Protocol.Qcom/       # Protocolo Qualcomm Sahara y Firehose
-│   ├── GeekFlashCore.Protocol.Sprd/       # Protocolo Unisoc / Spreadtrum BSL y PAC
-│   ├── GeekFlashCore.UsbWatcher/          # Monitoreo en vivo de bus USB y PnP
-│   ├── GeekFlashCore.Gpt/                 # Parser y gestor de particiones GPT
-│   ├── GeekFlashCore.BlockDevice/         # Abstracción de operaciones de bloques EMMC/UFS
-│   ├── GeekFlashCore.Transport.LibUsb/    # Capa de transporte LibUsb / UsbDk
-│   ├── GeekFlashCore.Transport.SerialPort/# Capa de transporte Serial / VCOM
-│   └── GeekFlashCore.CLI/                 # Interfaz de línea de comandos (geekflash)
+│   ├── TensaZangetsu.App/                 # Aplicación de escritorio Avalonia UI (Estilo DOTS)
+│   ├── TensaZangetsu.Services/            # Motor de servicios (AdbFastboot, DriverToolkit, FlashEngine)
+│   ├── TensaZangetsu.Protocol.Mtk/        # Protocolo BROM, DA, Scatter y extensiones MTK
+│   ├── TensaZangetsu.Protocol.Qcom/       # Protocolo Qualcomm Sahara y Firehose
+│   ├── TensaZangetsu.Protocol.Sprd/       # Protocolo Unisoc / Spreadtrum BSL y PAC
+│   ├── TensaZangetsu.UsbWatcher/          # Monitoreo en vivo de bus USB y PnP
+│   ├── TensaZangetsu.Gpt/                 # Parser y gestor de particiones GPT
+│   ├── TensaZangetsu.BlockDevice/         # Abstracción de operaciones de bloques EMMC/UFS
+│   ├── TensaZangetsu.Transport.LibUsb/    # Capa de transporte LibUsb / UsbDk
+│   ├── TensaZangetsu.Transport.SerialPort/# Capa de transporte Serial / VCOM
+│   └── TensaZangetsu.CLI/                 # Interfaz de línea de comandos (tensazangetsu)
 ├── docs/                                  # Especificaciones de protocolos y arquitectura
 ├── licenses/                              # Licencias de librerías de terceros
 ├── Directory.Build.props                  # Configuración de compilación global
 ├── Directory.Build.targets                # Metas de compilación
-├── GeekFlashCore.slnx                     # Solución XML moderna de Visual Studio / .NET 10
+├── TensaZangetsu.slnx                     # Solución XML moderna de Visual Studio / .NET 10
 └── README.md                              # Documentación del proyecto
 ```
 
@@ -127,18 +127,18 @@ GeekFlashPro/
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/TU_USUARIO/GeekFlashPro.git
-   cd GeekFlashPro
+   git clone https://github.com/DavidBGE-cmd/Tensa-Zangetsu.git
+   cd Tensa-Zangetsu
    ```
 
 2. **Compilar la solución:**
    ```bash
-   dotnet build GeekFlashCore.slnx
+   dotnet build TensaZangetsu.slnx
    ```
 
 3. **Ejecutar la interfaz gráfica:**
    ```bash
-   dotnet run --project src/GeekFlashCore.App/GeekFlashCore.App.csproj
+   dotnet run --project src/TensaZangetsu.App/TensaZangetsu.App.csproj
    ```
 
 ---

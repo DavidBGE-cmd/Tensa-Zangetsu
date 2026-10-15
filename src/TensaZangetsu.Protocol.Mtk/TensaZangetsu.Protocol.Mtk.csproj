@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../TensaZangetsu.Protocol.Mtk.Abstractions/TensaZangetsu.Protocol.Mtk.Abstractions.csproj" />
+    <ProjectReference Include="../TensaZangetsu.Transport.LibUsb/TensaZangetsu.Transport.LibUsb.csproj" />
+    <ProjectReference Include="../TensaZangetsu.Android.Sparse/TensaZangetsu.Android.Sparse.csproj" />
+    <ProjectReference Include="../TensaZangetsu.Gpt/TensaZangetsu.Gpt.csproj" />
+    <ProjectReference Include="../TensaZangetsu.BlockDevice/TensaZangetsu.BlockDevice.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="4.4.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Exploits/Resources/dependencies.json" LogicalName="TensaZangetsu.Protocol.Mtk.Exploits.Dependencies.json" />
+    <EmbeddedResource Include="Exploits/Resources/Payloads/*.bin" LogicalName="TensaZangetsu.Protocol.Mtk.Exploits.Payloads.%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="TensaZangetsu.Services" />
+  </ItemGroup>
+</Project>

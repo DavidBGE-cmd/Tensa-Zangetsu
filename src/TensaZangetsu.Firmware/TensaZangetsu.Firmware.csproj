@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../TensaZangetsu.Android.Lp/TensaZangetsu.Android.Lp.csproj" />
+    <ProjectReference Include="../TensaZangetsu.Android.Lp.Abstractions/TensaZangetsu.Android.Lp.Abstractions.csproj" />
+    <ProjectReference Include="../TensaZangetsu.ImageFormats.Abstractions/TensaZangetsu.ImageFormats.Abstractions.csproj" />
+    <ProjectReference Include="../TensaZangetsu.Android.Sparse/TensaZangetsu.Android.Sparse.csproj" />
+    <ProjectReference Include="../TensaZangetsu.Protocol.Abstractions/TensaZangetsu.Protocol.Abstractions.csproj" />
+    <PackageReference Include="SharpCompress" Version="0.50.4" />
+    <PackageReference Include="ZstdSharp.Port" Version="0.8.8" />
+  </ItemGroup>
+</Project>

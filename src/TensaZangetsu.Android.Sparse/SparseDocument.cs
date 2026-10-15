@@ -1,0 +1,318 @@
+﻿using System.Globalization;
+using TensaZangetsu.Android.Sparse.BlockDevice;
+using TensaZangetsu.Android.Sparse.Internals;
+using TensaZangetsu.Android.Sparse.Models;
+using TensaZangetsu.Android.Sparse.Types;
+using TensaZangetsu.BlockDevice;
+using TensaZangetsu.BlockDevice.Abstractions;
+using TensaZangetsu.Shared.Utilities;
+
+namespace TensaZangetsu.Android.Sparse;
+
+public sealed class SparseDocument : IDisposable
+{
+    private readonly IReadableBlockDevice _source;
+    private readonly SparseChunk[] _chunks;
+    private readonly bool _ownsSource;
+    private int _checksumStatus;
+    private uint _verifiedChecksum;
+    private bool _disposed;
+
+    internal SparseDocument(
+        IReadableBlockDevice source,
+        SparseHeader header,
+        SparseChunk[] chunks,
+        long parsedPhysicalLength,
+        DeviceOwnership ownership)
+    {
+        _source = source;
+        _chunks = chunks;
+        _ownsSource = ownership == DeviceOwnership.Transfer;
+        Header = header;
+        PhysicalLength = source.Length;
+        ParsedPhysicalLength = parsedPhysicalLength;
+        bool hasChecksum = header.ImageChecksum != 0 ||
+                           Array.Exists(chunks, static chunk => chunk.Type == SparseChunkType.Crc32);
+        _checksumStatus = (int)(hasChecksum
+            ? SparseChecksumStatus.NotVerified
+            : SparseChecksumStatus.NotPresent);
+        _disposed = false;
+    }
+
+    public SparseHeader Header { get; }
+    public long PhysicalLength { get; }
+    public long ParsedPhysicalLength { get; }
+    public long ExpandedLength => Header.RawLength;
+
+    public SparseChecksumStatus ChecksumStatus =>
+        (SparseChecksumStatus)Volatile.Read(ref _checksumStatus);
+
+    public ReadOnlyMemory<SparseChunk> Chunks => _chunks;
+
+    public SparseExpandedBlockDevice CreateExpandedBlockDevice(BlockDeviceId? id = null)
+    {
+        ThrowIfDisposed();
+        BlockDeviceId deviceId = id ?? new BlockDeviceId($"sparse-expanded:{_source.Id}");
+        return new SparseExpandedBlockDevice(this, deviceId);
+    }
+
+    /// <summary>Opens a readable, seekable stream over the expanded image.</summary>
+    /// <remarks>
+    /// The stream reads through this document. Keep the document alive until the returned stream is disposed.
+    /// </remarks>
+    public Stream OpenExpandedStream()
+    {
+        ThrowIfDisposed();
+        return new BlockDeviceStream(CreateExpandedBlockDevice(), DeviceOwnership.Transfer);
+    }
+
+    /// <summary>Projects validated data chunks into streaming raw and fill regions.</summary>
+    public IReadOnlyList<SparseRegion> CreateDataRegions()
+    {
+        ThrowIfDisposed();
+        var regions = new List<SparseRegion>();
+        var rawChunks = new List<SparseDataChunk>();
+        uint rawStartBlock = 0;
+        long rawLength = 0;
+
+        foreach (SparseChunk chunk in _chunks)
+        {
+            uint startBlock = checked((uint)(chunk.OutputOffset / Header.BlockSize));
+            if (chunk.Type == SparseChunkType.Raw)
+            {
+                if (rawChunks.Count == 0)
+                    rawStartBlock = startBlock;
+                rawChunks.Add(new SparseDataChunk(
+                    SparseDataChunkType.Raw,
+                    chunk.PayloadOffset,
+                    chunk.OutputLength,
+                    0));
+                rawLength = checked(rawLength + chunk.OutputLength);
+                continue;
+            }
+
+            FlushRawRegion(regions, rawChunks, rawStartBlock, ref rawLength);
+            if (chunk.Type == SparseChunkType.Fill)
+            {
+                regions.Add(new SparseRegion(
+                    startBlock,
+                    chunk.OutputLength,
+                    [new SparseDataChunk(
+                        SparseDataChunkType.Fill,
+                        0,
+                        chunk.OutputLength,
+                        chunk.FillValue)]));
+            }
+        }
+
+        FlushRawRegion(regions, rawChunks, rawStartBlock, ref rawLength);
+        return regions;
+    }
+
+    /// <summary>Combines adjacent raw and fill chunks without crossing a don't-care range.</summary>
+    public IReadOnlyList<SparseRegion> CreateContiguousDataRegions()
+    {
+        ThrowIfDisposed();
+        var regions = new List<SparseRegion>();
+        var chunks = new List<SparseDataChunk>();
+        uint startBlock = 0;
+        long length = 0;
+        foreach (SparseChunk chunk in _chunks)
+        {
+            if (chunk.Type is SparseChunkType.Raw or SparseChunkType.Fill)
+            {
+                if (chunks.Count == 0)
+                    startBlock = checked((uint)(chunk.OutputOffset / Header.BlockSize));
+                chunks.Add(new SparseDataChunk(chunk.Type == SparseChunkType.Raw ? SparseDataChunkType.Raw : SparseDataChunkType.Fill,
+                    chunk.PayloadOffset, chunk.OutputLength, chunk.FillValue));
+                length = checked(length + chunk.OutputLength);
+            }
+            else if (chunk.Type == SparseChunkType.DontCare)
+                FlushRawRegion(regions, chunks, startBlock, ref length);
+        }
+        FlushRawRegion(regions, chunks, startBlock, ref length);
+        return regions;
+    }
+
+    public uint VerifyChecksum(
+        BudgetedArrayPool? buffers = null,
+        IProgress<BlockCopyProgress>? progress = null,
+        CancellationToken cancellationToken = default)
+    {
+        ThrowIfDisposed();
+        if (ChecksumStatus == SparseChecksumStatus.Verified)
+            return _verifiedChecksum;
+
+        buffers ??= new BudgetedArrayPool(
+            new ByteBudget(BoundedStreamCopier.MaximumBufferSize));
+        using PooledBufferLease lease = buffers.Rent(
+            BoundedStreamCopier.DefaultBufferSize,
+            cancellationToken);
+        Span<byte> buffer = lease.Memory.Span;
+        uint checksum = 0;
+        long completed = 0;
+        bool hasChecksum = Header.ImageChecksum != 0;
+
+        for (int index = 0; index < _chunks.Length; index++)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            SparseChunk chunk = _chunks[index];
+            if (chunk.Type == SparseChunkType.Crc32)
+            {
+                hasChecksum = true;
+                if (chunk.ExpectedCrc32 != checksum)
+                    throw ChecksumMismatch(index, chunk.PayloadOffset, chunk.ExpectedCrc32, checksum);
+                continue;
+            }
+
+            long chunkCompleted = 0;
+            while (chunkCompleted < chunk.OutputLength)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                int length = (int)Math.Min(buffer.Length, chunk.OutputLength - chunkCompleted);
+                Span<byte> part = buffer[..length];
+                switch (chunk.Type)
+                {
+                    case SparseChunkType.Raw:
+                        BlockDeviceIO.ReadExactlyAt(
+                            _source,
+                            checked(chunk.PayloadOffset + chunkCompleted),
+                            part);
+                        break;
+                    case SparseChunkType.Fill:
+                        SparsePattern.Fill(part, chunk.FillValue, chunkCompleted);
+                        break;
+                    case SparseChunkType.DontCare:
+                        part.Clear();
+                        break;
+                    default:
+                        throw new SparseException(Strings.NonDataChunkMapped);
+                }
+
+                checksum = Crc32Helper.Append(checksum, part);
+                chunkCompleted += length;
+                completed += length;
+                progress?.Report(new BlockCopyProgress(completed, ExpandedLength));
+            }
+        }
+
+        if (Header.ImageChecksum != 0 && Header.ImageChecksum != checksum)
+            throw ImageChecksumMismatch(Header.ImageChecksum, checksum);
+
+        _verifiedChecksum = checksum;
+        if (hasChecksum)
+            Volatile.Write(ref _checksumStatus, (int)SparseChecksumStatus.Verified);
+        return checksum;
+    }
+
+    public async ValueTask ExportExpandedAsync(
+        Stream destination,
+        IProgress<BlockCopyProgress>? progress = null,
+        CancellationToken cancellationToken = default)
+    {
+        ThrowIfDisposed();
+        using SparseExpandedBlockDevice expanded = CreateExpandedBlockDevice();
+        await BlockDeviceExporter.ExportAsync(expanded, destination, progress, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    public SparseImageWritePlan ExportSparse(
+        Stream destination,
+        SparseImageWriteOptions? options = null,
+        IProgress<BlockCopyProgress>? progress = null,
+        BudgetedArrayPool? buffers = null)
+    {
+        ThrowIfDisposed();
+        options ??= new SparseImageWriteOptions
+        {
+            BlockSize = checked((int)Header.BlockSize)
+        };
+        using SparseExpandedBlockDevice expanded = CreateExpandedBlockDevice();
+        return SparseImageWriter.Write(expanded, destination, options, progress, buffers);
+    }
+
+    public async ValueTask<SparseImageWritePlan> ExportSparseAsync(
+        Stream destination,
+        SparseImageWriteOptions? options = null,
+        IProgress<BlockCopyProgress>? progress = null,
+        BudgetedArrayPool? buffers = null,
+        CancellationToken cancellationToken = default)
+    {
+        ThrowIfDisposed();
+        options ??= new SparseImageWriteOptions
+        {
+            BlockSize = checked((int)Header.BlockSize)
+        };
+        using SparseExpandedBlockDevice expanded = CreateExpandedBlockDevice();
+        return await SparseImageWriter
+            .WriteAsync(expanded, destination, options, progress, buffers, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    public void Dispose()
+    {
+        if (_disposed) return;
+        if (_ownsSource) _source.Dispose();
+        _disposed = true;
+        GC.SuppressFinalize(this);
+    }
+
+    internal IReadableBlockDevice Source
+    {
+        get
+        {
+            ThrowIfDisposed();
+            return _source;
+        }
+    }
+
+    internal ReadOnlySpan<SparseChunk> ChunkSpan
+    {
+        get
+        {
+            ThrowIfDisposed();
+            return _chunks;
+        }
+    }
+
+    internal void ThrowIfDisposed()
+    {
+        if (_disposed) throw new ObjectDisposedException(nameof(SparseDocument));
+    }
+
+    private static void FlushRawRegion(
+        List<SparseRegion> regions,
+        List<SparseDataChunk> rawChunks,
+        uint startBlock,
+        ref long length)
+    {
+        if (rawChunks.Count == 0)
+            return;
+
+        regions.Add(new SparseRegion(startBlock, length, rawChunks.ToArray()));
+        rawChunks.Clear();
+        length = 0;
+    }
+
+    private SparseException ChecksumMismatch(
+        int chunkIndex,
+        long payloadOffset,
+        uint expected,
+        uint actual) =>
+        new(
+            $"{Strings.FormatImageChecksumMismatch(
+                expected.ToString("X8", CultureInfo.InvariantCulture),
+                actual.ToString("X8", CultureInfo.InvariantCulture))} "
+            + $"blockDeviceId: {_source.Id} "
+            + $"deviceRelativeOffset:  {payloadOffset} "
+            + $"chunkIndex: {chunkIndex}"
+        );
+
+
+    private SparseException ImageChecksumMismatch(uint expected, uint actual) =>
+        new(
+            $"{Strings.FormatImageChecksumMismatch(
+                expected.ToString("X8", CultureInfo.InvariantCulture),
+                actual.ToString("X8", CultureInfo.InvariantCulture))} "
+            + $"blockDeviceId: {_source.Id}");
+}

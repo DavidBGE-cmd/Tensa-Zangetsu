@@ -1,0 +1,55 @@
+﻿<Solution>
+  <Folder Name="/Abstractions/">
+    <Project Path="src/TensaZangetsu.Abstractions/TensaZangetsu.Abstractions.csproj" />
+    <Project Path="src/TensaZangetsu.BlockDevice.Abstractions/TensaZangetsu.BlockDevice.Abstractions.csproj" />
+    <Project Path="src/TensaZangetsu.ImageFormats.Abstractions/TensaZangetsu.ImageFormats.Abstractions.csproj" />
+    <Project Path="src/TensaZangetsu.FileSystem.Abstractions/TensaZangetsu.FileSystem.Abstractions.csproj" />
+    <Project Path="src/TensaZangetsu.Gpt.Abstractions/TensaZangetsu.Gpt.Abstractions.csproj" />
+    <Project Path="src/TensaZangetsu.Protocol.Abstractions/TensaZangetsu.Protocol.Abstractions.csproj" />
+    <Project Path="src/TensaZangetsu.Protocol.Qcom.Abstractions/TensaZangetsu.Protocol.Qcom.Abstractions.csproj" />
+    <Project Path="src/TensaZangetsu.Protocol.Mtk.Abstractions/TensaZangetsu.Protocol.Mtk.Abstractions.csproj" />
+    <Project Path="src/TensaZangetsu.Protocol.Sprd.Abstractions/TensaZangetsu.Protocol.Sprd.Abstractions.csproj" />
+    <Project Path="src/TensaZangetsu.Transport.Abstractions/TensaZangetsu.Transport.Abstractions.csproj" />
+    <Project Path="src/TensaZangetsu.UsbWatcher.Abstractions/TensaZangetsu.UsbWatcher.Abstractions.csproj" />
+  </Folder>
+  <Folder Name="/Android/">
+    <Project Path="src/TensaZangetsu.Android.Lp.Abstractions/TensaZangetsu.Android.Lp.Abstractions.csproj" />
+    <Project Path="src/TensaZangetsu.Android.Lp/TensaZangetsu.Android.Lp.csproj" />
+    <Project Path="src/TensaZangetsu.Android.Sparse/TensaZangetsu.Android.Sparse.csproj" />
+  </Folder>
+  <Folder Name="/Disk/">
+    <Project Path="src/TensaZangetsu.Gpt/TensaZangetsu.Gpt.csproj" />
+  </Folder>
+  <Folder Name="/Firmware/">
+    <Project Path="src/TensaZangetsu.Firmware/TensaZangetsu.Firmware.csproj" />
+  </Folder>
+  <Folder Name="/FileSystem/">
+    <Project Path="src/TensaZangetsu.BlockDevice/TensaZangetsu.BlockDevice.csproj" />
+    <Project Path="src/TensaZangetsu.FileSystem.Erofs/TensaZangetsu.FileSystem.Erofs.csproj" />
+    <Project Path="src/TensaZangetsu.FileSystem.Ext/TensaZangetsu.FileSystem.Ext.csproj" />
+  </Folder>
+  <Folder Name="/Integration/">
+    <Project Path="src/TensaZangetsu.Protocol.Qcom.MessagePipe/TensaZangetsu.Protocol.Qcom.MessagePipe.csproj" />
+  </Folder>
+  <Folder Name="/Protocol/">
+    <Project Path="src/TensaZangetsu.Protocol.Qcom/TensaZangetsu.Protocol.Qcom.csproj" />
+    <Project Path="src/TensaZangetsu.Protocol.Mtk/TensaZangetsu.Protocol.Mtk.csproj" />
+    <Project Path="src/TensaZangetsu.Protocol.Sprd/TensaZangetsu.Protocol.Sprd.csproj" />
+    <Project Path="src/TensaZangetsu.Protocol.Mtk.Extensions/TensaZangetsu.Protocol.Mtk.Extensions.csproj" />
+  </Folder>
+  <Folder Name="/Transport/">
+    <Project Path="src/TensaZangetsu.Transport.LibUsb/TensaZangetsu.Transport.LibUsb.csproj" />
+    <Project Path="src/TensaZangetsu.Transport.SerialPort/TensaZangetsu.Transport.SerialPort.csproj" />
+  </Folder>
+  <Folder Name="/Utility/">
+    <Project Path="src/TensaZangetsu.UsbWatcher/TensaZangetsu.UsbWatcher.csproj" />
+  </Folder>
+  <Folder Name="/Apps/">
+    <Project Path="src/TensaZangetsu.CLI/TensaZangetsu.CLI.csproj" />
+    <Project Path="src/TensaZangetsu.App/TensaZangetsu.App.csproj" />
+  </Folder>
+  <Folder Name="/Services/">
+    <Project Path="src/TensaZangetsu.Services/TensaZangetsu.Services.csproj" />
+  </Folder>
+  <Project Path="src/TensaZangetsu.Shared/TensaZangetsu.Shared.csproj" />
+</Solution>

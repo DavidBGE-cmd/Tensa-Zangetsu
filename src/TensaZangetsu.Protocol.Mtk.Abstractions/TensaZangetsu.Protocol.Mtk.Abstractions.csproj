@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../TensaZangetsu.Protocol.Abstractions/TensaZangetsu.Protocol.Abstractions.csproj" />
+    <ProjectReference Include="../TensaZangetsu.BlockDevice.Abstractions/TensaZangetsu.BlockDevice.Abstractions.csproj" />
+  </ItemGroup>
+</Project>
