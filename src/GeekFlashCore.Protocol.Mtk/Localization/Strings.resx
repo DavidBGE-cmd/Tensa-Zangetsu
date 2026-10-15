@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader>
+<data name="InvalidData" xml:space="preserve"><value>MTK 数据或应答格式无效：{0}。</value></data>
+<data name="SessionUnavailable" xml:space="preserve"><value>MTK 会话不可用，请重新连接。</value></data>
+<data name="Reentry" xml:space="preserve"><value>MTK 会话回调不允许重入协议。</value></data>
+<data name="Phase" xml:space="preserve"><value>MTK 阶段：{0}。</value></data>
+<data name="Faulted" xml:space="preserve"><value>MTK 会话失效，需重新连接。</value></data>
+<data name="SessionPreserved" xml:space="preserve"><value>MTK {BootStage}：命令 {CommandName} 的结束应答与 ACK 已确认；后续主机检查失败（{ExceptionType}），保留连接，不自动重试。</value></data>
+<data name="Ambiguous" xml:space="preserve"><value>MTK 资源或设备匹配不唯一。</value></data>
+<data name="Timeout" xml:space="preserve"><value>MTK 阶段超时。</value></data>
+<data name="UsbRequired" xml:space="preserve"><value>MTK 需要带身份信息的 USB 传输。</value></data>
+  <data name="ExploitCheckpoint" xml:space="preserve"><value>宿主扩展阶段 {0} 返回 {1}。</value></data>
+  <data name="ProbeSnapshot" xml:space="preserve"><value>MTK 探测：HW=0x{0}，CPU={1}，DA=0x{2}，subcode=0x{3}，FD HW=0x{4}，FC HW=0x{5}，SW=0x{6}，BROM=0x{7}，Preloader=0x{8}，阶段={9}，安全配置=0x{10}，WDT={11}。</value></data>
+<data name="GptBackupSelected" xml:space="preserve"><value>存储区域 {0} 的主 GPT 不可用，已验证并使用备份 GPT。</value></data>
+<data name="PmtMirrorSelected" xml:space="preserve"><value>存储区域 {0} 的主磁盘 PMT 标记或版本无效，已验证并使用镜像表。</value></data>
+<data name="OptionalCommandUnsupported" xml:space="preserve"><value>设备不支持可选命令 {0}，继续标准初始化。</value></data>
+<data name="ExploitCheckpointReached" xml:space="preserve"><value>已到达宿主扩展检查点 {0}。</value></data>
+<data name="ExploitCheckpointSkipped" xml:space="preserve"><value>宿主扩展检查点 {0} 未执行回调：{1}。</value></data>
+<data name="HandshakeStep" xml:space="preserve"><value>BROM/Preloader 握手步骤 {0}/{1}。</value></data>
+<data name="ExploitStrategyStarting" xml:space="preserve"><value>宿主扩展阶段 {0} 正在调用策略 {1}/{2}。</value></data>
+<data name="RscProgress" xml:space="preserve"><value>写入 RSC 信息</value></data>
+<data name="ScatterProgress" xml:space="preserve"><value>刷写 Scatter 镜像</value></data>
+<data name="SparseWritePlan" xml:space="preserve"><value>MTK Sparse：展开 {ExpandedLength} 字节，实际传输 {TransferLength} 字节，{RegionCount} 个连续区域。</value></data>
+<data name="WireCommand" xml:space="preserve"><value>MTK {BootStage}：命令 {CommandName}（0x{Command:X8}）。</value></data>
+<data name="WireStatus" xml:space="preserve"><value>MTK {BootStage}：命令 0x{Command:X8}，状态 0x{Status:X8}，接受={StatusAccepted}。</value></data>
+<data name="WireWrite" xml:space="preserve"><value>MTK {BootStage}：命令 0x{Command:X8}，写入 {RequestedLength} 字节，耗时 {ElapsedMilliseconds} ms。</value></data>
+<data name="WireRead" xml:space="preserve"><value>MTK {BootStage}：命令 0x{Command:X8}，读取 {RequestedLength} 字节 / {ReadFragmentCount} 片，耗时 {ElapsedMilliseconds} ms，预算 {TimeoutMilliseconds} ms。</value></data>
+<data name="WireInterrupted" xml:space="preserve"><value>MTK {Direction} 中断：阶段 {BootStage}，命令 0x{Command:X8}，请求 {RequestedLength}，已接收 {ReceivedLength}，片数 {ReadFragmentCount}，耗时 {ElapsedMilliseconds} ms，预算 {TimeoutMilliseconds} ms，类型 {ExceptionType}。</value></data>
+<data name="WireFrame" xml:space="preserve"><value>MTK {Direction} 帧：阶段 {BootStage}，命令 0x{Command:X8}，类型 {FrameType}，长度 {FrameLength}。</value></data>
+<data name="WireDeviceMessage" xml:space="preserve"><value>MTK {BootStage}：命令 0x{Command:X8}，清理设备消息 {DeviceMessageIndex}，长度 {DeviceMessageLength}；内容省略。</value></data>
+<data name="WireZlp" xml:space="preserve"><value>MTK {BootStage}：命令 0x{Command:X8}，已发送显式兼容 ZLP。</value></data>
+<data name="SessionPhase" xml:space="preserve"><value>MTK：{Phase}。</value></data>
+<data name="SessionFailure" xml:space="preserve"><value>MTK 会话失效：状态 {SessionState}，阶段 {BootStage}，命令 {CommandName}（0x{Command:X8}），状态码 {Status}，类型 {ExceptionType}。需要重新连接。</value></data>
+<data name="XmlSessionFailure" xml:space="preserve"><value>MTK XML 会话失效：阶段 {BootStage}，命令 {CommandName}（0x{Command:X8}），result {ResultCode}，message-code {MessageCode}。需要重新连接。</value></data>
+<data name="PhaseOpening" xml:space="preserve"><value>打开 USB</value></data>
+<data name="PhaseHandshaking" xml:space="preserve"><value>BROM/Preloader 握手</value></data>
+<data name="PhaseProbed" xml:space="preserve"><value>已识别 BROM/Preloader</value></data>
+<data name="PhaseAuthenticating" xml:space="preserve"><value>使用宿主材料进行认证</value></data>
+<data name="PhaseUploadingDa1" xml:space="preserve"><value>上传 DA1</value></data>
+<data name="PhaseDa1Ready" xml:space="preserve"><value>DA1 已传输，开始初始化</value></data>
+<data name="PhaseUploadingDa2" xml:space="preserve"><value>上传 DA2</value></data>
+<data name="PhaseDa2Ready" xml:space="preserve"><value>DA2 已初始化</value></data>
+<data name="PhaseStorageReady" xml:space="preserve"><value>存储已就绪</value></data>
+<data name="PhaseDisconnected" xml:space="preserve"><value>已断开</value></data>
+<data name="PhaseInitializingEmi" xml:space="preserve"><value>初始化外部 RAM</value></data>
+<data name="PhaseExtending" xml:space="preserve"><value>宿主扩展阶段</value></data>
+<data name="TransferRead" xml:space="preserve"><value>读取</value></data>
+<data name="TransferWrite" xml:space="preserve"><value>写入</value></data>
+<data name="TransferErase" xml:space="preserve"><value>擦除</value></data>
+<data name="TransferNamedRead" xml:space="preserve"><value>命名分区读取</value></data>
+<data name="TransferNamedWrite" xml:space="preserve"><value>命名分区写入</value></data>
+<data name="TransferNamedErase" xml:space="preserve"><value>命名分区擦除</value></data>
+<data name="TransferStarted" xml:space="preserve"><value>MTK {Operation}开始：{Dialect}，区域 {Region}，偏移 {Offset}，字节数/上限 {ByteCount}。</value></data>
+<data name="TransferCompleted" xml:space="preserve"><value>MTK {Operation}完成：{Dialect}，{ByteCount} 字节，耗时 {ElapsedMilliseconds} ms。</value></data>
+<data name="DaSelected" xml:space="preserve"><value>MTK 已选择 DA：{Dialect}，入口 {EntryRegionIndex}，区域数 {RegionCount}。</value></data>
+<data name="BromUploadStarted" xml:space="preserve"><value>BROM DA 上传：{ByteCount} 字节，地址 0x{Address:X8}，宿主块 {ChunkSize}，尾部 ZLP {TailZlp}。</value></data>
+<data name="BromUploadCompleted" xml:space="preserve"><value>BROM DA 上传已验证：{ByteCount} 字节，校验和与状态通过。</value></data>
+<data name="BromJump" xml:space="preserve"><value>BROM 正在跳转到 DA，地址 0x{Address:X8}。</value></data>
+<data name="ChecksumValidated" xml:space="preserve"><value>MTK {BootStage}：命令 0x{Command:X8}，校验和通过={ChecksumAccepted}。</value></data>
+<data name="BromResourceStarted" xml:space="preserve"><value>BROM 正在发送 {CommandName} 宿主安全材料，内容省略。</value></data>
+<data name="BromResourceCompleted" xml:space="preserve"><value>BROM 的 {CommandName} 宿主安全材料已通过。</value></data>
+<data name="AuthenticationEvidence" xml:space="preserve"><value>MTK 认证 {AuthenticationKind}：{AuthenticationState}。</value></data>
+<data name="AuthenticationStarted" xml:space="preserve"><value>MTK 认证 {AuthenticationKind}：请求宿主签名。</value></data>
+<data name="EmiStarted" xml:space="preserve"><value>MTK {Dialect}：需要初始化外部 RAM，EMI {ByteCount} 字节。</value></data>
+<data name="EmiCompleted" xml:space="preserve"><value>MTK {Dialect}：外部 RAM 已初始化。</value></data>
+<data name="EmiNotRequired" xml:space="preserve"><value>MTK {Dialect}：当前 DA 无需初始化外部 RAM。</value></data>
+<data name="PacketLengths" xml:space="preserve"><value>MTK XFlash 包长：写 {WritePacketLength}，读 {ReadPacketLength}，设备写 {DeviceWritePacketLength}，设备读 {DeviceReadPacketLength}。</value></data>
+<data name="StorageDetected" xml:space="preserve"><value>MTK 存储：{StorageKind}，{RegionCount} 个区域，用户区域 {UserRegionId}。</value></data>
+<data name="StorageRegion" xml:space="preserve"><value>MTK 存储区域 {Region}：{ByteCount} 字节，块 {BlockSize}，擦除块 {EraseBlockSize}，可写 {CanWrite}。</value></data>
+<data name="WatchdogEvidence" xml:space="preserve"><value>MTK 看门狗：{WatchdogState}。</value></data>
+<data name="ResourcesRequested" xml:space="preserve"><value>MTK 正在请求宿主 DA 和可选 EMI 资源。</value></data>
+<data name="XmlLifecycle" xml:space="preserve"><value>MTK {BootStage}：XML 命令 {CommandName}，预期事件 {XmlEvent}，匹配={EventAccepted}。</value></data>
+<data name="XmlPacketLength" xml:space="preserve"><value>MTK {BootStage}：XML 命令 {CommandName}，包长 {PacketLength}。</value></data>
+<data name="WireProgress" xml:space="preserve"><value>MTK {BootStage}：命令 0x{Command:X8}，进度 {ProgressPercent}%。</value></data>
+<data name="NamedEraseStarted" xml:space="preserve"><value>MTK 命名分区擦除开始：{Dialect}，分区 {PartitionName}；不推断容量。</value></data>
+<data name="NamedEraseCompleted" xml:space="preserve"><value>MTK 命名分区擦除已确认：{Dialect}，分区 {PartitionName}，耗时 {ElapsedMilliseconds} ms。</value></data>
+<data name="NamedTransferStarted" xml:space="preserve"><value>MTK {Operation}开始：{Dialect}，分区 {PartitionName}，字节数/上限 {ByteCount}。</value></data>
+<data name="NamedTransferCompleted" xml:space="preserve"><value>MTK {Operation}完成：{Dialect}，分区 {PartitionName}，{ByteCount} 字节，耗时 {ElapsedMilliseconds} ms。</value></data>
+<data name="SecurityExchangeSkipped" xml:space="preserve"><value>BROM {CommandName}：设备返回允许跳过的状态 0x{Status:X4}，未发送宿主材料；不等同于本次认证成功。</value></data>
+<data name="WireStorageRange" xml:space="preserve"><value>MTK {BootStage}：存储请求 {TransferKind}，类型 {StorageKind}，区域 {Region}，偏移 {FlashOffset}，长度 {FlashLength}。</value></data>
+<data name="EmiWindowSelected" xml:space="preserve"><value>MTK XFlash EMI：格式 {EmiFormat}，版本 {EmiVersion}，长度 {ByteCount}；内容省略。</value></data>
+<data name="UsbCandidate" xml:space="preserve"><value>MTK USB 候选 {VendorId:X4}:{ProductId:X4}，数据接口 {InterfaceNumber}，CDC 控制接口 {ControlInterfaceNumber}；阶段待握手确认。</value></data>
+<data name="PreloaderWake" xml:space="preserve"><value>MTK Preloader 候选：发送一次 A0 唤醒，再执行握手。</value></data>
+<data name="CdcSetup" xml:space="preserve"><value>MTK CDC：控制接口 {ControlInterfaceNumber}，波特率 {BaudRate}，控制线 {ControlLineState}。</value></data>
+<data name="StartupPacketRead" xml:space="preserve"><value>MTK 启动 IN：缓冲 {RequestedLength} 字节，收到 {ReceivedLength} 字节，耗时 {ElapsedMilliseconds} ms，预算 {TimeoutMilliseconds} ms。</value></data>
+<data name="HandshakePrefix" xml:space="preserve"><value>MTK 首个握手应答前已跳过 {HandshakePrefixCount} 字节启动前缀。</value></data>
+<data name="HandshakePrefixLimit" xml:space="preserve"><value>MTK 启动前缀 {HandshakePrefixCount} 字节，超过上限 {HandshakePrefixLimit}；停止握手。</value></data>
+<data name="PreloaderReadySync" xml:space="preserve"><value>MTK Preloader 仍返回 READY；同步首步 A0 {HandshakeStartAttempt}/{HandshakeStartLimit}。</value></data>
+<data name="HandshakeWakeDuplicate" xml:space="preserve"><value>MTK Preloader：消费重复的首步应答，不重发后续命令。</value></data>
+<data name="HandshakeResponse" xml:space="preserve"><value>MTK 握手步骤 {HandshakeStep}：应答 0x{HandshakeResponse:X2}，预期 0x{HandshakeExpected:X2}。</value></data>
+<data name="HandshakeIdentified" xml:space="preserve"><value>MTK 握手及完整 FD 身份校验通过，已握手候选 {AlreadyHandshaken}；阶段仍需 FE 确认。</value></data>
+<data name="Da1ReplacementChecked" xml:space="preserve"><value>MTK {Dialect}：已检查上传前 DA1 替换，非签名字节实际修改={Da1Modified}；不等同于认证成功。</value></data>
+<data name="CarbonaraSkippedPatchedDa1" xml:space="preserve"><value>MTK：BROM 路径的 DA1 已修改并上传验证，跳过 Carbonara，继续标准 DA2 BootTo。</value></data>
+<data name="Da2BootRequested" xml:space="preserve"><value>MTK XFlash：请求标准 DA2 BootTo，地址 0x{Address:X8}，{ByteCount} 字节；等待命令确认。</value></data>
+<data name="Da2BootCommandAccepted" xml:space="preserve"><value>MTK XFlash：标准 DA2 BootTo 命令已确认，开始发送参数和载荷。</value></data>
+<data name="Da2PayloadSent" xml:space="preserve"><value>MTK XFlash：DA2 的 {ByteCount} 字节已发送，等待参数组和执行状态；尚未确认启动。</value></data>
+<data name="Da2BootConfirmed" xml:space="preserve"><value>MTK XFlash：标准 DA2 参数组及执行状态均已确认。</value></data>
+<data name="SlaStatusUnsupported" xml:space="preserve"><value>MTK XFlash：DA 不支持 SLA 状态查询 0x{Command:X8}（0x{Status:X8}），按旧版 DA 线路继续查询包长和存储；认证证据为 Unsupported，不代表认证成功或 SLA 已关闭。</value></data>
+<data name="PacketLengthResponse" xml:space="preserve"><value>MTK {BootStage}：包长查询结果长度 {ResponseLength}，预期 8 字节。</value></data>
+<data name="PacketLengthsOffered" xml:space="preserve"><value>MTK {BootStage}：设备写包上限 {DeviceWritePacketLength}，读包上限 {DeviceReadPacketLength}，能力范围有效={PacketLengthsValid}；宿主窗口独立限制。</value></data>
+<data name="DaZeroLengthIn" xml:space="preserve"><value>MTK {BootStage}：命令 0x{Command:X8} 收到 USB 零长度 IN，连续 {ZeroLengthPacketCount} 个，剩余读预算 {RemainingTimeoutMilliseconds} ms；继续同一次接收，未重发命令。</value></data>
+<data name="PartitionDiscoveryStarted" xml:space="preserve"><value>MTK：开始获取分区表，存储 {StorageKind}，User 区域 {UserRegionId}。</value></data>
+<data name="PartitionDiscoveryCompleted" xml:space="preserve"><value>MTK：分区表获取完成，共 {PartitionCount} 个条目。</value></data>
+<data name="PartitionBootMetadata" xml:space="preserve"><value>MTK {StorageKind} 启动区域 {RegionId}：根据已报告容量 {Length} 构造 Preloader 条目，不读取 GPT。</value></data>
+<data name="PartitionGptProbe" xml:space="preserve"><value>MTK {StorageKind} 区域 {RegionId}：探测 GPT，User 区域={IsUserRegion}。</value></data>
+<data name="GptHeaderGeometry" xml:space="preserve"><value>MTK 区域 {RegionId} {GptCopy} GPT：块 {BlockSize}，当前位置 {CurrentLba}，备用位置 {AlternateLba}，声明可用范围 {FirstUsableLba}～{LastUsableLba}，条目位置 {EntriesLba}，数量 {EntryCount}，大小 {EntrySize}，设备末块 {DeviceLastLba}。</value></data>
+<data name="GptCrcChecked" xml:space="preserve"><value>MTK 区域 {RegionId} {GptCopy} GPT：{ValidationStep} 校验通过={ValidationPassed}。</value></data>
+<data name="GptCopyRejected" xml:space="preserve"><value>MTK 区域 {RegionId} {GptCopy} GPT：副本校验拒绝，阶段 {ValidationStep}。</value></data>
+<data name="GptUfsBoundarySelected" xml:space="preserve"><value>MTK UFS 区域 {RegionId}：4K GPT 声明起始 LBA {DeclaredFirstUsableLba}，实际首分区 LBA {FirstPartitionLba}；原始 CRC 已通过，按物理元数据末端 LBA {MetadataEndLba} 严格验证并以首分区界定 PGPT。仅宿主兼容解析，不改写设备。</value></data>
+<data name="PreloaderDaSignatureRequired" xml:space="preserve"><value>安全 Preloader 所需的 DA1 签名</value></data>
+<data name="PreloaderDaVerification" xml:space="preserve"><value>MTK Preloader：DA1 签名 {SignatureLength} 字节，由设备校验；不执行 BROM 前置认证。</value></data>
+<data name="EmiReplacementStage" xml:space="preserve"><value>仅允许在 BeforeDa1 阶段补充缺失的 EMI 资源</value></data>
+<data name="DumpPreloader" xml:space="preserve"><value>Dump Preloader</value></data>
+<data name="DumpPreloaderStarted" xml:space="preserve"><value>{DumpLabel}</value></data>
+<data name="DumpPreloaderProgress" xml:space="preserve"><value>{DumpLabel}: {ProgressPercent}% ({CurrentBytes}/{TotalBytes} bytes)</value></data>
+</root>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader>
+<data name="InvalidData" xml:space="preserve"><value>Invalid MTK data or response: {0}.</value></data>
+<data name="SessionUnavailable" xml:space="preserve"><value>MTK session unavailable. Reconnect required.</value></data>
+<data name="Reentry" xml:space="preserve"><value>MTK session callbacks cannot reenter the protocol.</value></data>
+<data name="Phase" xml:space="preserve"><value>MTK stage: {0}.</value></data>
+<data name="Faulted" xml:space="preserve"><value>MTK session faulted. Reconnect required.</value></data>
+<data name="SessionPreserved" xml:space="preserve"><value>MTK {BootStage}: the END response and ACK for {CommandName} are confirmed; a subsequent host check failed ({ExceptionType}). Keeping the connection without automatic retry.</value></data>
+<data name="Ambiguous" xml:space="preserve"><value>MTK resource or device match is ambiguous.</value></data>
+<data name="Timeout" xml:space="preserve"><value>MTK stage timed out.</value></data>
+<data name="UsbRequired" xml:space="preserve"><value>MTK requires an identified USB transport.</value></data>
+  <data name="ExploitCheckpoint" xml:space="preserve"><value>Host extension checkpoint {0} returned {1}.</value></data>
+  <data name="ProbeSnapshot" xml:space="preserve"><value>MTK probe: HW=0x{0}, CPU={1}, DA=0x{2}, subcode=0x{3}, FD HW=0x{4}, FC HW=0x{5}, SW=0x{6}, BROM=0x{7}, Preloader=0x{8}, stage={9}, security=0x{10}, WDT={11}.</value></data>
+<data name="GptBackupSelected" xml:space="preserve"><value>The primary GPT in storage region {0} is unavailable; the validated backup GPT is being used.</value></data>
+<data name="PmtMirrorSelected" xml:space="preserve"><value>The primary disk PMT markers or version in storage region {0} are invalid; the validated mirror table is being used.</value></data>
+<data name="OptionalCommandUnsupported" xml:space="preserve"><value>Device does not support optional command {0}; continuing standard initialization.</value></data>
+<data name="ExploitCheckpointReached" xml:space="preserve"><value>Reached host extension checkpoint {0}.</value></data>
+<data name="ExploitCheckpointSkipped" xml:space="preserve"><value>Host extension checkpoint {0} skipped callback: {1}.</value></data>
+<data name="HandshakeStep" xml:space="preserve"><value>BROM/Preloader handshake step {0}/{1}.</value></data>
+<data name="ExploitStrategyStarting" xml:space="preserve"><value>Host extension checkpoint {0} is invoking strategy {1}/{2}.</value></data>
+<data name="RscProgress" xml:space="preserve"><value>Writing RSC information</value></data>
+<data name="ScatterProgress" xml:space="preserve"><value>Flashing scatter images</value></data>
+<data name="SparseWritePlan" xml:space="preserve"><value>MTK Sparse: expanded {ExpandedLength} bytes, transferring {TransferLength} bytes in {RegionCount} contiguous regions.</value></data>
+<data name="WireCommand" xml:space="preserve"><value>MTK {BootStage}: command {CommandName} (0x{Command:X8}).</value></data>
+<data name="WireStatus" xml:space="preserve"><value>MTK {BootStage}: command 0x{Command:X8}, status 0x{Status:X8}, accepted={StatusAccepted}.</value></data>
+<data name="WireWrite" xml:space="preserve"><value>MTK {BootStage}: command 0x{Command:X8}, wrote {RequestedLength} bytes in {ElapsedMilliseconds} ms.</value></data>
+<data name="WireRead" xml:space="preserve"><value>MTK {BootStage}: command 0x{Command:X8}, read {RequestedLength} bytes in {ReadFragmentCount} fragments, {ElapsedMilliseconds} ms, budget {TimeoutMilliseconds} ms.</value></data>
+<data name="WireInterrupted" xml:space="preserve"><value>MTK {Direction} interrupted: stage {BootStage}, command 0x{Command:X8}, requested {RequestedLength}, received {ReceivedLength}, fragments {ReadFragmentCount}, elapsed {ElapsedMilliseconds} ms, budget {TimeoutMilliseconds} ms, type {ExceptionType}.</value></data>
+<data name="WireFrame" xml:space="preserve"><value>MTK {Direction} frame: stage {BootStage}, command 0x{Command:X8}, type {FrameType}, length {FrameLength}.</value></data>
+<data name="WireDeviceMessage" xml:space="preserve"><value>MTK {BootStage}: command 0x{Command:X8}, drained device message {DeviceMessageIndex}, length {DeviceMessageLength}; content omitted.</value></data>
+<data name="WireZlp" xml:space="preserve"><value>MTK {BootStage}: command 0x{Command:X8}, explicit compatibility ZLP sent.</value></data>
+<data name="SessionPhase" xml:space="preserve"><value>MTK: {Phase}.</value></data>
+<data name="SessionFailure" xml:space="preserve"><value>MTK session invalidated: state {SessionState}, stage {BootStage}, command {CommandName} (0x{Command:X8}), status {Status}, type {ExceptionType}. Reconnect required.</value></data>
+<data name="XmlSessionFailure" xml:space="preserve"><value>MTK XML session invalidated: stage {BootStage}, command {CommandName} (0x{Command:X8}), result {ResultCode}, message-code {MessageCode}. Reconnect required.</value></data>
+<data name="PhaseOpening" xml:space="preserve"><value>Opening USB</value></data>
+<data name="PhaseHandshaking" xml:space="preserve"><value>BROM/Preloader handshake</value></data>
+<data name="PhaseProbed" xml:space="preserve"><value>BROM/Preloader identified</value></data>
+<data name="PhaseAuthenticating" xml:space="preserve"><value>Authenticating with host-supplied material</value></data>
+<data name="PhaseUploadingDa1" xml:space="preserve"><value>Uploading DA1</value></data>
+<data name="PhaseDa1Ready" xml:space="preserve"><value>DA1 transferred; initializing DA1</value></data>
+<data name="PhaseUploadingDa2" xml:space="preserve"><value>Uploading DA2</value></data>
+<data name="PhaseDa2Ready" xml:space="preserve"><value>DA2 initialized</value></data>
+<data name="PhaseStorageReady" xml:space="preserve"><value>Storage ready</value></data>
+<data name="PhaseDisconnected" xml:space="preserve"><value>Disconnected</value></data>
+<data name="PhaseInitializingEmi" xml:space="preserve"><value>Initializing external RAM</value></data>
+<data name="PhaseExtending" xml:space="preserve"><value>Host extension phase</value></data>
+<data name="TransferRead" xml:space="preserve"><value>read</value></data>
+<data name="TransferWrite" xml:space="preserve"><value>write</value></data>
+<data name="TransferErase" xml:space="preserve"><value>erase</value></data>
+<data name="TransferNamedRead" xml:space="preserve"><value>named partition read</value></data>
+<data name="TransferNamedWrite" xml:space="preserve"><value>named partition write</value></data>
+<data name="TransferNamedErase" xml:space="preserve"><value>named partition erase</value></data>
+<data name="TransferStarted" xml:space="preserve"><value>MTK {Operation} started: {Dialect}, region {Region}, offset {Offset}, byte count/limit {ByteCount}.</value></data>
+<data name="TransferCompleted" xml:space="preserve"><value>MTK {Operation} completed: {Dialect}, {ByteCount} bytes, {ElapsedMilliseconds} ms.</value></data>
+<data name="DaSelected" xml:space="preserve"><value>MTK DA selected: {Dialect}, entry {EntryRegionIndex}, regions {RegionCount}.</value></data>
+<data name="BromUploadStarted" xml:space="preserve"><value>BROM DA upload: {ByteCount} bytes at 0x{Address:X8}, host chunk {ChunkSize}, tail ZLP {TailZlp}.</value></data>
+<data name="BromUploadCompleted" xml:space="preserve"><value>BROM DA upload verified: {ByteCount} bytes; checksum and status accepted.</value></data>
+<data name="BromJump" xml:space="preserve"><value>BROM jumping to DA at 0x{Address:X8}.</value></data>
+<data name="ChecksumValidated" xml:space="preserve"><value>MTK {BootStage}: command 0x{Command:X8}, checksum accepted={ChecksumAccepted}.</value></data>
+<data name="BromResourceStarted" xml:space="preserve"><value>BROM sending host security material for {CommandName}. Content omitted.</value></data>
+<data name="BromResourceCompleted" xml:space="preserve"><value>BROM host security material accepted for {CommandName}.</value></data>
+<data name="AuthenticationEvidence" xml:space="preserve"><value>MTK authentication {AuthenticationKind}: {AuthenticationState}.</value></data>
+<data name="AuthenticationStarted" xml:space="preserve"><value>MTK authentication {AuthenticationKind}: requesting host signature.</value></data>
+<data name="EmiStarted" xml:space="preserve"><value>MTK {Dialect}: external RAM initialization required, EMI {ByteCount} bytes.</value></data>
+<data name="EmiCompleted" xml:space="preserve"><value>MTK {Dialect}: external RAM initialized.</value></data>
+<data name="EmiNotRequired" xml:space="preserve"><value>MTK {Dialect}: external RAM initialization not required by the current DA.</value></data>
+<data name="PacketLengths" xml:space="preserve"><value>MTK XFlash packet limits: write {WritePacketLength}, read {ReadPacketLength}, device write {DeviceWritePacketLength}, device read {DeviceReadPacketLength}.</value></data>
+<data name="StorageDetected" xml:space="preserve"><value>MTK storage: {StorageKind}, {RegionCount} regions, user region {UserRegionId}.</value></data>
+<data name="StorageRegion" xml:space="preserve"><value>MTK storage region {Region}: {ByteCount} bytes, block {BlockSize}, erase block {EraseBlockSize}, writable {CanWrite}.</value></data>
+<data name="WatchdogEvidence" xml:space="preserve"><value>MTK watchdog: {WatchdogState}.</value></data>
+<data name="ResourcesRequested" xml:space="preserve"><value>MTK requesting DA and optional EMI resources from the host.</value></data>
+<data name="XmlLifecycle" xml:space="preserve"><value>MTK {BootStage}: XML command {CommandName}, expected event {XmlEvent}, matched={EventAccepted}.</value></data>
+<data name="XmlPacketLength" xml:space="preserve"><value>MTK {BootStage}: XML command {CommandName}, packet length {PacketLength}.</value></data>
+<data name="WireProgress" xml:space="preserve"><value>MTK {BootStage}: command 0x{Command:X8}, progress {ProgressPercent}%.</value></data>
+<data name="NamedEraseStarted" xml:space="preserve"><value>MTK named partition erase started: {Dialect}, partition {PartitionName}; capacity is not inferred.</value></data>
+<data name="NamedEraseCompleted" xml:space="preserve"><value>MTK named partition erase acknowledged: {Dialect}, partition {PartitionName}, {ElapsedMilliseconds} ms.</value></data>
+<data name="NamedTransferStarted" xml:space="preserve"><value>MTK {Operation} started: {Dialect}, partition {PartitionName}, byte count/limit {ByteCount}.</value></data>
+<data name="NamedTransferCompleted" xml:space="preserve"><value>MTK {Operation} completed: {Dialect}, partition {PartitionName}, {ByteCount} bytes, {ElapsedMilliseconds} ms.</value></data>
+<data name="SecurityExchangeSkipped" xml:space="preserve"><value>BROM {CommandName}: device returned accepted skip status 0x{Status:X4}; no host material sent. This is not a new authentication success.</value></data>
+<data name="WireStorageRange" xml:space="preserve"><value>MTK {BootStage}: storage request {TransferKind}, kind {StorageKind}, region {Region}, offset {FlashOffset}, length {FlashLength}.</value></data>
+<data name="EmiWindowSelected" xml:space="preserve"><value>MTK XFlash EMI: format {EmiFormat}, version {EmiVersion}, length {ByteCount}; contents omitted.</value></data>
+<data name="UsbCandidate" xml:space="preserve"><value>MTK USB candidate {VendorId:X4}:{ProductId:X4}, data interface {InterfaceNumber}, CDC control interface {ControlInterfaceNumber}; stage awaits handshake confirmation.</value></data>
+<data name="PreloaderWake" xml:space="preserve"><value>MTK Preloader candidate: sending one A0 wakeup before the handshake.</value></data>
+<data name="CdcSetup" xml:space="preserve"><value>MTK CDC: control interface {ControlInterfaceNumber}, baud rate {BaudRate}, control lines {ControlLineState}.</value></data>
+<data name="StartupPacketRead" xml:space="preserve"><value>MTK startup IN: buffer {RequestedLength} bytes, received {ReceivedLength} bytes, elapsed {ElapsedMilliseconds} ms, budget {TimeoutMilliseconds} ms.</value></data>
+<data name="HandshakePrefix" xml:space="preserve"><value>MTK skipped {HandshakePrefixCount} startup prefix bytes before the first handshake response.</value></data>
+<data name="HandshakePrefixLimit" xml:space="preserve"><value>MTK startup prefix reached {HandshakePrefixCount} bytes, exceeding the limit of {HandshakePrefixLimit}; stopping the handshake.</value></data>
+<data name="PreloaderReadySync" xml:space="preserve"><value>MTK Preloader still reports READY; synchronizing initial A0 {HandshakeStartAttempt}/{HandshakeStartLimit}.</value></data>
+<data name="HandshakeWakeDuplicate" xml:space="preserve"><value>MTK Preloader: consumed a duplicate initial response without resending subsequent commands.</value></data>
+<data name="HandshakeResponse" xml:space="preserve"><value>MTK handshake step {HandshakeStep}: response 0x{HandshakeResponse:X2}, expected 0x{HandshakeExpected:X2}.</value></data>
+<data name="HandshakeIdentified" xml:space="preserve"><value>MTK handshake and complete FD identity validation succeeded, already-handshaken candidate {AlreadyHandshaken}; FE must still confirm the stage.</value></data>
+<data name="Da1ReplacementChecked" xml:space="preserve"><value>MTK {Dialect}: checked pre-upload DA1 replacement, non-signature bytes modified={Da1Modified}; this is not authentication evidence.</value></data>
+<data name="CarbonaraSkippedPatchedDa1" xml:space="preserve"><value>MTK: modified DA1 was uploaded and verified on the BROM path; skipping Carbonara and continuing standard DA2 BootTo.</value></data>
+<data name="Da2BootRequested" xml:space="preserve"><value>MTK XFlash: requesting standard DA2 BootTo at 0x{Address:X8}, {ByteCount} bytes; waiting for command acknowledgment.</value></data>
+<data name="Da2BootCommandAccepted" xml:space="preserve"><value>MTK XFlash: standard DA2 BootTo command acknowledged; sending parameters and payload.</value></data>
+<data name="Da2PayloadSent" xml:space="preserve"><value>MTK XFlash: sent {ByteCount} DA2 bytes; waiting for parameter-group and execution status, boot not yet confirmed.</value></data>
+<data name="Da2BootConfirmed" xml:space="preserve"><value>MTK XFlash: standard DA2 parameter-group and execution status both confirmed.</value></data>
+<data name="SlaStatusUnsupported" xml:space="preserve"><value>MTK XFlash: DA rejected SLA status query 0x{Command:X8} as unsupported (0x{Status:X8}); continuing legacy-DA packet-length and storage queries. Authentication evidence is Unsupported, not authentication success or proof that SLA is disabled.</value></data>
+<data name="PacketLengthResponse" xml:space="preserve"><value>MTK {BootStage}: packet-length response is {ResponseLength} bytes; expected 8.</value></data>
+<data name="PacketLengthsOffered" xml:space="preserve"><value>MTK {BootStage}: device write-packet ceiling {DeviceWritePacketLength}, read-packet ceiling {DeviceReadPacketLength}, valid range={PacketLengthsValid}; host windows are bounded independently.</value></data>
+<data name="DaZeroLengthIn" xml:space="preserve"><value>MTK {BootStage}: command 0x{Command:X8} received a USB zero-length IN packet, consecutive count {ZeroLengthPacketCount}, remaining read budget {RemainingTimeoutMilliseconds} ms; continuing the same receive without retransmitting commands.</value></data>
+<data name="PartitionDiscoveryStarted" xml:space="preserve"><value>MTK: discovering partitions on {StorageKind}, User region {UserRegionId}.</value></data>
+<data name="PartitionDiscoveryCompleted" xml:space="preserve"><value>MTK: partition discovery completed with {PartitionCount} entries.</value></data>
+<data name="PartitionBootMetadata" xml:space="preserve"><value>MTK {StorageKind} boot region {RegionId}: constructing the Preloader entry from reported capacity {Length}, without reading GPT.</value></data>
+<data name="PartitionGptProbe" xml:space="preserve"><value>MTK {StorageKind} region {RegionId}: probing GPT, User region={IsUserRegion}.</value></data>
+<data name="GptHeaderGeometry" xml:space="preserve"><value>MTK region {RegionId} {GptCopy} GPT: block {BlockSize}, current {CurrentLba}, alternate {AlternateLba}, declared usable range {FirstUsableLba}..{LastUsableLba}, entries {EntriesLba}, count {EntryCount}, size {EntrySize}, device last block {DeviceLastLba}.</value></data>
+<data name="GptCrcChecked" xml:space="preserve"><value>MTK region {RegionId} {GptCopy} GPT: {ValidationStep} passed={ValidationPassed}.</value></data>
+<data name="GptCopyRejected" xml:space="preserve"><value>MTK region {RegionId} {GptCopy} GPT: copy rejected at {ValidationStep}.</value></data>
+<data name="GptUfsBoundarySelected" xml:space="preserve"><value>MTK UFS region {RegionId}: 4K GPT declares first usable LBA {DeclaredFirstUsableLba}, but its first partition starts at LBA {FirstPartitionLba}. Original CRCs passed; validating strictly from physical metadata end LBA {MetadataEndLba} and ending PGPT at the first partition. Host compatibility parsing only; device unchanged.</value></data>
+<data name="PreloaderDaSignatureRequired" xml:space="preserve"><value>DA1 signature required by secure Preloader</value></data>
+<data name="PreloaderDaVerification" xml:space="preserve"><value>MTK Preloader: DA1 has {SignatureLength} signature bytes for device verification; no BROM pre-authentication.</value></data>
+<data name="EmiReplacementStage" xml:space="preserve"><value>Missing EMI resources may only be supplied at BeforeDa1</value></data>
+<data name="DumpPreloader" xml:space="preserve"><value>Dump Preloader</value></data>
+<data name="DumpPreloaderStarted" xml:space="preserve"><value>{DumpLabel}</value></data>
+<data name="DumpPreloaderProgress" xml:space="preserve"><value>{DumpLabel}: {ProgressPercent}% ({CurrentBytes}/{TotalBytes} bytes)</value></data>
+</root>

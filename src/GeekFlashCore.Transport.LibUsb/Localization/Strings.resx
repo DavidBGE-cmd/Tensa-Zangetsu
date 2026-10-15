@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="LibUsbTransport_WriteIncomplete" xml:space="preserve"><value>USB write was incomplete: expected {0} bytes, received {1} bytes.</value></data>
+  <data name="LibUsbTransport_ZeroByteRead" xml:space="preserve"><value>The USB endpoint returned a zero-byte read.</value></data>
+  <data name="LibUsbTransport_InterfaceClaimFailed" xml:space="preserve"><value>Unable to claim USB interface {0}.</value></data>
+  <data name="LibUsbTransport_NotOpen" xml:space="preserve"><value>The USB device is not open.</value></data>
+  <data name="LibUsbTransport_InvalidBufferSize" xml:space="preserve"><value>The USB buffer size must be positive.</value></data>
+  <data name="LibUsbTransport_ReadEndpointMustBeIn" xml:space="preserve"><value>The read endpoint must be an IN endpoint.</value></data>
+  <data name="LibUsbTransport_WriteEndpointMustBeOut" xml:space="preserve"><value>The write endpoint must be an OUT endpoint.</value></data>
+  <data name="LibUsbTransport_BufferRangeInvalid" xml:space="preserve"><value>The offset and count exceed the buffer range.</value></data>
+  <data name="LibUsbTransport_TransferTimedOut" xml:space="preserve"><value>{0} timed out after {1} ms.</value></data>
+  <data name="LibUsbFactory_DeviceNotFound" xml:space="preserve"><value>No USB device found for VID={0}, PID={1}.</value></data>
+  <data name="LibUsbManager_DeviceNotFound" xml:space="preserve"><value>No USB device found for VID={0}, PID={1}.</value></data>
+  <data name="LibUsbTransport_DeviceMissing" xml:space="preserve"><value>No matching USB device was found.</value></data>
+  <data name="LibUsbTransport_BulkInterfaceMissing" xml:space="preserve"><value>No USB interface with bulk input and output endpoints was found.</value></data>
+  <data name="LibUsbTransport_ConfigurationFailed" xml:space="preserve"><value>无法设置 USB 设备配置。</value></data>
+  <data name="LibUsbTransport_AmbiguousDevice" xml:space="preserve"><value>多个 USB 设备匹配，请指定序列号或物理端口路径。</value></data>
+  <data name="LibUsbTransport_DevicePathUnsupported" xml:space="preserve"><value>此 LibUsb 后端不能按 Windows 设备路径匹配，请使用序列号或总线/端口路径。</value></data>
+  <data name="LibUsbTransport_IdentityInvalid" xml:space="preserve"><value>USB 序列号或总线/端口路径无效。</value></data>
+</root>

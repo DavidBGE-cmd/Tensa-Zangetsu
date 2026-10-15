@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SaharaNak_UnsupportedNumPhdrs" xml:space="preserve">
+    <value>Unable to receive the specified number of program headers</value>
+  </data>
+  <data name="SaharaNak_InvalidImageType" xml:space="preserve">
+    <value>Received invalid image type</value>
+  </data>
+  <data name="SaharaNak_InvalidDataSize" xml:space="preserve">
+    <value>Received invalid image data size</value>
+  </data>
+  <data name="SaharaNak_InvalidHeaderSize" xml:space="preserve">
+    <value>Received invalid image header size</value>
+  </data>
+  <data name="SaharaNak_UnexpectedImageId" xml:space="preserve">
+    <value>Received unexpected image ID</value>
+  </data>
+  <data name="SaharaNak_ReadDataError" xml:space="preserve">
+    <value>Error sending READ_DATA packet</value>
+  </data>
+  <data name="Sahara_TargetAlreadyInFirehose" xml:space="preserve">
+    <value>The device is already in Firehose mode</value>
+  </data>
+  <data name="Common_TransportIsClosed" xml:space="preserve">
+    <value>Transport is closed</value>
+  </data>
+  <data name="Sahara_CantReceivePacket" xml:space="preserve">
+    <value>Cannot read package '{0}'</value>
+  </data>
+  <data name="Sahara_InvalidPacketLength" xml:space="preserve">
+    <value>Packet length invalid '{0}'</value>
+  </data>
+  <data name="Sahara_InvalidImageLength" xml:space="preserve">
+    <value>The declared Sahara image length is invalid or does not match its data source.</value>
+  </data>
+  <data name="Sahara_DuplicateImageId" xml:space="preserve">
+    <value>Sahara image IDs must be unique.</value>
+  </data>
+  <data name="Sahara_ImageStreamMustBeReadableAndSeekable" xml:space="preserve">
+    <value>The Sahara image stream must be readable and seekable.</value>
+  </data>
+  <data name="Sahara_InvalidMode" xml:space="preserve">
+    <value>Wrong Sahara mode.
+Current {0}, expected {1}</value>
+  </data>
+  <data name="Sahara_InvalidResponse" xml:space="preserve">
+    <value>Unable to get '{0}' package</value>
+  </data>
+  <data name="Sahara_ImageNotFound" xml:space="preserve">
+    <value>Unable to find image with image Id '{0}'</value>
+  </data>
+  <data name="Sahara_UnexpectedCommand" xml:space="preserve">
+    <value>Unexpected Sahara command '{0}'</value>
+  </data>
+  <data name="Sahara_UnexpectedStatus" xml:space="preserve">
+    <value>Unexpected Sahara status '{0}'</value>
+  </data>
+  <data name="SaharaStatus_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="SaharaNak_InvalidCmd" xml:space="preserve">
+    <value>Current state received invalid command</value>
+  </data>
+  <data name="SaharaNak_ProtocolMismatch" xml:space="preserve">
+    <value>Host and target machine protocol mismatch</value>
+  </data>
+  <data name="SaharaNak_InvalidTargetProtocol" xml:space="preserve">
+    <value>Invalid target machine protocol version</value>
+  </data>
+  <data name="SaharaNak_InvalidHostProtocol" xml:space="preserve">
+    <value>Invalid host protocol version</value>
+  </data>
+  <data name="SaharaNak_InvalidPacketSize" xml:space="preserve">
+    <value>Received invalid packet size</value>
+  </data>
+  <data name="SaharaNak_InvalidTxLength" xml:space="preserve">
+    <value>Invalid send length</value>
+  </data>
+  <data name="SaharaNak_InvalidRxLength" xml:space="preserve">
+    <value>invalid receive length</value>
+  </data>
+  <data name="SaharaNak_GeneralTxRxError" xml:space="preserve">
+    <value>General send or receive error</value>
+  </data>
+  <data name="SaharaNak_InvalidPdhrSize" xml:space="preserve">
+    <value>Invalid program header data length</value>
+  </data>
+  <data name="SaharaNak_MultipleSharedSeg" xml:space="preserve">
+    <value>Multiple shared segments found in ELF image</value>
+  </data>
+  <data name="SaharaNak_UninitPhdrLoc" xml:space="preserve">
+    <value>Program header position not initialized</value>
+  </data>
+  <data name="SaharaNak_InvalidDestAddr" xml:space="preserve">
+    <value>invalid target address</value>
+  </data>
+  <data name="SaharaNak_InvalidImgHdrDataSize" xml:space="preserve">
+    <value>The data size in the image header is invalid</value>
+  </data>
+  <data name="SaharaNak_InvalidElfHdr" xml:space="preserve">
+    <value>Received invalid ELF header</value>
+  </data>
+  <data name="SaharaNak_UnknownHostError" xml:space="preserve">
+    <value>Received unknown host error in HELLO_RESP</value>
+  </data>
+  <data name="SaharaNak_TimeoutRx" xml:space="preserve">
+    <value>Data reception timeout</value>
+  </data>
+  <data name="SaharaNak_TimeoutTx" xml:space="preserve">
+    <value>Data send timeout</value>
+  </data>
+  <data name="SaharaNak_InvalidHostMode" xml:space="preserve">
+    <value>Invalid host mode received</value>
+  </data>
+  <data name="SaharaNak_InvalidMemoryRead" xml:space="preserve">
+    <value>Invalid memory read access</value>
+  </data>
+  <data name="SaharaNak_InvalidDataSizeRequest" xml:space="preserve">
+    <value>The host cannot handle the requested read data size</value>
+  </data>
+  <data name="SaharaNak_MemoryDebugNotSupported" xml:space="preserve">
+    <value>Memory debugging not supported</value>
+  </data>
+  <data name="SaharaNak_InvalidModeSwitch" xml:space="preserve">
+    <value>Invalid mode switch</value>
+  </data>
+  <data name="SaharaNak_CmdExecFailure" xml:space="preserve">
+    <value>command execution failed</value>
+  </data>
+  <data name="SaharaNak_ExecCmdInvalidParam" xml:space="preserve">
+    <value>Invalid command execution parameter</value>
+  </data>
+  <data name="SaharaNak_ExecCmdUnsupported" xml:space="preserve">
+    <value>Received unsupported command</value>
+  </data>
+  <data name="SaharaNak_ExecDataInvalidClientCmd" xml:space="preserve">
+    <value>Invalid command received in data response</value>
+  </data>
+  <data name="SaharaNak_HashTableAuthFailure" xml:space="preserve">
+    <value>Hash table verification failed</value>
+  </data>
+  <data name="SaharaNak_HashVerificationFailure" xml:space="preserve">
+    <value>ELF segment hash verification failed</value>
+  </data>
+  <data name="SaharaNak_HashTableNotFound" xml:space="preserve">
+    <value>Hash table not found in ELF image</value>
+  </data>
+  <data name="Common_ConnectingToMode" xml:space="preserve">
+    <value>Connecting to mode '{0}'</value>
+  </data>
+  <data name="Common_ReadingTargetInfo" xml:space="preserve">
+    <value>Reading target info</value>
+  </data>
+  <data name="Common_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="Common_Failed" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="Qcom_ProtocolCreated" xml:space="preserve">
+    <value>The Qcom protocol session was created.</value>
+  </data>
+  <data name="Qcom_MissingSaharaProgrammer" xml:space="preserve">
+    <value>No Sahara programmer image was supplied.</value>
+  </data>
+  <data name="Qcom_SaharaStreamDisposeFailed" xml:space="preserve">
+    <value>Failed to dispose a Sahara image stream.</value>
+  </data>
+  <data name="Qcom_TargetSectorSizeMismatch" xml:space="preserve">
+    <value>Target sector size {0} does not match the negotiated sector size {1}.</value>
+  </data>
+  <data name="Qcom_OffsetTargetNotAligned" xml:space="preserve">
+    <value>Offset targets must be aligned to the negotiated sector size.</value>
+  </data>
+  <data name="Qcom_PartitionAmbiguousAcrossLuns" xml:space="preserve">
+    <value>GPT partition '{0}' exists on multiple LUNs; specify PhysicalPartitionNumber.</value>
+  </data>
+  <data name="Qcom_PartitionNotFound" xml:space="preserve">
+    <value>GPT partition '{0}' was not found.</value>
+  </data>
+  <data name="Qcom_UnsupportedStorageTarget" xml:space="preserve">
+    <value>Qcom storage target type {0} is not supported.</value>
+  </data>
+  <data name="Qcom_UnsupportedProgrammerMedium" xml:space="preserve">
+    <value>Programmer data medium type {0} is not supported.</value>
+  </data>
+  <data name="Qcom_ProgrammerFileNotFound" xml:space="preserve">
+    <value>The programmer file was not found.</value>
+  </data>
+  <data name="Sahara_NotConnected" xml:space="preserve">
+    <value>Sahara protocol is not connected</value>
+  </data>
+  <data name="Sahara_InvalidMemoryTable" xml:space="preserve">
+    <value>Invalid memory table, length {0}</value>
+  </data>
+  <data name="Sahara_EmptyImageList" xml:space="preserve">
+    <value>The image list is empty</value>
+  </data>
+  <data name="Progress_Connecting" xml:space="preserve">
+    <value>Connecting to device</value>
+  </data>
+  <data name="Progress_HelloReceived" xml:space="preserve">
+    <value>HELLO packet received</value>
+  </data>
+  <data name="Progress_ReadingTargetInfo" xml:space="preserve">
+    <value>Reading target info</value>
+  </data>
+  <data name="Progress_Connected" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="Progress_UploadingImage" xml:space="preserve">
+    <value>Uploading image {0}</value>
+  </data>
+  <data name="Progress_UploadComplete" xml:space="preserve">
+    <value>Image upload complete</value>
+  </data>
+  <data name="Progress_MemoryDump" xml:space="preserve">
+    <value>Target entered memory dump mode</value>
+  </data>
+  <data name="Firehose_RawPayloadEndedEarly" xml:space="preserve">
+    <value>Firehose raw payload ended early</value>
+  </data>
+  <data name="Firehose_DestinationStreamNotWritable" xml:space="preserve">
+    <value>Destination stream is not writable</value>
+  </data>
+  <data name="Firehose_SourceStreamNotReadable" xml:space="preserve">
+    <value>Source stream is not readable</value>
+  </data>
+  <data name="Firehose_SourceEndedBeforeDeclaredLength" xml:space="preserve">
+    <value>Source stream ended before the declared length</value>
+  </data>
+  <data name="Firehose_StartupDataNotXml" xml:space="preserve">
+    <value>Firehose startup data is not XML</value>
+  </data>
+  <data name="Firehose_XmlPacketTooLarge" xml:space="preserve">
+    <value>Firehose XML packet exceeds {0} bytes</value>
+  </data>
+  <data name="Firehose_TransportClosedReadingXml" xml:space="preserve">
+    <value>Transport closed while reading Firehose XML</value>
+  </data>
+  <data name="Firehose_ReadTimedOut" xml:space="preserve">
+    <value>Timed out reading Firehose data</value>
+  </data>
+  <data name="Firehose_CommandTagMissing" xml:space="preserve">
+    <value>Command type '{0}' is missing the FirehoseCmdTag attribute</value>
+  </data>
+  <data name="Firehose_UnsupportedPropertyType" xml:space="preserve">
+    <value>Command property type '{0}' is not supported</value>
+  </data>
+  <data name="Firehose_NotConnected" xml:space="preserve">
+    <value>Firehose protocol is not connected</value>
+  </data>
+  <data name="Qcom_UnknownProtocol" xml:space="preserve"><value>The device protocol could not be identified.</value></data>
+  <data name="Qcom_InvalidAuthentication" xml:space="preserve"><value>The authentication material is invalid.</value></data>
+  <data name="Qcom_UseDedicatedCommand" xml:space="preserve"><value>Use the dedicated protocol method for this command.</value></data>
+  <data name="Qcom_DigestProviderRequired" xml:space="preserve"><value>An Oplus Digest provider is required.</value></data>
+  <data name="Qcom_InvalidResource" xml:space="preserve"><value>The resource is invalid or its provider failed.</value></data>
+  <data name="Qcom_LoaderProviderRequired" xml:space="preserve"><value>A Sahara image provider is required.</value></data>
+  <data name="Qcom_InvalidSessionState" xml:space="preserve"><value>The session is invalid; reconnect before continuing.</value></data>
+  <data name="Qcom_OperationInProgress" xml:space="preserve"><value>Another session operation is in progress.</value></data>
+  <data name="Qcom_AuthenticationProviderRequired" xml:space="preserve"><value>A vendor authentication provider is required.</value></data>
+  <data name="Qcom_GptEntryArrayExceedsRange" xml:space="preserve"><value>The GPT entry array exceeds the bounded read range.</value></data>
+  <data name="Qcom_FirehoseVipTablesRequired" xml:space="preserve"><value>The loader is waiting for a signed table. Configure VIP tables or select the matching Oplus Digest mode before reconnecting.</value></data>
+  <data name="Qcom_FirehoseVipProviderRequired" xml:space="preserve"><value>The Firehose VIP provider is required.</value></data>
+  <data name="Qcom_FirehoseVipNotAnnounced" xml:space="preserve"><value>The Firehose programmer did not announce VIP support.</value></data>
+  <data name="Qcom_UnsupportedFirehoseCommand" xml:space="preserve"><value>The Firehose command is not supported.</value></data>
+  <data name="Qcom_DigestSourceNotReadable" xml:space="preserve"><value>The Digest source is not readable.</value></data>
+  <data name="Qcom_FirehoseNotConfigured" xml:space="preserve"><value>Firehose is not configured.</value></data>
+  <data name="Qcom_FirehoseRawModeUnexpected" xml:space="preserve"><value>Firehose remained in raw mode after the transfer.</value></data>
+  <data name="Qcom_FirehoseXmlTooLargeConfigured" xml:space="preserve"><value>The Firehose XML document exceeds the configured size limit.</value></data>
+  <data name="Qcom_FirehoseXmlRootInvalid" xml:space="preserve"><value>The Firehose XML root element must be data.</value></data>
+  <data name="Qcom_FirehoseXmlCommandCountInvalid" xml:space="preserve"><value>The Firehose XML document must contain exactly one command element.</value></data>
+  <data name="Qcom_FirehoseXmlInvalidUnsafe" xml:space="preserve"><value>The Firehose XML document is invalid or unsafe.</value></data>
+  <data name="Qcom_FirehoseAttributeFormatFailed" xml:space="preserve"><value>Unable to format Firehose attribute {0}.</value></data>
+  <data name="Qcom_FirehoseOperationStateInvalid" xml:space="preserve"><value>Firehose command is not valid while the session is {0}.</value></data>
+  <data name="Qcom_FirehoseOperationInProgress" xml:space="preserve"><value>Another Firehose operation is already in progress.</value></data>
+  <data name="Qcom_VipSignedTableRequired" xml:space="preserve"><value>VIP signed table is required.</value></data>
+  <data name="Qcom_VipChainedTablesExhausted" xml:space="preserve"><value>The VIP chained table sequence is exhausted.</value></data>
+  <data name="Qcom_VipTableStreamMissing" xml:space="preserve"><value>The VIP table source returned no stream.</value></data>
+  <data name="Qcom_VipTableNotReadable" xml:space="preserve"><value>The VIP table source is not readable.</value></data>
+  <data name="Qcom_VipTableNotAcknowledged" xml:space="preserve"><value>The Firehose VIP table was not acknowledged.</value></data>
+  <data name="Qcom_VipTableLengthInvalid" xml:space="preserve"><value>The VIP table length is invalid.</value></data>
+  <data name="Qcom_FirehoseReadDestinationNotWritable" xml:space="preserve"><value>The Firehose read destination is not writable.</value></data>
+  <data name="Qcom_FirehoseDestinationLengthMismatch" xml:space="preserve"><value>The destination length must equal the Firehose read range.</value></data>
+  <data name="Qcom_FirehoseProgramStreamMissing" xml:space="preserve"><value>The Firehose program source returned no stream.</value></data>
+  <data name="Qcom_FirehoseProgramBufferUnaligned" xml:space="preserve"><value>The Firehose program buffer must contain aligned sectors.</value></data>
+  <data name="Qcom_FirmwarePayloadEmpty" xml:space="preserve"><value>The firmware payload cannot be empty.</value></data>
+  <data name="Qcom_FirehosePeekDestinationEmpty" xml:space="preserve"><value>The Firehose peek destination cannot be empty.</value></data>
+  <data name="Qcom_FirehoseDigestMissing" xml:space="preserve"><value>Firehose acknowledged getsha256digest without a SHA-256 value.</value></data>
+  <data name="Qcom_BlockDeviceUnknown" xml:space="preserve"><value>Unknown Qualcomm block device '{0}'.</value></data>
+  <data name="Qcom_BlockDeviceReadOnly" xml:space="preserve"><value>Qualcomm block device '{0}' is read-only.</value></data>
+  <data name="Qcom_ByteRangeUnaligned" xml:space="preserve"><value>The Firehose byte range must be aligned to the logical block size.</value></data>
+  <data name="Qcom_BlockDevicePartitionRequired" xml:space="preserve"><value>A Qualcomm block device requires a physical partition number.</value></data>
+  <data name="Qcom_BlockDeviceOpenedReadOnly" xml:space="preserve"><value>Qualcomm block device '{0}' was opened read-only.</value></data>
+  <data name="Qcom_ProgramSourceNotReadable" xml:space="preserve"><value>The Firehose program source is not readable.</value></data>
+  <data name="Qcom_ProgramSourceEmpty" xml:space="preserve"><value>The Firehose program source cannot be empty.</value></data>
+  <data name="Qcom_SparseRequiresSeekable" xml:space="preserve"><value>Android sparse programming requires a seekable source stream.</value></data>
+  <data name="Qcom_SourceLargerThanTarget" xml:space="preserve"><value>The source is larger than the target range.</value></data>
+  <data name="Qcom_SourceEndedBeforeOffset" xml:space="preserve"><value>The Firehose source ended before its requested offset.</value></data>
+  <data name="Qcom_SparseRegionUnaligned" xml:space="preserve"><value>An Android sparse region is not sector aligned.</value></data>
+  <data name="Qcom_SparseRegionExceedsTarget" xml:space="preserve"><value>An Android sparse region exceeds the target range.</value></data>
+  <data name="Qcom_SourceWindowRequiresSeekable" xml:space="preserve"><value>The source window requires a readable, seekable stream.</value></data>
+  <data name="Qcom_SourceWindowSeekOutside" xml:space="preserve"><value>An attempt was made to seek outside the source window.</value></data>
+  <data name="Qcom_CustomXmlSizeExceeded" xml:space="preserve"><value>The Firehose XML document exceeds the size limit.</value></data>
+  <data name="Qcom_CustomXmlRootInvalid" xml:space="preserve"><value>The Firehose XML root element must be data.</value></data>
+  <data name="Qcom_CustomXmlCommandInvalid" xml:space="preserve"><value>The Firehose XML must contain one flat command element.</value></data>
+  <data name="Qcom_CustomXmlCommandNotAllowed" xml:space="preserve"><value>Command '{0}' is not allowed for {1}.</value></data>
+  <data name="Qcom_CustomXmlTextNotAllowed" xml:space="preserve"><value>Firehose command text content is not allowed.</value></data>
+  <data name="Qcom_CustomXmlCommandMissing" xml:space="preserve"><value>The Firehose XML contains no command.</value></data>
+  <data name="Qcom_CustomXmlInvalid" xml:space="preserve"><value>The Firehose custom XML is invalid or not allowed.</value></data>
+  <data name="Qcom_CustomXmlAttributesExceeded" xml:space="preserve"><value>The Firehose command attributes exceed the safety limits.</value></data>
+  <data name="Qcom_DtdNotAllowed" xml:space="preserve"><value>DTD and XML declarations are not permitted in Firehose responses.</value></data>
+  <data name="Qcom_UnterminatedXml" xml:space="preserve"><value>Unterminated XML markup in a Firehose response.</value></data>
+  <data name="Qcom_XiaomiChallengeMissing" xml:space="preserve"><value>Xiaomi Firehose returned no signature challenge.</value></data>
+  <data name="Qcom_XiaomiSignatureLength" xml:space="preserve"><value>The Xiaomi signature must be {0} bytes.</value></data>
+  <data name="Qcom_OplusRangeUnmapped" xml:space="preserve"><value>The requested range is not mapped by the verified Oplus Digest.</value></data>
+  <data name="Qcom_OplusOperationDenied" xml:space="preserve"><value>The verified Oplus Digest does not permit the requested operation.</value></data>
+  <data name="Qcom_OplusDigestLengthInvalid" xml:space="preserve"><value>The Oplus Digest length is invalid or exceeds the safety limit.</value></data>
+  <data name="Qcom_OplusDigestStreamMissing" xml:space="preserve"><value>The Oplus Digest source returned no stream.</value></data>
+  <data name="Qcom_OplusDigestInvalid" xml:space="preserve"><value>The Oplus Digest is truncated or contains unsupported ranges.</value></data>
+  <data name="Qcom_OplusLegacyModeRequired" xml:space="preserve"><value>The policy requires Legacy Digest mode.</value></data>
+  <data name="Qcom_OplusLegacyLengthInvalid" xml:space="preserve"><value>The Legacy Digest source has an invalid length.</value></data>
+  <data name="Qcom_OplusLegacyStreamMissing" xml:space="preserve"><value>The Legacy Digest source returned no stream.</value></data>
+  <data name="Qcom_OplusLegacySourceChanged" xml:space="preserve"><value>The Legacy Digest source changed or is unreadable.</value></data>
+  <data name="Qcom_OplusLegacyCommandCountExceeded" xml:space="preserve"><value>The Legacy operation exceeds the supported command count.</value></data>
+  <data name="Qcom_OplusDigestEntryInvalid" xml:space="preserve"><value>The Oplus Digest contains an invalid partition entry.</value></data>
+  <data name="Qcom_OplusDigestOverlap" xml:space="preserve"><value>The Oplus Digest contains overlapping partition entries.</value></data>
+  <data name="Qcom_OnePlusTimestampMissing" xml:space="preserve"><value>OnePlus setprocstart returned no valid device timestamp.</value></data>
+  <data name="Qcom_NothingTokenInvalid" xml:space="preserve"><value>Nothing token1 must contain 32 lowercase hexadecimal characters.</value></data>
+  <data name="Qcom_NothingSerialInvalid" xml:space="preserve"><value>Unable to format the Nothing device serial.</value></data>
+  <data name="Qcom_OnePlusPublicKeyInvalid" xml:space="preserve"><value>The OnePlus public key must contain 16 ASCII alphanumeric characters.</value></data>
+  <data name="Qcom_OnePlusTokenInvalid" xml:space="preserve"><value>The OnePlus token must contain {0} ASCII hexadecimal characters.</value></data>
+  <data name="Qcom_OnePlusProjectVerificationFailed" xml:space="preserve"><value>None of the supported OnePlus project IDs passed verification.</value></data>
+  <data name="Qcom_NothingProjectVerificationFailed" xml:space="preserve"><value>None of the supported Nothing project IDs passed verification.</value></data>
+  <data name="Qcom_LogOnePlusParamProject" xml:space="preserve"><value>Detected OnePlus project ID {0} from the param partition.</value></data>
+  <data name="Qcom_LogOnePlusParamUnavailable" xml:space="preserve"><value>Unable to detect a OnePlus project ID from the param partition; trying built-in candidates.</value></data>
+  <data name="Qcom_LogOnePlusProjectVerified" xml:space="preserve"><value>Verified OnePlus project ID {0}.</value></data>
+  <data name="Qcom_LogNothingProjectVerified" xml:space="preserve"><value>Verified Nothing project ID {0}.</value></data>
+  <data name="Qcom_LogTargetInfo" xml:space="preserve"><value>Target info: {0}</value></data>
+  <data name="Qcom_LogTransferImage" xml:space="preserve"><value>Transferring image {0}, offset {1}, length {2}</value></data>
+  <data name="Qcom_LogMemoryDebugWarning" xml:space="preserve"><value>Target entered memory debug mode; dumping memory.</value></data>
+  <data name="Qcom_LogExecuteCommand" xml:space="preserve"><value>Execute command {0}</value></data>
+  <data name="Qcom_LogSendingReset" xml:space="preserve"><value>Sending reset request.</value></data>
+  <data name="Qcom_LogResetAcknowledged" xml:space="preserve"><value>Reset request acknowledged.</value></data>
+  <data name="Qcom_LogEnteringMemoryDebug" xml:space="preserve"><value>Entering memory debug mode.</value></data>
+  <data name="Qcom_LogMemoryDebugInfo" xml:space="preserve"><value>{0}-bit memory debug, table address 0x{1:X}, length {2}</value></data>
+  <data name="Qcom_LogMemoryTableInvalid" xml:space="preserve"><value>Invalid memory table length {0}; entry size is {1} bytes.</value></data>
+  <data name="Qcom_LogDumpedRegion" xml:space="preserve"><value>Dumped region '{0}' ({1} bytes).</value></data>
+  <data name="Qcom_LogSwitchingMode" xml:space="preserve"><value>Switching to {0} mode.</value></data>
+  <data name="Qcom_LogHelloReceiveFailed" xml:space="preserve"><value>Receiving HELLO request failed.</value></data>
+  <data name="Qcom_LogOperationComplete" xml:space="preserve"><value>{0} complete: {1:N0} bytes in {2} ({3:F2} MB/s).</value></data>
+  <data name="Qcom_LogFirehoseConfigured" xml:space="preserve"><value>Firehose configured with storage type {0}.</value></data>
+  <data name="Qcom_LogDisposeSahara" xml:space="preserve"><value>Disposing Sahara protocol.</value></data>
+  <data name="Qcom_LogDisposeFirehose" xml:space="preserve"><value>Disposing Firehose protocol.</value></data>
+  <data name="Qcom_LogSendRaw" xml:space="preserve"><value>Sending raw data ({0} bytes, {1} packets).</value></data>
+  <data name="Qcom_LogSendRawCompleted" xml:space="preserve"><value>Raw data send complete (source {0} bytes, wire {1} bytes).</value></data>
+  <data name="Qcom_LogSaharaSendPacket" xml:space="preserve"><value>Sahara send {0}</value></data>
+  <data name="Qcom_LogSaharaReceivePacket" xml:space="preserve"><value>Sahara receive {0}</value></data>
+  <data name="Qcom_LogDeviceMessage" xml:space="preserve"><value>{0}</value></data>
+  <data name="Qcom_LogHelloRetry" xml:space="preserve"><value>Receiving HELLO request; {0} retries remaining.</value></data>
+  <data name="Qcom_LogTargetInfoFromHello" xml:space="preserve"><value>Set target info from HELLO request: {0}</value></data>
+  <data name="Qcom_LogMemoryRegion" xml:space="preserve"><value>Memory region: base 0x{0:X}, length 0x{1:X}, filename '{2}', description '{3}'</value></data>
+  <data name="Qcom_LogFirehoseResponseAttributes" xml:space="preserve"><value>Firehose response attributes: status={0}, count={1}, keys={2}</value></data>
+  <data name="Qcom_ConfigureNegotiationRepeated" xml:space="preserve"><value>Configure negotiation repeated an unchanged state.</value></data>
+  <data name="Qcom_XiaomiAuthenticationRequiredForConfigure" xml:space="preserve"><value>Xiaomi authentication is required for Configure.</value></data>
+  <data name="Qcom_ExplicitStorageRejected" xml:space="preserve"><value>Firehose rejected the explicitly selected storage configuration.</value></data>
+  <data name="Qcom_AllStorageRejected" xml:space="preserve"><value>Firehose rejected every supported storage configuration.</value></data>
+  <data name="Qcom_ConfigureNoActionableEvidence" xml:space="preserve"><value>Firehose Configure returned no actionable negotiation evidence.</value></data>
+  <data name="Qcom_ConfigureAttemptsExceeded" xml:space="preserve"><value>Firehose Configure exceeded {0} attempts.</value></data>
+  <data name="Qcom_FirehoseRawmodeMismatch" xml:space="preserve"><value>Firehose returned rawmode={0}, expected rawmode={1}.</value></data>
+  <data name="Qcom_FirehoseCommandRejected" xml:space="preserve"><value>Firehose rejected the command.</value></data>
+  <data name="Qcom_ByteRangeExceedsDevice" xml:space="preserve"><value>The Firehose byte range exceeds the device.</value></data>
+  <data name="Qcom_SparseBlockSizeUnaligned" xml:space="preserve"><value>The Android sparse block size must be a multiple of the Firehose sector size.</value></data>
+  <data name="Qcom_SparseExpandedRangeTooLarge" xml:space="preserve"><value>The expanded Android sparse image is larger than the target range.</value></data>
+  <data name="Qcom_OplusDigestParseFailed" xml:space="preserve"><value>The Oplus Digest could not be parsed: {0}</value></data>
+  <data name="Qcom_LogGptSkipped" xml:space="preserve"><value>Skipping GPT on LUN {PhysicalPartitionNumber}: {Reason}</value></data>
+  <data name="Qcom_GptSignatureMissing" xml:space="preserve"><value>No EFI PART signature was found at LBA 1.</value></data>
+  <data name="Qcom_GptInvalidGeometry" xml:space="preserve"><value>Invalid GPT header or entry range; exceeds device capacity or the 16 MiB metadata limit.</value></data>
+  <data name="Qcom_GptHeaderCrcInvalid" xml:space="preserve"><value>GPT header CRC validation failed.</value></data>
+  <data name="Qcom_InvalidLunCount" xml:space="preserve"><value>The device reported an invalid physical partition count.</value></data>
+  <data name="Qcom_UnknownLun" xml:space="preserve"><value>The LUN is outside the physical partitions reported by the device.</value></data>
+  <data name="Qcom_StorageRangeOutsideDevice" xml:space="preserve"><value>The requested range exceeds the device storage capacity.</value></data>
+  <data name="Qcom_StorageCapacityMissing" xml:space="preserve"><value>No usable storage capacity was reported for this LUN.</value></data>
+  <data name="Qcom_PeekLengthMismatch" xml:space="preserve"><value>The hexadecimal Peek data length does not match the request.</value></data>
+  <data name="Qcom_StoragePolicyMappingInvalid" xml:space="preserve"><value>The storage policy returned an invalid or incomplete sector mapping.</value></data>
+  <data name="Qcom_FirehoseExpectedState" xml:space="preserve"><value>The Firehose operation requires state {0}, but the session is {1}.</value></data>
+  <data name="Progress_Writing" xml:space="preserve"><value>Writing</value></data>
+  <data name="Progress_WritingPartition" xml:space="preserve"><value>Writing partition {0} (LUN {1})</value></data>
+  <data name="Progress_WritingSector" xml:space="preserve"><value>Writing LUN {0}, start sector {1}</value></data>
+  <data name="Progress_WritingFile" xml:space="preserve"><value>{0} | File {1}</value></data>
+  <data name="Progress_Reading" xml:space="preserve"><value>Reading</value></data>
+  <data name="Progress_Uploading" xml:space="preserve"><value>Uploading Loader</value></data>
+  <data name="Firehose_ResponseNotXml" xml:space="preserve"><value>The Firehose command did not receive a valid XML response.</value></data>
+  <data name="Firehose_OptionalResponseIncomplete" xml:space="preserve"><value>An incomplete XML response arrived within the Digest reply window.</value></data>
+  <data name="Qcom_LegacyNopRequired" xml:space="preserve"><value>The Legacy confirmation command must be a single NOP.</value></data>
+  <data name="Qcom_LegacyNopUnconfirmed" xml:space="preserve"><value>The Legacy Digest did not receive a correlated NOP handler and ACK.</value></data>
+  <data name="Qcom_LegacyPolicyAlreadyAttached" xml:space="preserve"><value>The Legacy policy is attached to another session.</value></data>
+  <data name="Qcom_LegacyPacketCountInvalid" xml:space="preserve"><value>The Legacy packet count exceeds the table trigger position. Reconnect the device.</value></data>
+  <data name="Qcom_DeviceTextRedacted" xml:space="preserve"><value>Device diagnostic contains sensitive material or XML and was hidden.</value></data>
+  <data name="Qcom_DeviceTextTruncated" xml:space="preserve"><value>{0}… (truncated)</value></data>
+  <data name="Firehose_XmlResponseTooLarge" xml:space="preserve"><value>Combined Firehose response XML exceeds {0} bytes.</value></data>
+  <data name="Qcom_OplusSignRequired" xml:space="preserve"><value>Oplus initialization requires a Sign. Legacy requires an explicit Sign; provide one manually when Pt has no matching chip template.</value></data>
+  <data name="Qcom_OplusSignInvalid" xml:space="preserve"><value>Oplus Sign must be a readable binary resource of 1 to 4096 bytes.</value></data>
+  <data name="Qcom_OplusSignRejected" xml:space="preserve"><value>Oplus Sign verification failed. Re-enter EDL and check the Digest and Sign.</value></data>
+  <data name="Qcom_LogOplusDigestBootstrap" xml:space="preserve"><value>Oplus startup: sending the Digest signed table.</value></data>
+  <data name="Qcom_LogOplusVerify" xml:space="preserve"><value>Oplus startup: sending verify followed by the 4096-byte Sign.</value></data>
+  <data name="Qcom_LogOplusVerified" xml:space="preserve"><value>Oplus Sign verified and initialization handled; continuing storage configuration.</value></data>
+  <data name="Qcom_LogOplusSignRejected" xml:space="preserve"><value>Oplus Sign verification failed; requesting one manual replacement.</value></data>
+  <data name="Qcom_LogStartupWait" xml:space="preserve"><value>Waiting for Firehose startup logs, budget {TimeoutMilliseconds} ms.</value></data>
+  <data name="Qcom_LogResponseTiming" xml:space="preserve"><value>Firehose response: status={Status} rawmode={RawMode} elapsed={ElapsedMilliseconds:F1} ms budget={TimeoutMilliseconds} ms.</value></data>
+  <data name="Qcom_LogWireCommand" xml:space="preserve"><value>Firehose send: command={CommandName} bytes={ByteCount}.</value></data>
+  <data name="Qcom_LogResponseInterrupted" xml:space="preserve"><value>Firehose receive interrupted: exception={ExceptionType} elapsed={ElapsedMilliseconds:F1} ms budget={TimeoutMilliseconds} ms.</value></data>
+  <data name="Qcom_ResourceRequestTimedOut" xml:space="preserve"><value>Resource request exceeded {0} ms; manual input can use an unlimited resource budget (-1).</value></data>
+  <data name="Qcom_LogOplusResume" xml:space="preserve"><value>Resuming an Oplus loader explicitly declared to await its initial Digest: skip Sahara/startup logs and send Digest first. One resend requires complete responses confirming signed-table receive after the first rejection; RAW interruption is unsupported.</value></data>
+  <data name="Qcom_LogOplusSilent" xml:space="preserve"><value>Passive Oplus detection did not receive a complete protocol prefix. A running loader may not replay logs; use CLI --oplus-resume only when it is known to await its initial Digest, otherwise re-enter EDL.</value></data>
+  <data name="Qcom_OplusSha256InitUnconfirmed" xml:space="preserve"><value>Oplus sha256init received neither a complete ACK nor the known compatibility response.</value></data>
+  <data name="Qcom_LogOplusSha256Compatibility" xml:space="preserve"><value>Oplus sha256init returned only the known complete error log without ACK; continuing Configure according to the reference flow after verified Sign.</value></data>
+  <data name="Qcom_OplusVerifyRestarted" xml:space="preserve"><value>Oplus Verify was rejected and the device is awaiting Digest again; Sign was not sent. Check resources and re-enter EDL.</value></data>
+  <data name="Qcom_DeviceHashMismatch" xml:space="preserve"><value>The device reports a packet Hash mismatch (original Hash omitted).</value></data>
+  <data name="Qcom_DeviceTableHashMismatch" xml:space="preserve"><value>The device reports a new Digest table Hash mismatch (original Hash omitted).</value></data>
+  <data name="Qcom_LogLegacyPacketCount" xml:space="preserve"><value>Legacy table packet count: {PacketCount}, capacity {TableCapacity}.</value></data>
+  <data name="Qcom_LogLegacyDigestBoundary" xml:space="preserve"><value>Legacy table boundary: sent {PacketCount}, capacity {TableCapacity}, remaining {Remaining}; padding and refreshing according to the reference flow.</value></data>
+  <data name="Qcom_LogOplusResumeDigestRetry" xml:space="preserve"><value>The initial Digest of explicit Oplus resume was rejected by the XML session; complete responses confirm signed-table receive. Resending the same Digest once.</value></data>
+  <data name="Progress_SaharaReady" xml:space="preserve"><value>Device identified</value></data>
+  <data name="Qcom_LogXiaomiAuthenticationAttempt" xml:space="preserve"><value>Xiaomi built-in authentication attempt {Attempt}: accepted={Accepted}, elapsed {ElapsedMilliseconds:F1} ms.</value></data>
+  <data name="Qcom_LogFirehoseProbeRejected" xml:space="preserve"><value>The device rejected the Sahara wake-up packet with complete XML; confirming the running Firehose session with NOP.</value></data>
+  <data name="Qcom_FirehoseResumeUnconfirmed" xml:space="preserve"><value>The device returned a Firehose response, but NOP was not confirmed. Check the device state and reconnect.</value></data>
+  <data name="Qcom_ByteReadSectorTooLarge" xml:space="preserve"><value>Firehose byte reads do not support logical sectors larger than 65536 bytes.</value></data>
+  <data name="Qcom_LogOplusModeDetected" xml:space="preserve"><value>Oplus mode automatically detected from Digest content: {OplusMode}.</value></data>
+  <data name="Qcom_PblAttemptsExhausted" xml:space="preserve"><value>Snapdragon 665 PBL Patch did not reach bootstrap transfer after 100 attempts.</value></data>
+  <data name="Qcom_PblUnexpectedPacket" xml:space="preserve"><value>PBL Patch received an unexpected Sahara command or packet length.</value></data>
+  <data name="Qcom_PblResourceInvalid" xml:space="preserve"><value>PBL Patch embedded resources are missing or have invalid lengths.</value></data>
+  <data name="Qcom_LogPblStart" xml:space="preserve"><value>Snapdragon {Chip} detected. Running Patch PBL…</value></data>
+  <data name="Qcom_LogPblLoaderTransfer" xml:space="preserve"><value>PBL Patch exchange completed; continuing Loader upload.</value></data>
+  <data name="Qcom_PblLoaderRangeInvalid" xml:space="preserve"><value>The Loader read request after PBL Patch is out of bounds or exceeds 4 MiB.</value></data>
+  <data name="Qcom_PblBootstrapRequestInvalid" xml:space="preserve"><value>The Snapdragon 665 PBL Patch request does not match the captured bootstrap ranges or order.</value></data>
+  <data name="Qcom_ScriptAttributeMissing" xml:space="preserve"><value>XML command {0} is missing attribute {1}.</value></data>
+  <data name="Qcom_ScriptInvalid" xml:space="preserve"><value>Invalid XML script structure or command attributes.</value></data>
+  <data name="Qcom_ScriptExpressionInvalid" xml:space="preserve"><value>The XML script contains an unsupported or out-of-range expression.</value></data>
+  <data name="Qcom_ScriptPowerMustBeLast" xml:space="preserve"><value>power must be the last executed command in an XML script.</value></data>
+  <data name="Qcom_ScriptCommandFailed" xml:space="preserve"><value>An XML script command failed; reconnect the session.</value></data>
+  <data name="Qcom_ScriptReadbackUnsupported" xml:space="preserve"><value>XML readbackverify is not implemented for program.</value></data>
+  <data name="Qcom_ScriptSourceInvalid" xml:space="preserve"><value>XML image sources must be nonempty, readable and seekable with valid file offsets.</value></data>
+  <data name="Qcom_ScriptExecuting" xml:space="preserve"><value>XML {0}/{1}: {2}</value></data>
+  <data name="Qcom_SignedTableAnnouncementInvalid" xml:space="preserve"><value>The signed-table waiting response is not a complete, valid log XML document. Reconnect the target.</value></data>
+  <data name="Qcom_SignedTableModeRequired" xml:space="preserve"><value>The target is waiting for a signed table. Explicitly select Oplus/OnePlus and DigestPt or Legacy, then provide Digest and Sign. Configure VIP signed tables for generic VIP targets.</value></data>
+  <data name="Qcom_LogSignedTableAwaitingSelection" xml:space="preserve"><value>Firehose is waiting for a signed table; materials will be requested after vendor and authentication mode selection.</value></data>
+  <data name="Qcom_PatchProgramIoUnsupported" xml:space="preserve"><value>PATCH programming cannot represent special PROGRAM I/O options; use Program mode.</value></data>
+  <data name="Qcom_LogPatchProgramFallback" xml:space="preserve"><value>The device explicitly rejected PROGRAM as unsupported; subsequent writes in this session use PATCH (at most 8 bytes each).</value></data>
+  <data name="Qcom_LogPatchProgramStart" xml:space="preserve"><value>PATCH programming started: LUN {Lun}, start sector {StartSector}, {Bytes} bytes, approximately {Commands} commands.</value></data>
+  <data name="Qcom_LogPatchProgramCommand" xml:space="preserve"><value>PATCH send: LUN {Lun}, sector {Sector}, byte offset {ByteOffset}, length {Bytes}, command {CommandIndex}, {ConfirmedBytes} bytes confirmed.</value></data>
+  <data name="Qcom_LogPatchProgramAck" xml:space="preserve"><value>PATCH ACK: command {CommandIndex}, {ConfirmedBytes}/{TotalBytes} bytes confirmed.</value></data>
+  <data name="Qcom_LogPatchProgramCompleted" xml:space="preserve"><value>PATCH programming completed: {Bytes} bytes, {Commands} commands, elapsed {ElapsedMilliseconds:F0} ms.</value></data>
+  <data name="Qcom_LogPatchProgramFailed" xml:space="preserve"><value>PATCH programming stopped: LUN {Lun}, sector {Sector}, byte offset {ByteOffset}, {ConfirmedBytes}/{TotalBytes} bytes confirmed; uncertain writes are not retried.</value></data>
+</root>
