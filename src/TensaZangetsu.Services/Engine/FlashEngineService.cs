@@ -1,4 +1,4 @@
-﻿using System.Buffers.Binary;
+using System.Buffers.Binary;
 using System.Globalization;
 using System.IO.Ports;
 using System.Management;
@@ -189,9 +189,15 @@ public class FlashEngineService
         return end > start ? text.Substring(start + 1, end - start - 1) : null;
     }
 
+    public Task<Dictionary<string, string>> ReadDeviceInfoAsync(
+        DeviceModel? model,
+        string? optionalRomPath,
+        CancellationToken ct) => ReadDeviceInfoAsync(model, optionalRomPath, explicitPortName: null, ct);
+
     public async Task<Dictionary<string, string>> ReadDeviceInfoAsync(
         DeviceModel? model = null,
         string? optionalRomPath = null,
+        string? explicitPortName = null,
         CancellationToken ct = default)
     {
         return await Task.Run(async () =>
@@ -199,7 +205,27 @@ public class FlashEngineService
             var info = new Dictionary<string, string>();
             ReportProgress("Escaneando bus USB / Puertos COM...", 15);
 
-            var (portName, platform, desc) = DetectConnectedHardwarePort();
+            string? portName = explicitPortName;
+            string platform = "MTK";
+            string desc = explicitPortName != null ? $"Puerto ({explicitPortName})" : "";
+
+            if (string.IsNullOrEmpty(portName))
+            {
+                var detected = DetectConnectedHardwarePort();
+                portName = detected.PortName;
+                platform = detected.Platform;
+                desc = detected.Description;
+            }
+            else
+            {
+                var detected = DetectConnectedHardwarePort();
+                if (!string.IsNullOrEmpty(detected.Platform) && detected.Platform != "NONE")
+                {
+                    platform = detected.Platform;
+                    desc = detected.Description;
+                }
+            }
+
             if (string.IsNullOrEmpty(portName))
                 throw new InvalidOperationException("No se detectó ningún teléfono en modo BROM, Preloader, EDL 9008 o UNISOC.");
 
@@ -746,7 +772,7 @@ public class FlashEngineService
         return Task.FromResult(true);
     }
 
-    private static SerialPort OpenSerialPort(string portName)
+    public static SerialPort OpenSerialPort(string portName)
     {
         var port = new SerialPort(portName, 115200, Parity.None, 8, StopBits.One)
         {
@@ -761,7 +787,7 @@ public class FlashEngineService
         return port;
     }
 
-    private static void PerformMtkHandshake(SerialPort port, CancellationToken ct)
+    public static void PerformMtkHandshake(SerialPort port, CancellationToken ct)
     {
         ReadOnlySpan<byte> tx = [0xA0, 0x0A, 0x50, 0x05];
         ReadOnlySpan<byte> rx = [0x5F, 0xF5, 0xAF, 0xFA];
@@ -780,7 +806,7 @@ public class FlashEngineService
         }
     }
 
-    private static ushort ReadMtkHwCode(SerialPort port)
+    public static ushort ReadMtkHwCode(SerialPort port)
     {
         port.Write([0xFD], 0, 1);
         if (port.ReadByte() != 0xFD) throw new IOException("Sin eco en GET_HW_CODE (0xFD).");
@@ -789,7 +815,7 @@ public class FlashEngineService
         return BinaryPrimitives.ReadUInt16BigEndian(buf[..2]);
     }
 
-    private static (ushort Sub, ushort Hw, ushort Sw) ReadMtkVers(SerialPort port)
+    public static (ushort Sub, ushort Hw, ushort Sw) ReadMtkVers(SerialPort port)
     {
         port.Write([0xFC], 0, 1);
         if (port.ReadByte() != 0xFC) return (0, 0, 0);
@@ -802,7 +828,7 @@ public class FlashEngineService
         );
     }
 
-    private static uint ReadMtkTargetConfig(SerialPort port)
+    public static uint ReadMtkTargetConfig(SerialPort port)
     {
         try
         {
@@ -815,7 +841,7 @@ public class FlashEngineService
         catch { return 0; }
     }
 
-    private static void DisableMtkWatchdog(SerialPort port)
+    public static void DisableMtkWatchdog(SerialPort port)
     {
         try
         {
@@ -833,7 +859,7 @@ public class FlashEngineService
         catch { }
     }
 
-    private static void ReadExact(SerialPort port, Span<byte> buf)
+    public static void ReadExact(SerialPort port, Span<byte> buf)
     {
         int read = 0;
         while (read < buf.Length)

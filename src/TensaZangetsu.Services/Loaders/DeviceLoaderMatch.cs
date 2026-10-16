@@ -1,4 +1,4 @@
-﻿namespace TensaZangetsu.Services.Loaders;
+namespace TensaZangetsu.Services.Loaders;
 
 /// <summary>
 /// Huella de hardware del dispositivo conectado (Qualcomm, MediaTek o UNISOC).
@@ -22,4 +22,10 @@ public sealed record ResolvedLoaderBundle(
     string? SprdFdl2Path = null,
     ulong SprdFdl1Address = 0,
     ulong SprdFdl2Address = 0,
-    string? AuthFilePath = null);
+    string? AuthFilePath = null,
+    string? ScatterPath = null,
+    string? CertPath = null,
+    string? ModelMatch = null,
+    MtkDaVariant? SelectedVariant = null,
+    IReadOnlyList<MtkDaVariant>? CandidateDaVariants = null,
+    IReadOnlyList<string>? CandidateDaFallbacks = null);

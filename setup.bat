@@ -29,7 +29,7 @@ echo.
 
 REM Restaurar dependencias
 echo [*] Restaurando dependencias...
-dotnet restore
+dotnet restore TensaZangetsu.sln
 if %errorlevel% neq 0 (
     echo [X] Error al restaurar las dependencias.
     pause
@@ -39,7 +39,7 @@ if %errorlevel% neq 0 (
 REM Compilar el proyecto
 echo.
 echo [*] Compilando la solucion...
-dotnet build TensaZangetsu.slnx
+dotnet build TensaZangetsu.sln
 if %errorlevel% neq 0 (
     echo [X] Error durante la compilacion. Revisa el registro arriba.
     pause

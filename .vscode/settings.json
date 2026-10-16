@@ -1,0 +1,4 @@
+{
+    "dotnet.defaultSolution": "TensaZangetsu.sln",
+    "omnisharp.defaultLaunchSolution": "TensaZangetsu.sln"
+}

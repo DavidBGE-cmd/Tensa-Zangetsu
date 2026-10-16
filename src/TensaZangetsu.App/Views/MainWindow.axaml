@@ -1,277 +1,531 @@
-﻿<Window xmlns="https://github.com/avaloniaui"
+<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:TensaZangetsu.App.ViewModels"
         x:Class="TensaZangetsu.App.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         x:CompileBindings="False"
-        Title="Tensa-Zangetsu • Universal Servicing Suite (MTK BROM/V5/V6 • Qualcomm EDL • Unisoc BSL)"
-        Width="1240" Height="780" MinWidth="1080" MinHeight="680"
+        Title="TENSA-ZANGETSU PRO • Universal Flashing &amp; Servicing Suite (Matrix Green Technical Studio)"
+        Width="1360" Height="860" MinWidth="1120" MinHeight="720"
         WindowStartupLocation="CenterScreen"
-        Background="#14161A" Foreground="#ECEFF1">
+        Background="#000000" Foreground="#E0FFE8">
 
   <Window.Styles>
+    <!-- Botón General de Taller (Matrix Green / Pandonymus Style) -->
     <Style Selector="Button">
-      <Setter Property="CornerRadius" Value="4"/>
+      <Setter Property="CornerRadius" Value="3"/>
       <Setter Property="Padding" Value="10,6"/>
       <Setter Property="HorizontalContentAlignment" Value="Center"/>
       <Setter Property="VerticalContentAlignment" Value="Center"/>
-      <Setter Property="Background" Value="#222733"/>
-      <Setter Property="Foreground" Value="#ECEFF1"/>
+      <Setter Property="Background" Value="#08120A"/>
+      <Setter Property="Foreground" Value="#00FF66"/>
       <Setter Property="BorderThickness" Value="1"/>
-      <Setter Property="BorderBrush" Value="#31394A"/>
+      <Setter Property="BorderBrush" Value="#00CC44"/>
+      <Setter Property="FontSize" Value="11.5"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
     <Style Selector="Button:hover">
-      <Setter Property="Background" Value="#2D3444"/>
-      <Setter Property="BorderBrush" Value="#455A64"/>
+      <Setter Property="Background" Value="#142C19"/>
+      <Setter Property="BorderBrush" Value="#00FF66"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
     </Style>
+    <Style Selector="Button:pressed">
+      <Setter Property="Background" Value="#050C07"/>
+      <Setter Property="BorderBrush" Value="#00882B"/>
+    </Style>
+
+    <!-- Botón de Acción Primaria con Brillo (Glow) -->
+    <Style Selector="Button.action-primary">
+      <Setter Property="Background" Value="#0B1C0F"/>
+      <Setter Property="Foreground" Value="#00FF66"/>
+      <Setter Property="BorderBrush" Value="#00FF66"/>
+      <Setter Property="BorderThickness" Value="1.5"/>
+      <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    <Style Selector="Button.action-primary:hover">
+      <Setter Property="Background" Value="#173D21"/>
+      <Setter Property="BorderBrush" Value="#00FF66"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+
+    <!-- Botones de Navegación Vertical (Sidebar) -->
+    <Style Selector="Button.navbtn">
+      <Setter Property="Background" Value="#060C08"/>
+      <Setter Property="BorderBrush" Value="#00CC44"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="CornerRadius" Value="3"/>
+      <Setter Property="HorizontalContentAlignment" Value="Left"/>
+      <Setter Property="Padding" Value="12,0"/>
+      <Setter Property="Height" Value="48"/>
+      <Setter Property="Foreground" Value="#E0FFE8"/>
+    </Style>
+    <Style Selector="Button.navbtn:hover">
+      <Setter Property="Background" Value="#102616"/>
+      <Setter Property="BorderBrush" Value="#00FF66"/>
+      <Setter Property="Foreground" Value="#00FF66"/>
+    </Style>
+
+    <!-- ComboBox de Taller -->
     <Style Selector="ComboBox">
-      <Setter Property="Background" Value="#1A1E27"/>
-      <Setter Property="BorderBrush" Value="#2F3646"/>
-      <Setter Property="CornerRadius" Value="4"/>
-      <Setter Property="Padding" Value="8,4"/>
-      <Setter Property="Foreground" Value="#ECEFF1"/>
-    </Style>
-    <Style Selector="TextBox">
-      <Setter Property="Background" Value="#10131A"/>
-      <Setter Property="BorderBrush" Value="#2A3140"/>
-      <Setter Property="CornerRadius" Value="4"/>
-      <Setter Property="Foreground" Value="#ECEFF1"/>
+      <Setter Property="Background" Value="#050A07"/>
+      <Setter Property="BorderBrush" Value="#00CC44"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="CornerRadius" Value="3"/>
       <Setter Property="Padding" Value="8,5"/>
+      <Setter Property="Foreground" Value="#E0FFE8"/>
+      <Setter Property="FontSize" Value="11.5"/>
     </Style>
-    <Style Selector="TabItem">
-      <Setter Property="FontSize" Value="13"/>
-      <Setter Property="FontWeight" Value="SemiBold"/>
-      <Setter Property="Padding" Value="18,8"/>
-      <Setter Property="Foreground" Value="#90A4AE"/>
+    <Style Selector="ComboBox:hover">
+      <Setter Property="BorderBrush" Value="#00FF66"/>
     </Style>
-    <Style Selector="TabItem:selected">
-      <Setter Property="Foreground" Value="#00E5FF"/>
+
+    <!-- TextBox de Taller -->
+    <Style Selector="TextBox">
+      <Setter Property="Background" Value="#040805"/>
+      <Setter Property="BorderBrush" Value="#00CC44"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="CornerRadius" Value="3"/>
+      <Setter Property="Foreground" Value="#00FF66"/>
+      <Setter Property="FontFamily" Value="Consolas, Cascadia Code, Courier New"/>
+      <Setter Property="Padding" Value="8,5"/>
+      <Setter Property="FontSize" Value="11.5"/>
+    </Style>
+    <Style Selector="TextBox:focus">
+      <Setter Property="BorderBrush" Value="#00FF66"/>
+    </Style>
+
+    <!-- Expander -->
+    <Style Selector="Expander">
+      <Setter Property="Background" Value="#060C08"/>
+      <Setter Property="BorderBrush" Value="#00CC44"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="CornerRadius" Value="3"/>
+      <Setter Property="Foreground" Value="#00FF66"/>
     </Style>
   </Window.Styles>
 
-  <Grid ColumnDefinitions="390,*">
+  <Grid RowDefinitions="52,*,175">
 
     <!-- ======================================================== -->
-    <!-- COLUMNA IZQUIERDA: CONEXIÓN, LOADERS Y CONSOLA DE LOGS   -->
+    <!-- FILA 0: ENCABEZADO SUPERIOR (ESTUDIO TÉCNICO & ESTADO)   -->
     <!-- ======================================================== -->
-    <Border Grid.Column="0" Background="#111317" BorderBrush="#20242E" BorderThickness="0,0,1,0" Padding="14">
-      <Grid RowDefinitions="Auto,*,Auto">
+    <Border Grid.Row="0" Background="#050906" BorderBrush="#00CC44" BorderThickness="0,0,0,1" Padding="14,0">
+      <Grid ColumnDefinitions="Auto,*,Auto">
 
-        <!-- 1. SELECTORES SUPERIORES DE CONEXIÓN -->
-        <StackPanel Grid.Row="0" Spacing="9" Margin="0,0,0,10">
-
-          <!-- Fila Port -->
-          <Grid ColumnDefinitions="65,*,Auto">
-            <TextBlock Text="Port :-" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" FontWeight="SemiBold"/>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding AvailablePorts}" SelectedItem="{Binding SelectedPort}" HorizontalAlignment="Stretch" Margin="0,0,6,0"/>
-            <Button Grid.Column="2" Content="🔄" ToolTip.Tip="Escanear Puertos" Command="{Binding RefreshPortsCommand}" Padding="8,4"/>
-          </Grid>
-
-          <!-- Fila Base -->
-          <Grid ColumnDefinitions="65,*">
-            <TextBlock Text="Base :-" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" FontWeight="SemiBold"/>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding AvailableBases}" SelectedItem="{Binding SelectedBase}" HorizontalAlignment="Stretch"/>
-          </Grid>
-
-          <!-- Fila Loader -->
-          <Grid ColumnDefinitions="65,*">
-            <TextBlock Text="Loader :-" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" FontWeight="SemiBold"/>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding AvailableLoaders}" SelectedItem="{Binding SelectedLoader}" HorizontalAlignment="Stretch"/>
-          </Grid>
-
-          <!-- Expander Custom DA/Preloader/Auth -->
-          <Expander Header="▶ Custom (DA, Preloader &amp; Auth)" IsExpanded="{Binding IsCustomExpanded}"
-                    Background="#171A21" BorderBrush="#252B38" CornerRadius="4" Padding="6" Margin="0,2,0,0">
-            <StackPanel Spacing="6" Margin="0,4,0,0">
-              <Grid ColumnDefinitions="75,*,Auto">
-                <TextBlock Text="DA File:" VerticalAlignment="Center" FontSize="11" Foreground="#90A4AE"/>
-                <TextBox Grid.Column="1" Text="{Binding CustomDaPath}" PlaceholderText="MTK_AllInOne_DA.bin" FontSize="11" Margin="0,0,4,0"/>
-                <Button Grid.Column="2" Content="..." Command="{Binding BrowseCustomDaCommand}" Padding="6,2"/>
-              </Grid>
-              <Grid ColumnDefinitions="75,*,Auto">
-                <TextBlock Text="Preloader:" VerticalAlignment="Center" FontSize="11" Foreground="#90A4AE"/>
-                <TextBox Grid.Column="1" Text="{Binding CustomPreloaderPath}" PlaceholderText="preloader.bin" FontSize="11" Margin="0,0,4,0"/>
-                <Button Grid.Column="2" Content="..." Command="{Binding BrowseCustomPreloaderCommand}" Padding="6,2"/>
-              </Grid>
-              <Grid ColumnDefinitions="75,*,Auto">
-                <TextBlock Text="Auth File:" VerticalAlignment="Center" FontSize="11" Foreground="#90A4AE"/>
-                <TextBox Grid.Column="1" Text="{Binding CustomAuthPath}" PlaceholderText="auth_sv5.auth / *.bin" FontSize="11" Margin="0,0,4,0"/>
-                <Button Grid.Column="2" Content="..." Command="{Binding BrowseCustomAuthCommand}" Padding="6,2"/>
-              </Grid>
-            </StackPanel>
-          </Expander>
-
+        <!-- LOGO Y BRANDING SUITE -->
+        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+          <Border Width="30" Height="30" Background="#0A180E" BorderBrush="#00FF66" BorderThickness="1.5" CornerRadius="4">
+            <TextBlock Text="⚡" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#00FF66"/>
+          </Border>
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="TENSA-ZANGETSU" FontSize="14" FontWeight="Black" Foreground="#FFFFFF" LetterSpacing="0.8"/>
+            <TextBlock Text="STUDIO PRO V22 • MATRIX GREEN SERVICING SUITE" FontSize="9.5" FontWeight="Bold" Foreground="#00FF66" FontFamily="Consolas, Cascadia Code"/>
+          </StackPanel>
         </StackPanel>
 
-        <!-- 2. CONSOLA DE LOGS PRINCIPAL -->
-        <Border Grid.Row="1" Background="#090B0E" BorderBrush="#1C212B" BorderThickness="1" CornerRadius="4" Padding="8">
-          <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding LogMessages}">
-              <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock Text="{Binding Message}" Foreground="{Binding ColorHex}" FontFamily="Consolas, Cascadia Code, Courier New"
-                             FontSize="11.5" Margin="0,1" TextWrapping="Wrap"/>
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
-          </ScrollViewer>
+        <!-- BANNER CENTRAL DE CONEXIÓN EN TIEMPO REAL (PANDONYMUS STYLE) -->
+        <Border Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                Background="#020503" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="16" Padding="14,5">
+          <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+            <!-- Indicador luminoso de estado -->
+            <Ellipse Width="10" Height="10" Fill="{Binding ConnectionBadgeColor}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding ConnectionStatusBadge}" FontWeight="SemiBold" FontSize="11.5" Foreground="#E0FFE8" VerticalAlignment="Center"/>
+            <Separator Width="1" Height="14" Background="#00CC44" Margin="4,0"/>
+            <TextBlock Text="{Binding DetectedChipsetBanner}" FontSize="11" Foreground="#00FF66" FontFamily="Consolas, Cascadia Code" VerticalAlignment="Center"/>
+          </StackPanel>
         </Border>
 
-        <!-- 3. BARRA INFERIOR DE PROGRESO Y CANCELACIÓN -->
-        <Border Grid.Row="2" Margin="0,10,0,0">
-          <Grid ColumnDefinitions="Auto,*,Auto,Auto" VerticalAlignment="Center">
-            <TextBlock Grid.Column="0" Text="{Binding ProgressStatusText}" Foreground="#B0BEC5" FontSize="11.5" FontWeight="SemiBold"
-                       VerticalAlignment="Center" Margin="0,0,8,0" MaxWidth="110" TextTrimming="CharacterEllipsis"/>
-
-            <ProgressBar Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding ProgressValue}"
-                         Height="12" CornerRadius="3" Background="#1D222C" Foreground="#00E676" VerticalAlignment="Center"/>
-
-            <TextBlock Grid.Column="2" Text="{Binding ProgressValue, StringFormat='{}{0}%'}" Foreground="#00E676" FontSize="11" FontWeight="Bold"
-                       VerticalAlignment="Center" Margin="8,0,10,0" Width="35" TextAlignment="Right"/>
-
-            <Button Grid.Column="3" Content="Cancel" Command="{Binding CancelOperationCommand}"
-                    Background="#261B20" BorderBrush="#4A262E" Foreground="#FF5252" Padding="12,4" FontSize="11"/>
-          </Grid>
-        </Border>
+        <!-- SELECTOR RÁPIDO DE PUERTO EN CABECERA -->
+        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
+          <TextBlock Text="PORT:" VerticalAlignment="Center" Foreground="#4D7A58" FontSize="11" FontWeight="Bold"/>
+          <ComboBox ItemsSource="{Binding AvailablePorts}" SelectedItem="{Binding SelectedPort}" MinWidth="150" Height="32"/>
+          <Button Content="🔄" ToolTip.Tip="Escanear Puertos de Hardware" Command="{Binding RefreshPortsCommand}" Height="32" Padding="8,4"/>
+        </StackPanel>
 
       </Grid>
     </Border>
 
     <!-- ======================================================== -->
-    <!-- COLUMNA DERECHA: PESTAÑAS (Service, Flash, Tools, etc.)  -->
+    <!-- FILA 1: WORKSPACE PRINCIPAL (SIDEBAR + MÓDULOS)          -->
     <!-- ======================================================== -->
-    <TabControl Grid.Column="1" Background="Transparent" Margin="10,6">
+    <Grid Grid.Row="1" ColumnDefinitions="235,*">
 
-      <!-- ==================== PESTAÑA 1: SERVICE ==================== -->
-      <TabItem Header="Service">
-        <ScrollViewer Padding="12">
-          <StackPanel Spacing="10" MaxWidth="680" HorizontalAlignment="Left">
+      <!-- ==================== SIDEBAR DE NAVEGACIÓN ==================== -->
+      <Border Grid.Column="0" Background="#040805" BorderBrush="#00CC44" BorderThickness="0,0,1,0" Padding="10,12">
+        <Grid RowDefinitions="Auto,*,Auto">
 
-            <!-- Botones Primarios de Operación -->
-            <Button Content="Read Info" Command="{Binding ReadInfoCommand}"
-                    HorizontalAlignment="Stretch" Height="38" Background="#1A202C" BorderBrush="#2D3748"
-                    Foreground="#00E5FF" FontWeight="Bold" FontSize="13"/>
+          <!-- Título Menú -->
+          <TextBlock Grid.Row="0" Text="PANEL MODULAR DE TALLER" Foreground="#4D7A58" FontSize="10" FontWeight="Bold" Margin="6,0,0,10" LetterSpacing="0.8"/>
 
-            <Button Content="Remove FRP" Command="{Binding RemoveFrpCommand}"
-                    HorizontalAlignment="Stretch" Height="38" Background="#1A202C" BorderBrush="#2D3748"
-                    Foreground="#00E676" FontWeight="Bold" FontSize="13"/>
+          <!-- Botones de Navegación Vertical -->
+          <StackPanel Grid.Row="1" Spacing="6">
 
-            <Separator Background="#222836" Margin="0,4"/>
+            <!-- MÓDULO 0: CONEXIÓN & BOOT -->
+            <Button Classes="navbtn" Command="{Binding SelectModuleCommand}" CommandParameter="0"
+                    HorizontalAlignment="Stretch">
+              <Grid ColumnDefinitions="Auto,*">
+                <TextBlock Text="🔌" FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                  <TextBlock Text="Conexión &amp; Boot" FontWeight="Bold" FontSize="12" Foreground="#FFFFFF"/>
+                  <TextBlock Text="BROM / Fastboot / EDL" FontSize="10" Foreground="#00FF66"/>
+                </StackPanel>
+              </Grid>
+            </Button>
 
-            <!-- Fila Factory Reset -->
-            <Grid ColumnDefinitions="140,*,75">
-              <TextBlock Text="Factory Reset:-" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" FontWeight="SemiBold"/>
+            <!-- MÓDULO 1: SERVICIOS & SEGURIDAD -->
+            <Button Classes="navbtn" Command="{Binding SelectModuleCommand}" CommandParameter="1"
+                    HorizontalAlignment="Stretch">
+              <Grid ColumnDefinitions="Auto,*">
+                <TextBlock Text="🛡️" FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                  <TextBlock Text="Servicios &amp; Seguridad" FontWeight="Bold" FontSize="12" Foreground="#FFFFFF"/>
+                  <TextBlock Text="FRP / Bootloader / Auth" FontSize="10" Foreground="#00FF66"/>
+                </StackPanel>
+              </Grid>
+            </Button>
+
+            <!-- MÓDULO 2: GESTIÓN DE PARTICIONES -->
+            <Button Classes="navbtn" Command="{Binding SelectModuleCommand}" CommandParameter="2"
+                    HorizontalAlignment="Stretch">
+              <Grid ColumnDefinitions="Auto,*">
+                <TextBlock Text="💾" FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                  <TextBlock Text="Gestión Particiones" FontWeight="Bold" FontSize="12" Foreground="#FFFFFF"/>
+                  <TextBlock Text="Dump / Flash / GPT Fix" FontSize="10" Foreground="#00FF66"/>
+                </StackPanel>
+              </Grid>
+            </Button>
+
+            <!-- MÓDULO 3: AYUDA Y TESTPOINTS -->
+            <Button Classes="navbtn" Command="{Binding SelectModuleCommand}" CommandParameter="3"
+                    HorizontalAlignment="Stretch">
+              <Grid ColumnDefinitions="Auto,*">
+                <TextBlock Text="🔬" FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                  <TextBlock Text="Ayuda y TestPoints" FontWeight="Bold" FontSize="12" Foreground="#FFFFFF"/>
+                  <TextBlock Text="Visor de Hardware" FontSize="10" Foreground="#00FF66"/>
+                </StackPanel>
+              </Grid>
+            </Button>
+
+            <!-- MÓDULO 4: AJUSTES & ENGINE -->
+            <Button Classes="navbtn" Command="{Binding SelectModuleCommand}" CommandParameter="4"
+                    HorizontalAlignment="Stretch">
+              <Grid ColumnDefinitions="Auto,*">
+                <TextBlock Text="⚙️" FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                  <TextBlock Text="Ajustes &amp; Engine" FontWeight="Bold" FontSize="12" Foreground="#FFFFFF"/>
+                  <TextBlock Text="Baudrate &amp; Opciones" FontSize="10" Foreground="#4D7A58"/>
+                </StackPanel>
+              </Grid>
+            </Button>
+
+          </StackPanel>
+
+          <!-- TARJETA INFORMATIVA INFERIOR DE SIDEBAR -->
+          <Border Grid.Row="2" Background="#060C08" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="4" Padding="10">
+            <StackPanel Spacing="4">
+              <TextBlock Text="⚡ RESUMEN DE RECURSOS" FontSize="10" FontWeight="Bold" Foreground="#00FF66"/>
+              <TextBlock Text="• Assets Manifest: 11,000+ files" FontSize="9.5" Foreground="#80FF9E"/>
+              <TextBlock Text="• Multi-DA Variants: Activo" FontSize="9.5" Foreground="#00FF66"/>
+              <TextBlock Text="• 201+ TestPoints Indexados" FontSize="9.5" Foreground="#E0FFE8"/>
+              <TextBlock Text="• Moto Tiger T606 / Reno / CC9" FontSize="9.5" Foreground="#80FF9E"/>
+            </StackPanel>
+          </Border>
+
+        </Grid>
+      </Border>
+
+      <!-- ==================== CONTENIDO DEL MÓDULO ACTIVO ==================== -->
+      <Grid Grid.Column="1" Margin="14,10">
+
+        <!-- ======================================================== -->
+        <!-- MÓDULO 0: CONEXIÓN & BOOT (BROM / FASTBOOT / EDL)        -->
+        <!-- ======================================================== -->
+        <Grid IsVisible="{Binding IsModule0Active}" ColumnDefinitions="*,*">
+
+          <!-- COLUMNA 1: SELECTORES DE DISPOSITIVO Y MULTI-DA -->
+          <ScrollViewer Grid.Column="0" Padding="0,0,10,0">
+            <StackPanel Spacing="10">
+
+              <!-- TARJETA DE PARÁMETROS BÁSICOS -->
+              <Border Background="#060C08" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="4" Padding="12">
+                <StackPanel Spacing="9">
+                  <TextBlock Text="SELECCIÓN DE PLATAFORMA Y HARDWARE" FontSize="11" FontWeight="Bold" Foreground="#00FF66"/>
+
+                  <!-- Fila Plataforma Base -->
+                  <Grid ColumnDefinitions="90,*">
+                    <TextBlock Text="Plataforma:" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" FontWeight="SemiBold"/>
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding AvailableBases}" SelectedItem="{Binding SelectedBase}" HorizontalAlignment="Stretch"/>
+                  </Grid>
+
+                  <!-- Fila Loader Mode -->
+                  <Grid ColumnDefinitions="90,*">
+                    <TextBlock Text="Loader Mode:" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" FontWeight="SemiBold"/>
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding AvailableLoaders}" SelectedItem="{Binding SelectedLoader}" HorizontalAlignment="Stretch"/>
+                  </Grid>
+
+                  <!-- Fila Marca (Brand) -->
+                  <Grid ColumnDefinitions="90,*">
+                    <TextBlock Text="Fabricante:" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" FontWeight="SemiBold"/>
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding AvailableBrands}" SelectedItem="{Binding SelectedBrand}" HorizontalAlignment="Stretch"/>
+                  </Grid>
+
+                  <!-- Fila Modelo (Model) -->
+                  <Grid ColumnDefinitions="90,*">
+                    <TextBlock Text="Modelo:" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" FontWeight="SemiBold"/>
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding AvailableDeviceModels}" SelectedItem="{Binding SelectedDeviceModel}"
+                              PlaceholderText="Seleccionar modelo indexado..." HorizontalAlignment="Stretch"/>
+                  </Grid>
+                </StackPanel>
+              </Border>
+
+              <!-- TARJETA DESTACADA: EL MULTI-DA SELECTOR (DINÁMICO) -->
+              <Border Background="#08140B" BorderBrush="#00FF66" BorderThickness="1.5" CornerRadius="4" Padding="12">
+                <StackPanel Spacing="8">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                      <TextBlock Text="⚡ MULTI-DA SELECTOR" FontSize="11.5" FontWeight="Bold" Foreground="#00FF66"/>
+                      <Border Background="#00FF66" CornerRadius="3" Padding="5,1" VerticalAlignment="Center" IsVisible="{Binding HasMultipleDaVariants}">
+                        <TextBlock Text="MÚLTIPLES VERSIONES" FontSize="9" FontWeight="Bold" Foreground="#000000"/>
+                      </Border>
+                    </StackPanel>
+                    <CheckBox Grid.Column="1" IsChecked="{Binding IsAutoDaFallbackEnabled}" Content="Modo Auto-Fallback" FontSize="11" Foreground="#E0FFE8"/>
+                  </Grid>
+
+                  <TextBlock Text="Variante DA para el modelo seleccionado:" FontSize="10.5" Foreground="#80FF9E"/>
+
+                  <!-- ComboBox de Variante Multi-DA -->
+                  <ComboBox ItemsSource="{Binding AvailableDaVariants}" SelectedItem="{Binding SelectedDaVariant}" HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding DisplayLabel}" FontSize="11.5" Foreground="#00FF66" FontWeight="SemiBold"/>
+                      </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                  </ComboBox>
+
+                  <!-- Resumen de Metadatos de la Variante Activa -->
+                  <Border Background="#020503" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="3" Padding="8">
+                    <TextBlock Text="{Binding DaVariantSummary}" FontSize="11" Foreground="#00FF66" TextWrapping="Wrap" FontFamily="Consolas, Cascadia Code"/>
+                  </Border>
+
+                  <!-- Botones de Acción de Variante -->
+                  <Grid ColumnDefinitions="*,*">
+                    <Button Grid.Column="0" Content="🔄 Alternar Siguiente DA" Command="{Binding FallbackToNextDaVariantCommand}"
+                            Margin="0,0,4,0" Background="#0A180E" BorderBrush="#00CC44" Foreground="#FFD600" FontSize="11"/>
+                    <Button Grid.Column="1" Content="🔍 Ver TestPoint Modelo" Command="{Binding SearchTestPointForCurrentModelCommand}"
+                            Margin="4,0,0,0" Background="#0A180E" BorderBrush="#00FF66" Foreground="#00FF66" FontSize="11"/>
+                  </Grid>
+
+                </StackPanel>
+              </Border>
+
+              <!-- EXPANDER CUSTOM LOADERS (DA, Preloader, Auth) -->
+              <Expander Header="▶ Archivos Personalizados (Custom DA / Preloader / Auth)" IsExpanded="{Binding IsCustomExpanded}" Padding="8">
+                <StackPanel Spacing="6" Margin="0,4,0,0">
+                  <Grid ColumnDefinitions="75,*,Auto">
+                    <TextBlock Text="DA File:" VerticalAlignment="Center" FontSize="11" Foreground="#80FF9E"/>
+                    <TextBox Grid.Column="1" Text="{Binding CustomDaPath}" PlaceholderText="MTK_AllInOne_DA.bin" FontSize="11" Margin="0,0,4,0"/>
+                    <Button Grid.Column="2" Content="..." Command="{Binding BrowseCustomDaCommand}" Padding="6,2"/>
+                  </Grid>
+                  <Grid ColumnDefinitions="75,*,Auto">
+                    <TextBlock Text="Preloader:" VerticalAlignment="Center" FontSize="11" Foreground="#80FF9E"/>
+                    <TextBox Grid.Column="1" Text="{Binding CustomPreloaderPath}" PlaceholderText="preloader.bin" FontSize="11" Margin="0,0,4,0"/>
+                    <Button Grid.Column="2" Content="..." Command="{Binding BrowseCustomPreloaderCommand}" Padding="6,2"/>
+                  </Grid>
+                  <Grid ColumnDefinitions="75,*,Auto">
+                    <TextBlock Text="Auth File:" VerticalAlignment="Center" FontSize="11" Foreground="#80FF9E"/>
+                    <TextBox Grid.Column="1" Text="{Binding CustomAuthPath}" PlaceholderText="auth_sv5.auth" FontSize="11" Margin="0,0,4,0"/>
+                    <Button Grid.Column="2" Content="..." Command="{Binding BrowseCustomAuthCommand}" Padding="6,2"/>
+                  </Grid>
+                </StackPanel>
+              </Expander>
+
+            </StackPanel>
+          </ScrollViewer>
+
+          <!-- COLUMNA 2: ACCIONES RÁPIDAS DE CONEXIÓN & BRIDGES -->
+          <ScrollViewer Grid.Column="1" Padding="10,0,0,0">
+            <StackPanel Spacing="10">
+
+              <!-- ACCIONES PRIMARIAS DE ARRANQUE / ENLACE (CORREGIDO A CONNECT / READ INFO) -->
+              <Border Background="#060C08" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="4" Padding="12">
+                <StackPanel Spacing="8">
+                  <TextBlock Text="ENLACE Y DETECCIÓN DEL HARDWARE" FontSize="11" FontWeight="Bold" Foreground="#00FF66"/>
+
+                  <!-- BOTÓN PRIMARIO: CONNECT / READ INFO (Handshake BROM/EDL y lectura sin reiniciar) -->
+                  <Button Classes="action-primary" Content="⚡ CONNECT / READ INFO (BROM / EDL / DA HANDSHAKE)"
+                          Command="{Binding ConnectAndReadInfoCommand}"
+                          Height="42" HorizontalAlignment="Stretch" FontSize="12.5"/>
+
+                  <!-- BOTÓN SEPARADO: REBOOT AL SISTEMA -->
+                  <Button Content="🔄 REBOOT (REINICIAR DISPOSITIVO AL SISTEMA)" Command="{Binding RebootDeviceCommand}"
+                          Height="36" HorizontalAlignment="Stretch" Background="#08140B" BorderBrush="#00CC44" Foreground="#80FF9E"/>
+                </StackPanel>
+              </Border>
+
+              <!-- QUALCOMM FASTBOOT / ADB -> EDL 9008 BRIDGES -->
+              <Border Background="#060C08" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="4" Padding="12">
+                <StackPanel Spacing="8">
+                  <TextBlock Text="PUENTES DE ENLACE QUALCOMM EDL 9008" FontSize="11" FontWeight="Bold" Foreground="#00FF66"/>
+                  <TextBlock Text="Fuerza el reinicio inmediato hacia Qualcomm HS-USB QDLoader 9008 desde modo Fastboot o ADB:" FontSize="10.5" Foreground="#80FF9E"/>
+
+                  <Grid ColumnDefinitions="*,*">
+                    <Button Grid.Column="0" Content="⚡ Fastboot -> EDL 9008" Command="{Binding FastbootToEdlCommand}"
+                            Margin="0,0,4,0" Height="36" Background="#08140B" BorderBrush="#00CC44" Foreground="#00FF66"/>
+                    <Button Grid.Column="1" Content="⚡ ADB -> EDL 9008" Command="{Binding AdbToEdlCommand}"
+                            Margin="4,0,0,0" Height="36" Background="#08140B" BorderBrush="#00CC44" Foreground="#00FF66"/>
+                  </Grid>
+                </StackPanel>
+              </Border>
+
+              <!-- MOTOR BYPASS SLA/DAA PYTHON & AMONET -->
+              <Border Background="#060C08" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="4" Padding="12">
+                <StackPanel Spacing="8">
+                  <TextBlock Text="EXPLOITS Y REPARACIÓN AVANZADA" FontSize="11" FontWeight="Bold" Foreground="#00FF66"/>
+
+                  <Button Content="⚡ Ejecutar Bypass SLA/DAA (Python Subprocess Engine)" Command="{Binding RunPythonBypassCommand}"
+                          Height="36" HorizontalAlignment="Stretch" Background="#14080A" BorderBrush="#FF3344" Foreground="#FF6677"/>
+
+                  <Button Content="🛠️ Amonet GPT Fix (Reconstrucción PGPT / SGPT &amp; CRC32)" Command="{Binding AmonetGptFixCommand}"
+                          Height="36" HorizontalAlignment="Stretch" Background="#0A180E" BorderBrush="#00CC44" Foreground="#FFD600"/>
+                </StackPanel>
+              </Border>
+
+            </StackPanel>
+          </ScrollViewer>
+
+        </Grid>
+
+        <!-- ======================================================== -->
+        <!-- MÓDULO 1: SERVICIOS & SEGURIDAD (FRP / BOOTLOADER / AUTH) -->
+        <!-- ======================================================== -->
+        <ScrollViewer IsVisible="{Binding IsModule1Active}" Padding="4">
+          <StackPanel Spacing="12" MaxWidth="850" HorizontalAlignment="Left">
+
+            <!-- BOTONES DE ACCIÓN RÁPIDA 1-CLICK -->
+            <TextBlock Text="OPERACIONES DE SERVICIO EN 1-CLIC" FontSize="11" FontWeight="Bold" Foreground="#00FF66"/>
+            <UniformGrid Columns="3" Rows="2">
+              <Button Classes="action-primary" Content="🔓 REMOVE FRP" Command="{Binding RemoveFrpCommand}" Height="40" Margin="3"/>
+
+              <Button Content="🔓 UNLOCK / LOCK BOOTLOADER" Command="{Binding UnlockBootloaderCommand}" Height="40" Margin="3"
+                      Background="#0B180D" BorderBrush="#00CC44" Foreground="#00FF66" FontWeight="Bold"/>
+
+              <Button Content="☁️ REMOVE MI ACCOUNT" Command="{Binding RemoveMiAccountCommand}" Height="40" Margin="3"
+                      Background="#0B180D" BorderBrush="#00CC44" Foreground="#00FF66" FontWeight="Bold"/>
+
+              <Button Content="🛡️ REMOVE HUAWEI ID" Command="{Binding RemoveHuaweiIdCommand}" Height="40" Margin="3"
+                      Background="#0B180D" BorderBrush="#00CC44" Foreground="#80FF9E"/>
+
+              <Button Content="🚫 DISABLE OTA UPDATES" Command="{Binding DisableOtaCommand}" Height="40" Margin="3"
+                      Background="#0B180D" BorderBrush="#00CC44" Foreground="#80FF9E"/>
+
+              <Button Content="🔑 READ HARDWARE KEYS (JSON)" Command="{Binding ReadHardwareKeysCommand}" Height="40" Margin="3"
+                      Background="#0B180D" BorderBrush="#00CC44" Foreground="#80FF9E"/>
+            </UniformGrid>
+
+            <Separator Background="#00CC44" Margin="0,6"/>
+
+            <!-- TAREAS MODULARES DE SERVICIO -->
+            <TextBlock Text="TAREAS MODULARES ESPECÍFICAS" FontSize="11" FontWeight="Bold" Foreground="#FFFFFF"/>
+
+            <!-- Factory Reset Task -->
+            <Grid ColumnDefinitions="150,*,85">
+              <TextBlock Text="Factory Reset:-" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" FontWeight="SemiBold"/>
               <ComboBox Grid.Column="1" ItemsSource="{Binding FactoryResetTasks}" SelectedItem="{Binding SelectedFactoryResetTask}"
                         HorizontalAlignment="Stretch" Margin="0,0,8,0"/>
-              <Button Grid.Column="2" Content="start" Command="{Binding StartFactoryResetTaskCommand}" Background="#1A2234" Foreground="#00E5FF"/>
+              <Button Grid.Column="2" Content="Start" Command="{Binding StartFactoryResetTaskCommand}" Background="#0A180E" Foreground="#00FF66"/>
             </Grid>
 
-            <!-- Fila Security/EFS -->
-            <Grid ColumnDefinitions="140,*,75">
-              <TextBlock Text="Security/EFS :-" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" FontWeight="SemiBold"/>
+            <!-- Security / EFS Task -->
+            <Grid ColumnDefinitions="150,*,85">
+              <TextBlock Text="Security / EFS :-" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" FontWeight="SemiBold"/>
               <ComboBox Grid.Column="1" ItemsSource="{Binding SecurityTasks}" SelectedItem="{Binding SelectedSecurityTask}"
                         HorizontalAlignment="Stretch" Margin="0,0,8,0"/>
-              <Button Grid.Column="2" Content="start" Command="{Binding StartSecurityTaskCommand}" Background="#1A2234" Foreground="#00E5FF"/>
+              <Button Grid.Column="2" Content="Start" Command="{Binding StartSecurityTaskCommand}" Background="#0A180E" Foreground="#00FF66"/>
             </Grid>
 
-            <!-- Fila Meta Task -->
-            <Grid ColumnDefinitions="140,*,75">
-              <TextBlock Text="Meta Task :-" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" FontWeight="SemiBold"/>
+            <!-- Meta Task -->
+            <Grid ColumnDefinitions="150,*,85">
+              <TextBlock Text="Meta Task :-" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" FontWeight="SemiBold"/>
               <ComboBox Grid.Column="1" ItemsSource="{Binding MetaTasks}" SelectedItem="{Binding SelectedMetaTask}"
                         HorizontalAlignment="Stretch" Margin="0,0,8,0"/>
-              <Button Grid.Column="2" Content="start" Command="{Binding StartMetaTaskCommand}" Background="#1A2234" Foreground="#00E5FF"/>
+              <Button Grid.Column="2" Content="Start" Command="{Binding StartMetaTaskCommand}" Background="#0A180E" Foreground="#00FF66"/>
             </Grid>
 
-            <!-- Fila MT62xx Tasks -->
-            <Grid ColumnDefinitions="140,*,75">
-              <TextBlock Text="MT62xx Tasks :-" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" FontWeight="SemiBold"/>
+            <!-- MT62xx Tasks -->
+            <Grid ColumnDefinitions="150,*,85">
+              <TextBlock Text="MT62xx Tasks :-" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" FontWeight="SemiBold"/>
               <ComboBox Grid.Column="1" ItemsSource="{Binding Mt62xxTasks}" SelectedItem="{Binding SelectedMt62xxTask}"
                         HorizontalAlignment="Stretch" Margin="0,0,8,0"/>
-              <Button Grid.Column="2" Content="start" Command="{Binding StartMt62xxTaskCommand}" Background="#1A2234" Foreground="#00E5FF"/>
+              <Button Grid.Column="2" Content="Start" Command="{Binding StartMt62xxTaskCommand}" Background="#0A180E" Foreground="#00FF66"/>
             </Grid>
 
-            <Separator Background="#222836" Margin="0,4"/>
+            <!-- RPMB & OEMINFO -->
+            <Grid ColumnDefinitions="150,*,85">
+              <TextBlock Text="RPMB Partition :-" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" FontWeight="SemiBold"/>
+              <ComboBox Grid.Column="1" ItemsSource="{Binding RpmbTasks}" SelectedItem="{Binding SelectedRpmbTask}"
+                        HorizontalAlignment="Stretch" Margin="0,0,8,0"/>
+              <Button Grid.Column="2" Content="Start" Command="{Binding StartRpmbTaskCommand}" Background="#0A180E" Foreground="#00FF66"/>
+            </Grid>
 
-            <!-- Botones de Utilidades de Seguridad -->
-            <Button Content="Unlock/Lock Bootloader" Command="{Binding UnlockBootloaderCommand}"
-                    HorizontalAlignment="Stretch" Height="34" Background="#161A22"/>
-
-            <Button Content="Read Hardware keys(json)" Command="{Binding ReadHardwareKeysCommand}"
-                    HorizontalAlignment="Stretch" Height="34" Background="#161A22"/>
-
-            <Button Content="Remove Mi Account" Command="{Binding RemoveMiAccountCommand}"
-                    HorizontalAlignment="Stretch" Height="34" Background="#161A22"/>
-
-            <Button Content="Disable OTA Updates" Command="{Binding DisableOtaCommand}"
-                    HorizontalAlignment="Stretch" Height="34" Background="#161A22"/>
-
-            <Button Content="Remove Huawei ID" Command="{Binding RemoveHuaweiIdCommand}"
-                    HorizontalAlignment="Stretch" Height="34" Background="#161A22"/>
-
-            <Button Content="⚡ Run Python SLA/DAA Bypass Script" Command="{Binding RunPythonBypassCommand}"
-                    HorizontalAlignment="Stretch" Height="36" Background="#261A1C" BorderBrush="#FF1744" Foreground="#FF8A80" FontWeight="SemiBold"/>
+            <!-- LK Patch -->
+            <Grid ColumnDefinitions="150,*,85">
+              <TextBlock Text="LK LittleKernel :-" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" FontWeight="SemiBold"/>
+              <ComboBox Grid.Column="1" ItemsSource="{Binding LkTasks}" SelectedItem="{Binding SelectedLkTask}"
+                        HorizontalAlignment="Stretch" Margin="0,0,8,0"/>
+              <Button Grid.Column="2" Content="Start" Command="{Binding StartLkTaskCommand}" Background="#0A180E" Foreground="#00FF66"/>
+            </Grid>
 
           </StackPanel>
         </ScrollViewer>
-      </TabItem>
 
-      <!-- ==================== PESTAÑA 2: FLASH ==================== -->
-      <TabItem Header="Flash">
-        <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="10,6">
+        <!-- ======================================================== -->
+        <!-- MÓDULO 2: GESTIÓN DE PARTICIONES (DUMP / FLASH / GPT)    -->
+        <!-- ======================================================== -->
+        <Grid IsVisible="{Binding IsModule2Active}" RowDefinitions="Auto,Auto,*,Auto">
 
           <!-- Barra Superior: REBOOT Type + Search -->
-          <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,220" Margin="0,0,0,8">
-            <TextBlock Text="REBOOT" VerticalAlignment="Center" Foreground="#FF5252" FontWeight="Bold" FontSize="12" Margin="0,0,8,0"/>
-            <TextBlock Grid.Column="1" Text="Type" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" Margin="0,0,8,0"/>
+          <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,240" Margin="0,0,0,8">
+            <TextBlock Text="FIRMWARE" VerticalAlignment="Center" Foreground="#00FF66" FontWeight="Bold" FontSize="11.5" Margin="0,0,8,0"/>
+            <TextBlock Grid.Column="1" Text="Type:" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" Margin="0,0,8,0"/>
             <ComboBox Grid.Column="2" ItemsSource="{Binding RebootTypes}" SelectedItem="{Binding SelectedRebootType}" HorizontalAlignment="Stretch" Margin="0,0,10,0"/>
-            <TextBox Grid.Column="3" Text="{Binding ScatterFilterQuery}" PlaceholderText="Search comma or spac..."/>
+            <TextBox Grid.Column="3" Text="{Binding ScatterFilterQuery}" PlaceholderText="Filtrar particiones (ej. boot, nv)..."/>
           </Grid>
 
-          <!-- Fila Firmware -->
-          <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
-            <TextBlock Text="Firmware" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" Margin="0,0,10,0"/>
-            <TextBox Grid.Column="1" Text="{Binding FirmwareScatterPath}" PlaceholderText="Selecciona MTK_Android_scatter.txt o rawprogram.xml..." Margin="0,0,6,0"/>
-            <Button Grid.Column="2" Content="..." Command="{Binding BrowseFirmwareCommand}" Padding="12,4"/>
+          <!-- Fila Firmware File Picker -->
+          <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,8">
+            <TextBlock Text="Archivo Scatter / ROM:" VerticalAlignment="Center" Foreground="#80FF9E" FontSize="11.5" Margin="0,0,8,0"/>
+            <TextBox Grid.Column="1" Text="{Binding FirmwareScatterPath}" PlaceholderText="Selecciona MTK_Android_scatter.txt, rawprogram.xml o paquete ROM..." Margin="0,0,6,0"/>
+            <Button Grid.Column="2" Content="Examinar..." Command="{Binding BrowseFirmwareCommand}" Padding="12,4"/>
           </Grid>
 
           <!-- Grid de Particiones Flash -->
-          <Border Grid.Row="2" Background="#0C0E12" BorderBrush="#202530" BorderThickness="1" CornerRadius="4">
+          <Border Grid.Row="2" Background="#030604" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="4">
             <Grid RowDefinitions="Auto,*">
 
-              <!-- Cabecera -->
-              <Border Grid.Row="0" Background="#171A21" Padding="10,6" BorderBrush="#202530" BorderThickness="0,0,0,1">
+              <!-- Cabecera de Tabla -->
+              <Border Grid.Row="0" Background="#07120A" Padding="10,6" BorderBrush="#00CC44" BorderThickness="0,0,0,1">
                 <Grid ColumnDefinitions="45,180,140,110,*">
-                  <TextBlock Text="Part" FontWeight="Bold" FontSize="11" Foreground="#90A4AE"/>
-                  <TextBlock Grid.Column="1" Text="Name" FontWeight="Bold" FontSize="11" Foreground="#90A4AE"/>
-                  <TextBlock Grid.Column="2" Text="Length" FontWeight="Bold" FontSize="11" Foreground="#90A4AE"/>
-                  <TextBlock Grid.Column="3" Text="Type" FontWeight="Bold" FontSize="11" Foreground="#90A4AE"/>
-                  <TextBlock Grid.Column="4" Text="File Name" FontWeight="Bold" FontSize="11" Foreground="#90A4AE"/>
+                  <TextBlock Text="Sel" FontWeight="Bold" FontSize="11" Foreground="#00FF66"/>
+                  <TextBlock Grid.Column="1" Text="Nombre Partición" FontWeight="Bold" FontSize="11" Foreground="#00FF66"/>
+                  <TextBlock Grid.Column="2" Text="Longitud" FontWeight="Bold" FontSize="11" Foreground="#00FF66"/>
+                  <TextBlock Grid.Column="3" Text="Tipo Memoria" FontWeight="Bold" FontSize="11" Foreground="#00FF66"/>
+                  <TextBlock Grid.Column="4" Text="Archivo de Imagen" FontWeight="Bold" FontSize="11" Foreground="#00FF66"/>
                 </Grid>
               </Border>
 
-              <!-- Lista Seleccionable de Particiones -->
-              <ListBox Grid.Row="1" ItemsSource="{Binding Partitions}"
-                       SelectedItem="{Binding SelectedPartition}"
+              <!-- Lista de Particiones -->
+              <ListBox Grid.Row="1" ItemsSource="{Binding Partitions}" SelectedItem="{Binding SelectedPartition}"
                        Background="Transparent" BorderThickness="0" Padding="0">
-                <ListBox.Styles>
-                  <Style Selector="ListBoxItem">
-                    <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="0"/>
-                    <Setter Property="Background" Value="Transparent"/>
-                  </Style>
-                  <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-                    <Setter Property="Background" Value="#1C2433"/>
-                  </Style>
-                </ListBox.Styles>
                 <ListBox.ItemTemplate>
                   <DataTemplate>
-                    <Border Padding="10,5" BorderBrush="#161922" BorderThickness="0,0,0,1">
+                    <Border Padding="10,4" BorderBrush="#0A180E" BorderThickness="0,0,0,1">
                       <Grid ColumnDefinitions="45,180,140,110,*">
                         <CheckBox IsChecked="{Binding IsSelected}" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Name}" Foreground="#ECEFF1" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Text="{Binding LengthFormatted}" Foreground="#00E676" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="3" Text="{Binding Type}" Foreground="#FFAB00" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="4" Text="{Binding FileName}" Foreground="#00E5FF" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" Foreground="#FFFFFF" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="{Binding LengthFormatted}" Foreground="#00FF66" FontFamily="Consolas, Cascadia Code" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="3" Text="{Binding Type}" Foreground="#FFD600" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="4" Text="{Binding FileName}" Foreground="#80FF9E" VerticalAlignment="Center"/>
                       </Grid>
                     </Border>
                   </DataTemplate>
@@ -280,88 +534,198 @@
             </Grid>
           </Border>
 
-          <!-- Botones Inferiores de Flasheo -->
-          <UniformGrid Grid.Row="3" Columns="4" Rows="1" Margin="0,10,0,0">
-            <Button Content="BOOT DEVICE" Command="{Binding BootDeviceCommand}" Margin="0,0,6,0" Height="36" FontWeight="SemiBold"/>
-            <Button Content="READ" Command="{Binding ReadFlashCommand}" Margin="3,0" Height="36" FontWeight="SemiBold"/>
-            <Button Content="WRITE" Command="{Binding WriteFlashCommand}" Margin="3,0" Height="36" FontWeight="SemiBold"/>
-            <Button Content="ERASE" Command="{Binding EraseFlashCommand}" Margin="6,0,0,0" Height="36" FontWeight="SemiBold"/>
+          <!-- Barra Inferior de Flasheo (CORREGIDO BOTÓN A CONNECT / READ INFO Y AGREGADO REBOOT INDEPENDIENTE) -->
+          <UniformGrid Grid.Row="3" Columns="6" Rows="1" Margin="0,10,0,0">
+            <!-- 1. Enlace BROM / EDL y lectura de Hardware -->
+            <Button Classes="action-primary" Content="⚡ CONNECT / READ INFO" Command="{Binding ConnectAndReadInfoCommand}" Margin="0,0,3,0" Height="36"/>
+            <!-- 2. Volcado -->
+            <Button Content="📥 READ (DUMP)" Command="{Binding ReadFlashCommand}" Margin="2,0" Height="36" Background="#0A180E" BorderBrush="#00CC44" Foreground="#00FF66"/>
+            <!-- 3. Flasheo -->
+            <Button Content="📤 WRITE (FLASH)" Command="{Binding WriteFlashCommand}" Margin="2,0" Height="36" Background="#0F2815" BorderBrush="#00FF66" Foreground="#00FF66"/>
+            <!-- 4. Borrado -->
+            <Button Content="🗑️ ERASE" Command="{Binding EraseFlashCommand}" Margin="2,0" Height="36" Background="#14080A" BorderBrush="#FF3344" Foreground="#FF6677"/>
+            <!-- 5. GPT Fix -->
+            <Button Content="🛠️ AMONET GPT FIX" Command="{Binding AmonetGptFixCommand}" Margin="2,0" Height="36" Background="#0A180E" BorderBrush="#00CC44" Foreground="#FFD600"/>
+            <!-- 6. Reinicio independiente -->
+            <Button Content="🔄 REBOOT" Command="{Binding RebootDeviceCommand}" Margin="3,0,0,0" Height="36" Background="#08140B" BorderBrush="#00CC44" Foreground="#80FF9E"/>
           </UniformGrid>
 
         </Grid>
-      </TabItem>
 
-      <!-- ==================== PESTAÑA 3: TOOLS ==================== -->
-      <TabItem Header="Tools">
-        <StackPanel Spacing="12" Margin="14" MaxWidth="600" HorizontalAlignment="Left">
+        <!-- ======================================================== -->
+        <!-- MÓDULO 3: AYUDA Y TESTPOINTS (VISOR DE HARDWARE)         -->
+        <!-- ======================================================== -->
+        <Grid IsVisible="{Binding IsModule3Active}" ColumnDefinitions="340,*">
 
-          <!-- Fila RPMB -->
-          <Grid ColumnDefinitions="130,*,75">
-            <TextBlock Text="RPMB :-" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" FontWeight="SemiBold"/>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding RpmbTasks}" SelectedItem="{Binding SelectedRpmbTask}"
-                      HorizontalAlignment="Stretch" Margin="0,0,8,0"/>
-            <Button Grid.Column="2" Content="start" Command="{Binding StartRpmbTaskCommand}" Background="#1A2234" Foreground="#00E5FF"/>
-          </Grid>
+          <!-- COLUMNA IZQUIERDA: LISTA Y BUSCADOR DE TESTPOINTS -->
+          <Border Grid.Column="0" Background="#040805" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,10,0">
+            <Grid RowDefinitions="Auto,Auto,*">
 
-          <!-- Fila OEMINFO -->
-          <Grid ColumnDefinitions="130,*,75">
-            <TextBlock Text="OEMINFO :-" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" FontWeight="SemiBold"/>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding OemInfoTasks}" SelectedItem="{Binding SelectedOemInfoTask}"
-                      HorizontalAlignment="Stretch" Margin="0,0,8,0"/>
-            <Button Grid.Column="2" Content="start" Command="{Binding StartOemInfoTaskCommand}" Background="#1A2234" Foreground="#00E5FF"/>
-          </Grid>
+              <!-- Cuadro de Búsqueda -->
+              <TextBox Grid.Row="0" Text="{Binding TestPointSearchQuery}"
+                       PlaceholderText="🔍 Buscar modelo (ej. P30, T606, CC9)..." Margin="0,0,0,8"/>
 
-          <Separator Background="#222836" Margin="0,6"/>
+              <!-- Contador de Diagramas -->
+              <Border Grid.Row="1" Background="#0A180E" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="3" Padding="8,4" Margin="0,0,0,8">
+                <Grid ColumnDefinitions="*,Auto">
+                  <TextBlock Text="PUNTOS DE PRUEBA INDEXADOS" FontSize="10" FontWeight="Bold" Foreground="#00FF66" VerticalAlignment="Center"/>
+                  <TextBlock Grid.Column="1" Text="{Binding TestPointsList.Count, StringFormat='{}{0} Modelos'}" FontSize="10" FontWeight="Bold" Foreground="#FFFFFF" VerticalAlignment="Center"/>
+                </Grid>
+              </Border>
 
-          <!-- Fila LittleKernel (LK) Patch -->
-          <Grid ColumnDefinitions="130,*,75">
-            <TextBlock Text="LK LittleKernel :-" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="12" FontWeight="SemiBold"/>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding LkTasks}" SelectedItem="{Binding SelectedLkTask}"
-                      HorizontalAlignment="Stretch" Margin="0,0,8,0"/>
-            <Button Grid.Column="2" Content="start" Command="{Binding StartLkTaskCommand}" Background="#1A2234" Foreground="#00E676"/>
-          </Grid>
+              <!-- Lista Seleccionable de TestPoints -->
+              <ListBox Grid.Row="2" ItemsSource="{Binding TestPointsList}" SelectedItem="{Binding SelectedTestPoint}"
+                       Background="Transparent" BorderThickness="0" Padding="0">
+                <ListBox.ItemTemplate>
+                  <DataTemplate>
+                    <Border Padding="8,6" BorderBrush="#0A180E" BorderThickness="0,0,0,1">
+                      <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0">
+                          <TextBlock Text="{Binding ModelName}" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="11.5" TextTrimming="CharacterEllipsis"/>
+                          <TextBlock Text="{Binding Brand}" Foreground="#80FF9E" FontSize="10"/>
+                        </StackPanel>
+                        <Border Grid.Column="1" Background="#08140B" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="3" Padding="5,2" VerticalAlignment="Center">
+                          <TextBlock Text="{Binding ImageFormat}" Foreground="#00FF66" FontSize="9.5" FontWeight="Bold"/>
+                        </Border>
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </ListBox.ItemTemplate>
+              </ListBox>
 
-          <Border Background="#10131A" BorderBrush="#1C212B" BorderThickness="1" CornerRadius="6" Padding="12" Margin="0,10,0,0">
-            <StackPanel Spacing="6">
-              <TextBlock Text="ℹ️ Información de Herramientas Avanzadas" FontWeight="Bold" Foreground="#00E5FF"/>
-              <TextBlock Text="• RPMB: Lee o escribe bloques protegidos por clave de autenticación HMAC SHA-256." Foreground="#90A4AE" FontSize="11" TextWrapping="Wrap"/>
-              <TextBlock Text="• OEMINFO: Restablece o modifica banderas de operador y bloqueo regional de fabricante." Foreground="#90A4AE" FontSize="11" TextWrapping="Wrap"/>
-              <TextBlock Text="• LK Patcher: Modifica la firma del bootloader Little Kernel para permitir kernels custom sin warning." Foreground="#90A4AE" FontSize="11" TextWrapping="Wrap"/>
-            </StackPanel>
+            </Grid>
           </Border>
 
-        </StackPanel>
-      </TabItem>
+          <!-- COLUMNA DERECHA: VISOR FOTOGRÁFICO DE HARDWARE -->
+          <Border Grid.Column="1" Background="#040805" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="4" Padding="12">
+            <Grid RowDefinitions="Auto,*">
 
-      <!-- ==================== PESTAÑA 4: SETTINGS ==================== -->
-      <TabItem Header="Settings">
-        <StackPanel Spacing="14" Margin="14" MaxWidth="500" HorizontalAlignment="Left">
+              <!-- Barra Superior de Información y Acción del Visor -->
+              <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+                <StackPanel Grid.Column="0">
+                  <TextBlock Text="{Binding SelectedTestPoint.ModelName, FallbackValue='Selecciona un modelo para ver su TestPoint'}"
+                             FontSize="14" FontWeight="Bold" Foreground="#FFFFFF"/>
+                  <TextBlock Text="{Binding TestPointDetails}" FontSize="11" Foreground="#00FF66" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
+                <Button Grid.Column="1" Content="🖼️ Abrir en Visor Externo" Command="{Binding OpenTestPointExternalCommand}"
+                        VerticalAlignment="Center" Padding="10,5" Background="#0A180E" BorderBrush="#00FF66" Foreground="#00FF66"/>
+              </Grid>
 
-          <TextBlock Text="Configuración de Comunicación y Protocolo" FontWeight="Bold" FontSize="13" Foreground="#00E5FF"/>
+              <!-- Área de Renderizado de la Imagen Fotográfica del Diagrama -->
+              <Border Grid.Row="1" Background="#000000" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="3">
+                <Grid>
+                  <!-- Imagen Activa -->
+                  <ScrollViewer IsVisible="{Binding HasSelectedTestPoint}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <Image Source="{Binding SelectedTestPointBitmap}" Stretch="Uniform" Margin="8"/>
+                  </ScrollViewer>
 
-          <Grid ColumnDefinitions="160,*">
-            <TextBlock Text="Velocidad Baudrate:" VerticalAlignment="Center" Foreground="#B0BEC5"/>
-            <TextBox Grid.Column="1" Text="{Binding BaudRate}"/>
-          </Grid>
+                  <!-- Placeholder / Guía cuando no hay imagen seleccionada -->
+                  <Border IsVisible="{Binding !HasSelectedTestPoint}" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="500" Padding="20">
+                    <StackPanel Spacing="10" HorizontalAlignment="Center">
+                      <TextBlock Text="🔬" FontSize="36" HorizontalAlignment="Center"/>
+                      <TextBlock Text="GUÍA DE TESTPOINT Y FORZADO BROM / EDL" FontWeight="Bold" FontSize="13" Foreground="#00FF66" HorizontalAlignment="Center"/>
+                      <TextBlock Text="1. Selecciona un modelo en la lista de la izquierda para cargar la fotografía de placa." Foreground="#E0FFE8" FontSize="11"/>
+                      <TextBlock Text="2. Desconecta la batería del terminal antes de operar en banco." Foreground="#E0FFE8" FontSize="11"/>
+                      <TextBlock Text="3. Realiza un puente metálico con pinzas entre el punto TP dorado y masa GND (blindaje)." Foreground="#E0FFE8" FontSize="11"/>
+                      <TextBlock Text="4. Conecta el cable USB Tipo C al PC manteniendo el contacto 3 segundos." Foreground="#E0FFE8" FontSize="11"/>
+                      <TextBlock Text="5. Al escuchar el sonido de conexión USB en el PC, retira las pinzas e inicia el enlace." Foreground="#00FF66" FontSize="11" FontWeight="Bold"/>
+                    </StackPanel>
+                  </Border>
+                </Grid>
+              </Border>
 
-          <CheckBox IsChecked="{Binding AutoReboot}" Content="Reiniciar dispositivo automáticamente tras flasheo" Foreground="#ECEFF1"/>
-          <CheckBox IsChecked="{Binding VerifyWrite}" Content="Verificar checksum de bloques escritos (MD5 / SHA-256)" Foreground="#ECEFF1"/>
-          <CheckBox IsChecked="{Binding UseHighSpeedUsb}" Content="Habilitar USB High-Speed DMA en Download Agent" Foreground="#ECEFF1"/>
-
-          <Border Background="#10131A" BorderBrush="#1C212B" BorderThickness="1" CornerRadius="6" Padding="12" Margin="0,10,0,0">
-            <StackPanel Spacing="4">
-              <TextBlock Text="Rutas de Recursos y Activos:" FontWeight="Bold" Foreground="#ECEFF1" FontSize="12"/>
-              <TextBlock Text="• Assets Principales: App/Assets (Copiados a salida de compilación)" Foreground="#90A4AE" FontSize="11"/>
-              <TextBlock Text="• ExternalAssets: ExternalAssets/ (3000+ Preloaders, Brand DAs, Payloads)" Foreground="#00E676" FontSize="11"/>
-              <TextBlock Text="• Scripts Python: ExternalAssets/Scripts/Python (bypass_utility, mtkclient, lkpatcher)" Foreground="#FFAB00" FontSize="11"/>
-              <TextBlock Text="• Guía Completa: ExternalAssets/Docs/Bypass-Patch-Guide.md" Foreground="#00E5FF" FontSize="11"/>
-            </StackPanel>
+            </Grid>
           </Border>
 
-        </StackPanel>
-      </TabItem>
+        </Grid>
 
-    </TabControl>
+        <!-- ======================================================== -->
+        <!-- MÓDULO 4: AJUSTES & ENGINE (CONFIGURACIÓN)               -->
+        <!-- ======================================================== -->
+        <ScrollViewer IsVisible="{Binding IsModule4Active}" Padding="4">
+          <StackPanel Spacing="14" MaxWidth="600" HorizontalAlignment="Left">
+            <TextBlock Text="CONFIGURACIÓN DEL PROTOCOLO Y COMUNICACIÓN USB" FontSize="12" FontWeight="Bold" Foreground="#00FF66"/>
+
+            <Grid ColumnDefinitions="170,*">
+              <TextBlock Text="Velocidad BaudRate:" VerticalAlignment="Center" Foreground="#80FF9E"/>
+              <TextBox Grid.Column="1" Text="{Binding BaudRate}"/>
+            </Grid>
+
+            <CheckBox IsChecked="{Binding AutoReboot}" Content="Reiniciar dispositivo automáticamente tras completar operación" Foreground="#E0FFE8"/>
+            <CheckBox IsChecked="{Binding VerifyWrite}" Content="Verificar checksum de bloques escritos (MD5 / SHA-256)" Foreground="#E0FFE8"/>
+            <CheckBox IsChecked="{Binding UseHighSpeedUsb}" Content="Habilitar USB High-Speed DMA en Download Agent" Foreground="#E0FFE8"/>
+
+            <Border Background="#060C08" BorderBrush="#00CC44" BorderThickness="1" CornerRadius="4" Padding="12" Margin="0,10,0,0">
+              <StackPanel Spacing="6">
+                <TextBlock Text="Directorio y Almacén de Activos (Assets):" FontWeight="Bold" Foreground="#FFFFFF" FontSize="11.5"/>
+                <TextBlock Text="• Manifiesto Central: AssetsManifest.json (11,000+ recursos indexados)" Foreground="#00FF66" FontSize="11"/>
+                <TextBlock Text="• BROM Payloads: 51 variantes nativas registradas" Foreground="#00FF66" FontSize="11"/>
+                <TextBlock Text="• ExternalAssets: Preloaders, Brand DAs, Auth SV5, XML V6" Foreground="#80FF9E" FontSize="11"/>
+                <TextBlock Text="• Python Native Bridge: Subprocess + Native C# Engine" Foreground="#E0FFE8" FontSize="11"/>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+
+      </Grid>
+    </Grid>
+
+    <!-- ======================================================== -->
+    <!-- FILA 2: CONSOLA DE LOGS EN TIEMPO REAL (TERMINAL DOCK)   -->
+    <!-- ======================================================== -->
+    <Border Grid.Row="2" Background="#020503" BorderBrush="#00CC44" BorderThickness="0,1,0,0" Padding="12,8">
+      <Grid RowDefinitions="Auto,*">
+
+        <!-- Barra Superior de la Terminal: Título + Progreso + Acciones -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto,Auto" Margin="0,0,0,6">
+
+          <!-- Título Consola -->
+          <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+            <TextBlock Text="📟" FontSize="13" VerticalAlignment="Center"/>
+            <TextBlock Text="TERMINAL DE REGISTRO EN TIEMPO REAL (ANSI MATRIX ENGINE)" Foreground="#00FF66" FontSize="10.5" FontWeight="Bold" VerticalAlignment="Center"/>
+          </StackPanel>
+
+          <!-- Estado y Barra de Progreso Central -->
+          <Grid Grid.Column="1" ColumnDefinitions="Auto,*,Auto" VerticalAlignment="Center" Margin="16,0">
+            <TextBlock Grid.Column="0" Text="{Binding ProgressStatusText}" Foreground="#80FF9E" FontSize="11" FontWeight="SemiBold"
+                       VerticalAlignment="Center" Margin="0,0,8,0" MaxWidth="140" TextTrimming="CharacterEllipsis"/>
+
+            <ProgressBar Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding ProgressValue}"
+                         Height="12" CornerRadius="2" Background="#040805" BorderBrush="#00CC44" BorderThickness="1"
+                         Foreground="#00FF66" VerticalAlignment="Center"/>
+
+            <TextBlock Grid.Column="2" Text="{Binding ProgressValue, StringFormat='{}{0}%'}" Foreground="#00FF66" FontSize="11" FontWeight="Bold"
+                       VerticalAlignment="Center" Margin="8,0,0,0" Width="36" TextAlignment="Right"/>
+          </Grid>
+
+          <!-- Botón Limpiar Consola -->
+          <Button Grid.Column="2" Content="🧹 Limpiar" Command="{Binding ClearLogsCommand}" Padding="8,3" FontSize="11" Margin="0,0,6,0"/>
+
+          <!-- Botón Cancelar Operación -->
+          <Button Grid.Column="3" Content="🛑 Cancelar" Command="{Binding CancelOperationCommand}"
+                  Background="#16080A" BorderBrush="#FF3344" Foreground="#FF6677" Padding="10,3" FontSize="11"/>
+        </Grid>
+
+        <!-- Cuadro de Salida Terminal con Color Coding -->
+        <Border Grid.Row="1" Background="#000000" BorderBrush="#009933" BorderThickness="1" CornerRadius="3" Padding="6">
+          <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding LogMessages}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock FontFamily="Cascadia Code, Consolas, Courier New" FontSize="11" Margin="0,1" TextWrapping="Wrap">
+                    <Run Text="[" Foreground="#1E592D"/>
+                    <Run Text="{Binding Time}" Foreground="#4D7A58"/>
+                    <Run Text="] " Foreground="#1E592D"/>
+                    <Run Text="{Binding Message}" Foreground="{Binding ColorHex}"/>
+                  </TextBlock>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </Border>
+
+      </Grid>
+    </Border>
 
   </Grid>
 </Window>
